@@ -60,8 +60,8 @@ body {
 
 .heading_container.heading_center {
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   text-align: center;
 }
 
@@ -419,6 +419,7 @@ a:focus {
   background-color: #f8f8f9;
   padding: 20px;
   border-radius: 5px;
+  height: 300px;
 }
 
 .service_section .box .img-box {
@@ -447,11 +448,13 @@ a:focus {
 .service_section .box .detail-box h5 {
   font-weight: bold;
   text-transform: uppercase;
+  height: 90px;
 }
 
 .service_section .box .detail-box a {
   color: #00204a;
   font-weight: 600;
+  height: 90px;
 }
 
 .service_section .box .detail-box a:hover {
