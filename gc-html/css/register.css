@@ -9732,6 +9732,14 @@ a.text-dark:hover, a.text-dark:focus {
   body {
     min-width: 992px !important;
   }
+  
+  .container-centered {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Ensures the container takes up at least the full height of the viewport */
+}
+  
   .container {
     min-width: 992px !important;
   }
@@ -9800,6 +9808,7 @@ a:focus {
 .container-md,
 .container-lg,
 .container-xl {
+
   padding-left: 1.5rem;
   padding-right: 1.5rem;
 }
@@ -9887,10 +9896,9 @@ a:focus {
   animation-timing-function: opacity cubic-bezier(0, 1, 0.4, 1);
 }
 
+
 .bg-gradient-primary {
-  background-color: #00204a;
-  background-image: linear-gradient(180deg, #00204a 10%, #224abe 100%);
-  background-size: cover;
+  background-Color : #00204a;
 }
 
 .bg-gradient-secondary {
