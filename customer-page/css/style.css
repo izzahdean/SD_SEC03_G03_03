@@ -415,11 +415,11 @@ a:focus {
       -ms-flex-align: center;
           align-items: center;
   text-align: center;
-  margin-top: 45px;
+  margin-top: 30px;
   background-color: #f8f8f9;
-  padding: 70px;
+  padding: 50px;
   border-radius: 5px;
-  height: 300px;
+  height: 450px;
 }
 
 .service_section .box .img-box {
@@ -448,13 +448,13 @@ a:focus {
 .service_section .box .detail-box h5 {
   font-weight: bold;
   text-transform: uppercase;
-  height: 90px;
+  height: 59px;
 }
 
 .service_section .box .detail-box a {
   color: #00204a;
   font-weight: 600;
-  height: 90px;
+  
 }
 
 .service_section .box .detail-box a:hover {
