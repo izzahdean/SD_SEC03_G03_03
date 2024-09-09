@@ -175,12 +175,6 @@ a:focus {
   font-weight: 600;
 }
 
-.user-pic{
-	width : 30%;
-	
-	
-}
-
 .custom_nav-container .nav_search-btn {
   width: 35px;
   height: 35px;
@@ -423,7 +417,7 @@ a:focus {
   text-align: center;
   margin-top: 45px;
   background-color: #f8f8f9;
-  padding: 20px;
+  padding: 70px;
   border-radius: 5px;
   height: 300px;
 }
