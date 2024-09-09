@@ -15,7 +15,9 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Check if "Remember Me" cookie exists
+// Initialize error message variable
+$error_message = "";
+
 if (isset($_COOKIE['user'])) {
     list($email, $hashed_password) = explode('|', $_COOKIE['user']);
 
@@ -41,7 +43,7 @@ if (isset($_COOKIE['user'])) {
             } elseif ($user_type === 'maid') {
                 header("Location: maid-page/index.html");
             } else {
-                echo "Unknown user type!";
+                $error_message = "Unknown user type!";
             }
             exit();
         }
@@ -89,14 +91,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             } elseif ($user_type === 'maid') {
                 header("Location: maid-page/index.html");
             } else {
-                echo "Unknown user type!";
+                $error_message = "Unknown user type!";
             }
             exit();
         } else {
-            echo "Invalid password!";
+            $error_message = "Invalid password!";
         }
     } else {
-        echo "No user found with this email!";
+        $error_message = "No user found with this email!";
     }
 
     $stmt->close();
@@ -114,6 +116,14 @@ $conn->close();
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
     <link href="styling.css" rel="stylesheet">
+    <script>
+        // Display error message if there is one
+        <?php if (!empty($error_message)): ?>
+        window.onload = function() {
+            alert("<?php echo addslashes($error_message); ?>");
+        };
+        <?php endif; ?>
+    </script>
 </head>
 <body class="bg-gradient-primary">
     <div class="container">
