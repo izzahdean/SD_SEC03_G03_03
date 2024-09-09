@@ -36,13 +36,21 @@
             <div class="col-lg-8">
                 <form id="profileForm">
                     <div class="form-group">
-                        <br><label for="name">Name</label>
+                        <br><label for="name">First Name</label>
                         <input type="text" class="form-control" id="name" value="ADMIN" readonly>
-                    </div>
+                    </div><br>
+					<div class="form-group">
+                        <label for="lastname">Last Name</label>
+                        <input type="text" class="form-control" id="lastname" value="ADMIN LAST NAME" readonly>
+                    </div><br>
                     <div class="form-group">
                         <label for="email">Email</label>
                         <input type="email" class="form-control" id="email" value="admin@example.com" readonly>
-                    </div>
+                    </div><br>
+					<div class="form-group">
+                        <label for="phoneNumber">Phone Number</label>
+                        <input type="number" class="form-control" id="phoneNum" value="" >
+                    </div><br>
                     <!-- Buttons -->
                     <button type="button" class="btn btn-primary mt-3" id="editButton">Edit Profile</button>
                     <button type="submit" class="btn btn-secondary mt-3 d-none" id="saveButton">Save Profile</button>
