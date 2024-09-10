@@ -113,10 +113,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action']) && $_POST['a
             color: #ffffff;
             font-family: Arial, sans-serif;
         }
-		
-		p {
-			color: #9D9D9D;
-		}
+        
+        p {
+            color: #9D9D9D;
+        }
 
         .container {
             display: flex;
@@ -176,25 +176,41 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action']) && $_POST['a
 
         .options button {
             background-color: #ffffff;
-			color: #00204a;
-			border: none;
-			padding: 10px 20px;
-			font-size: 16px;
-			border-radius: 5px;
-			cursor: pointer; 
-			transition: background-color 0.3s;
+            color: #00204a;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer; 
+            transition: background-color 0.3s;
         }
 
         .options button:hover {
             background-color: #f8f9fa;
         }
-		
-		.options button:focus {
-			outline: none;
-			box-shadow: none; 
-		}
+        
+        .options button:focus {
+            outline: none;
+            box-shadow: none; 
+        }
     </style>
     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const otpBoxes = document.querySelectorAll('.otp-box');
+
+            otpBoxes.forEach((box, index) => {
+                box.addEventListener('input', function(e) {
+                    const value = e.target.value;
+
+                    if (value.length === 1 && index < otpBoxes.length - 1) {
+                        otpBoxes[index + 1].focus();
+                    } else if (value.length === 0 && index > 0) {
+                        otpBoxes[index - 1].focus();
+                    }
+                });
+            });
+        });
+
         function verifyOtp() {
             const otp = Array.from(document.querySelectorAll('.otp-box')).map(input => input.value).join('');
             const email = new URLSearchParams(window.location.search).get('email');
@@ -257,7 +273,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action']) && $_POST['a
             <h1>Verify Your OTP</h1>
             <form id="otpForm">
                 <div class="otp-group">
-                    <input type="text" class="otp-box" maxlength="1" pattern="\d" required>
+                    <input type="text" class="otp-box" maxlength="1" pattern="\d" required autofocus>
                     <input type="text" class="otp-box" maxlength="1" pattern="\d" required>
                     <input type="text" class="otp-box" maxlength="1" pattern="\d" required>
                     <input type="text" class="otp-box" maxlength="1" pattern="\d" required>
@@ -265,7 +281,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action']) && $_POST['a
                 <div class="button-container">
                     <button type="button" onclick="verifyOtp()">Verify OTP</button>
                 </div>
-				<p>Didn't receive the OTP yet?</p>
+                <p>Didn't receive the OTP yet?</p>
                 <div class="options">
                     <button type="button" onclick="changeEmail()"><b>Change Email</b></button> or
                     <button type="button" onclick="resendOtp()"><b>Resend OTP</b></button>

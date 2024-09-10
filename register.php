@@ -62,6 +62,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Execute the query
     if ($stmt->execute()) {
+        // Prepare and bind SQL statement to insert into `users` table
+        $user_type = 'customer'; // Assuming a default user type for new users
+        $stmt = $conn->prepare("INSERT INTO users (email, pass, user_type) VALUES (?, ?, ?)");
+        $stmt->bind_param("sss", $email, $hashed_password, $user_type);
+        $stmt->execute();
+
         // Generate a 4-digit OTP code
         $verification_code = generateOtp();
 
@@ -155,7 +161,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         </div>
                                         <div class="form-group row">
                                             <div class="col-sm-6 mb-3 mb-sm-0">
-                                                <input type="password" class="form-control form-control-user" id="password" name="password" placeholder="Password" required>
+                                                <input type="password" class="form-control form-control-user" id="password" name="password" placeholder="Password (atleast 8 characters)" required>
                                             </div>
                                             <div class="col-sm-6">
                                                 <input type="password" class="form-control form-control-user" id="repeatPassword" name="repeat_password" placeholder="Confirm Password" required>
