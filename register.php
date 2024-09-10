@@ -57,8 +57,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
     // Prepare and bind SQL statement to insert into `customer` table
-    $stmt = $conn->prepare("INSERT INTO customer (fname, lname, cnum, address, email, pass) VALUES (?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("ssssss", $first_name, $last_name, $contact_number, $address, $email, $hashed_password);
+    $stmt = $conn->prepare("INSERT INTO customer (fname, lname, cnum, address, email, pass, verified) VALUES (?, ?, ?, ?, ?, ?, ?)");
+    $verified = 1; // Set verified to 1
+    $stmt->bind_param("ssssssi", $first_name, $last_name, $contact_number, $address, $email, $hashed_password, $verified);
 
     // Execute the query
     if ($stmt->execute()) {

@@ -123,6 +123,18 @@ $conn->close();
             alert("<?php echo addslashes($error_message); ?>");
         };
         <?php endif; ?>
+
+        // Client-side validation
+        function validateForm() {
+            var email = document.getElementById('email').value;
+            var password = document.getElementById('password').value;
+            
+            if (!email || !password) {
+                alert('Both email and password are required!');
+                return false; // Prevent form submission
+            }
+            return true; // Allow form submission
+        }
     </script>
 </head>
 <body class="bg-gradient-primary">
@@ -139,7 +151,7 @@ $conn->close();
                                 <div class="text-center">
                                     <h1 class="h4 text-gray-900 mb-4"><b>Login</b></h1>
                                 </div>
-                                <form id="loginForm" class="user" action="login.php" method="POST">
+                                <form id="loginForm" class="user" action="login.php" method="POST" onsubmit="return validateForm();">
                                     <div class="form-group">
                                         <input type="email" class="form-control form-control-user" id="email" name="email" placeholder="Email Address" required>
                                     </div>
