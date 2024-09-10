@@ -5,7 +5,7 @@ session_start();
 $servername = "localhost";
 $username = "wp2024";
 $password = "@webprogramming"; // Update with your MySQL password
-$dbname = "mySister";
+$dbname = "mysister";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);

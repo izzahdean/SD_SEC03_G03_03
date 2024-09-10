@@ -3,11 +3,19 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
+// Include PHPMailer files
+require_once 'PHPMailer/src/PHPMailer.php';
+require_once 'PHPMailer/src/SMTP.php';
+require_once 'PHPMailer/src/Exception.php';
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
 // Database connection parameters
 $servername = "localhost";
 $username = "wp2024";
-$password = "@webprogramming"; // Update this with your MySQL password
-$dbname = "mySister";
+$password = "@webprogramming"; // Update with your MySQL password
+$dbname = "mysister";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -15,6 +23,11 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 // Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
+}
+
+// Function to generate a 4-digit OTP code
+function generateOtp() {
+    return str_pad(rand(0, 9999), 4, '0', STR_PAD_LEFT);
 }
 
 // Handle form submission
@@ -28,7 +41,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = $_POST['password'];
     $repeat_password = $_POST['repeat_password'];
 
-    // Password validation
+    // Password validation: Check if password is at least 8 characters long
+    if (strlen($password) < 8) {
+        echo "Password must be at least 8 characters long!";
+        exit();
+    }
+
+    // Check if passwords match
     if ($password !== $repeat_password) {
         echo "Passwords do not match!";
         exit();
@@ -43,28 +62,45 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Execute the query
     if ($stmt->execute()) {
-        // Prepare email verification
-        $verification_code = md5($email . time()); // Unique verification code
-        $stmt = $conn->prepare("INSERT INTO email_verification (email, code) VALUES (?, ?)");
+        // Generate a 4-digit OTP code
+        $verification_code = generateOtp();
+
+        // Prepare and execute SQL to insert OTP into `otp_codes` table
+        $stmt = $conn->prepare("INSERT INTO otp_codes (email, code, created_at) VALUES (?, ?, NOW())");
         $stmt->bind_param("ss", $email, $verification_code);
         $stmt->execute();
-        
-        // Send verification email
-        $to = $email;
-		$subject = "Verify Your Email Address";
-		$message = "Please click the following link to verify your email address:\n";
-		$message .= "http://localhost/test-run/verify-email.php?code=$verification_code";
-		$headers = "From: no-reply@yourdomain.com\r\n";
-		$headers .= "Reply-To: no-reply@yourdomain.com\r\n";
-		$headers .= "Content-type: text/plain; charset=UTF-8\r\n";
 
-		if (mail($to, $subject, $message, $headers)) {
-		header("Location: check-email.php");
-		exit();
-		}else {
-			echo "Failed to send verification email.";
-		}
+        // Send OTP email using PHPMailer
+        $mail = new PHPMailer(true);
 
+        try {
+            // Server settings
+            $mail->isSMTP(); // Set mailer to use SMTP
+            $mail->Host = 'smtp.gmail.com'; // Specify main and backup SMTP servers
+            $mail->SMTPAuth = true; // Enable SMTP authentication
+            $mail->Username = 'nrulizzh35@gmail.com'; // SMTP username
+            $mail->Password = 'qaml lehv vntq cqur'; // SMTP password
+            $mail->SMTPSecure = 'tls'; // Enable TLS encryption, `ssl` also accepted
+            $mail->Port = 587; // TCP port to connect to
+
+            // Recipients
+            $mail->setFrom('nrulizzh35@gmail.com', 'MyKakaks');
+            $mail->addAddress($email); // Add a recipient
+
+            // Content
+            $mail->isHTML(true); // Set email format to HTML
+            $mail->Subject = 'Your account authentication Code';
+            $mail->Body    = 'Your OTP code is: ' . $verification_code;
+            $mail->AltBody = 'Your OTP code is: ' . $verification_code;
+
+            $mail->send();
+
+            // Redirect to OTP verification page with email as query string
+            header("Location: otp-page.php?email=" . urlencode($email));
+            exit();
+        } catch (Exception $e) {
+            echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+        }
     } else {
         echo "Error: " . $stmt->error;
     }
@@ -144,6 +180,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
         <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
         <script src="js/sb-admin-2.min.js"></script>
+
+        <!-- Client-side password validation -->
+        <script>
+            document.getElementById('signupForm').addEventListener('submit', function (event) {
+                var password = document.getElementById('password').value;
+                var repeatPassword = document.getElementById('repeatPassword').value;
+
+                // Check if the password is at least 8 characters long
+                if (password.length < 8) {
+                    alert('Password must be at least 8 characters long.');
+                    event.preventDefault(); // Prevent the form from being submitted
+                    return;
+                }
+
+                // Check if passwords match
+                if (password !== repeatPassword) {
+                    alert('Passwords do not match!');
+                    event.preventDefault();
+                }
+            });
+        </script>
     </body>
     </html>
     <?php
