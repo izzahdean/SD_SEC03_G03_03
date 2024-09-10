@@ -18,6 +18,7 @@ if ($conn->connect_error) {
 // Initialize error message variable
 $error_message = "";
 
+// Check if user is already logged in via cookie
 if (isset($_COOKIE['user'])) {
     list($email, $hashed_password) = explode('|', $_COOKIE['user']);
 
@@ -38,18 +39,21 @@ if (isset($_COOKIE['user'])) {
             // Redirect based on user type
             if ($user_type === 'admin') {
                 header("Location: admin-page/index.html");
+                exit();
             } elseif ($user_type === 'customer') {
                 header("Location: customer-page/index.html");
+                exit();
             } elseif ($user_type === 'maid') {
                 header("Location: maid-page/index.html");
+                exit();
             } else {
                 $error_message = "Unknown user type!";
             }
-            exit();
         }
     }
 }
 
+// Process login form submission
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Get form data
     $email = $_POST['email'];
@@ -86,14 +90,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Redirect based on user type
             if ($user_type === 'admin') {
                 header("Location: admin-page/index.html");
+                exit();
             } elseif ($user_type === 'customer') {
                 header("Location: customer-page/index.html");
+                exit();
             } elseif ($user_type === 'maid') {
                 header("Location: maid-page/index.html");
+                exit();
             } else {
                 $error_message = "Unknown user type!";
             }
-            exit();
         } else {
             $error_message = "Invalid password!";
         }
