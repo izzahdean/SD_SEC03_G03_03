@@ -1,30 +1,23 @@
 <?php
-// Start the session
 session_start();
 
-// Include your database connection
 $servername = "localhost";
 $username = "wp2024";
 $password = "@webprogramming";
 $dbname = "mysister";
 
-// Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
 
-// Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Check if the form has been submitted to update the profile
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Get updated values from the form
     $new_fname = $_POST['fname'];
     $new_lname = $_POST['lname'];
-    $new_email = $_POST['email']; // This should ideally remain unchanged
+    $new_email = $_POST['email']; 
     $new_phone = $_POST['cnum'];
 
-    // Update the maid's information in the database
     $update_sql = "UPDATE maid SET fname = ?, lname = ?, cnum = ? WHERE email = ?";
     $stmt = $conn->prepare($update_sql);
     $stmt->bind_param("ssss", $new_fname, $new_lname, $new_phone, $new_email);
@@ -37,18 +30,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $stmt->close();
 
-    // Redirect to the same page to refresh data and show the message
+
     header("Location: profile.php");
     exit();
 }
 
-// Fetch maid details from the database
-$maid_email = $_SESSION['email']; // Assuming the email is stored in the session
+$maid_email = $_SESSION['email']; 
 $sql = "SELECT fname, lname, cnum, email FROM maid WHERE email='$maid_email'";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
-    // Fetch data for display
     $row = $result->fetch_assoc();
     $fname = $row['fname'];
     $lname = $row['lname'];
@@ -58,9 +49,8 @@ if ($result->num_rows > 0) {
     echo "No records found!";
 }
 
-// Check for message in session
 $message = isset($_SESSION['message']) ? $_SESSION['message'] : '';
-unset($_SESSION['message']); // Clear message after displaying
+unset($_SESSION['message']); 
 $conn->close();
 ?>
 
@@ -89,7 +79,6 @@ $conn->close();
     <div class="container">
         <h1 class="mt-5">User Profile</h1>
 
-        <!-- Display message if it exists -->
         <?php if ($message): ?>
             <div class="alert alert-info" role="alert">
                 <?php echo $message; ?>
@@ -114,7 +103,7 @@ $conn->close();
                     <i class="bi bi-star-fill"></i>
                     <i class="bi bi-star-fill"></i>
                     <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star"></i> <!-- Half-filled star -->
+                    <i class="bi bi-star"></i> 
                 </div>
             </div>
             <div class="col-lg-8">
@@ -151,7 +140,6 @@ $conn->close();
         const cancelButton = document.getElementById('cancelButton');
         const formInputs = document.querySelectorAll('#profileForm input');
 
-        // Toggle read-only mode off and show Save/Cancel buttons
         editButton.addEventListener('click', function() {
             formInputs.forEach(input => input.removeAttribute('readonly'));
             editButton.classList.add('d-none');
@@ -159,13 +147,11 @@ $conn->close();
             cancelButton.classList.remove('d-none');
         });
 
-        // Cancel editing, reset inputs and return to read-only mode
         cancelButton.addEventListener('click', function() {
             formInputs.forEach(input => input.setAttribute('readonly', true));
             saveButton.classList.add('d-none');
             cancelButton.classList.add('d-none');
             editButton.classList.remove('d-none');
-            // Reset values to initial database values
             document.getElementById('fname').value = '<?php echo $fname; ?>';
             document.getElementById('lname').value = '<?php echo $lname; ?>';
             document.getElementById('email').value = '<?php echo $email; ?>';
