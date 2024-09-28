@@ -1,29 +1,22 @@
 <?php
-// Start the session
 session_start();
 
-// Include your database connection
 $servername = "localhost";
 $username = "wp2024";
 $password = "@webprogramming";
 $dbname = "mysister";
 
-// Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
 
-// Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Fetch admin details from the database
-$admin_email = $_SESSION['email']; // Assuming you stored email in session during login
-
+$admin_email = $_SESSION['email'];
 $sql = "SELECT fname, lname, cnum, email FROM admin WHERE email='$admin_email'";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
-    // Fetch data for display
     $row = $result->fetch_assoc();
     $fname = $row['fname'];
     $lname = $row['lname'];
@@ -33,6 +26,29 @@ if ($result->num_rows > 0) {
     echo "No records found!";
 }
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $new_fname = $_POST['fname'];
+    $new_lname = $_POST['lname'];
+    $new_cnum = $_POST['cnum'];
+    
+    $update_sql = "UPDATE admin SET fname = ?, lname = ?, cnum = ? WHERE email = ?";
+    $stmt = $conn->prepare($update_sql);
+    $stmt->bind_param("ssss", $new_fname, $new_lname, $new_cnum, $admin_email);
+    
+    if ($stmt->execute()) {
+        $_SESSION['message'] = "Profile updated successfully!";
+    } else {
+        $_SESSION['message'] = "Failed to update profile.";
+    }
+
+    $stmt->close();
+
+    header("Location: profile.php");
+    exit();
+}
+
+$message = isset($_SESSION['message']) ? $_SESSION['message'] : '';
+unset($_SESSION['message']); 
 $conn->close();
 ?>
 
@@ -52,6 +68,13 @@ $conn->close();
 
     <div class="container">
         <h1 class="mt-5">Admin Profile</h1>
+
+        <?php if ($message): ?>
+            <div class="alert alert-info" role="alert">
+                <?php echo $message; ?>
+            </div>
+        <?php endif; ?>
+
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
@@ -67,14 +90,14 @@ $conn->close();
                 <img class="img-profile rounded-circle" src="img/undraw_profile.svg" alt="Admin profile image" width="150">
             </div>
             <div class="col-lg-8">
-                <form id="profileForm">
+                <form id="profileForm" method="POST" action="profile.php">
                     <div class="form-group">
                         <br><label for="fname">First Name</label>
-                        <input type="text" class="form-control" id="fname" value="<?php echo $fname; ?>" readonly>
+                        <input type="text" class="form-control" name="fname" id="fname" value="<?php echo $fname; ?>" readonly>
                     </div><br>
                     <div class="form-group">
                         <label for="lname">Last Name</label>
-                        <input type="text" class="form-control" id="lname" value="<?php echo $lname; ?>" readonly>
+                        <input type="text" class="form-control" name="lname" id="lname" value="<?php echo $lname; ?>" readonly>
                     </div><br>
                     <div class="form-group">
                         <label for="email">Email</label>
@@ -82,7 +105,7 @@ $conn->close();
                     </div><br>
                     <div class="form-group">
                         <label for="cnum">Phone Number</label>
-                        <input type="number" class="form-control" id="cnum" value="<?php echo $cnum; ?>">
+                        <input type="number" class="form-control" name="cnum" id="cnum" value="<?php echo $cnum; ?>" readonly>
                     </div><br>
                     <button type="button" class="btn btn-primary mt-3" id="editButton">Edit Profile</button>
                     <button type="submit" class="btn btn-secondary mt-3 d-none" id="saveButton">Save Profile</button>
@@ -111,6 +134,10 @@ $conn->close();
             saveButton.classList.add('d-none');
             cancelButton.classList.add('d-none');
             editButton.classList.remove('d-none');
+            document.getElementById('profileForm').reset();
+            document.querySelector("input[name='fname']").value = '<?php echo $fname; ?>';
+            document.querySelector("input[name='lname']").value = '<?php echo $lname; ?>';
+            document.querySelector("input[name='cnum']").value = '<?php echo $cnum; ?>';
         });
     </script>
 </body>
