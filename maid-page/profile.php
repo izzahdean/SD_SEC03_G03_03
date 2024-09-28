@@ -16,10 +16,31 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
+// Check if the form has been submitted to update the profile
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Get updated values from the form
+    $new_fname = $_POST['fname'];
+    $new_lname = $_POST['lname'];
+    $new_email = $_POST['email']; // This should ideally remain unchanged
+    $new_phone = $_POST['cnum'];
+
+    // Update the maid's information in the database
+    $update_sql = "UPDATE maid SET fname = ?, lname = ?, cnum = ? WHERE email = ?";
+    $stmt = $conn->prepare($update_sql);
+    $stmt->bind_param("ssss", $new_fname, $new_lname, $new_phone, $new_email);
+
+    if ($stmt->execute()) {
+        echo "<script>alert('Profile updated successfully!');</script>";
+    } else {
+        echo "<script>alert('Failed to update profile.');</script>";
+    }
+
+    $stmt->close();
+}
+
 // Fetch maid details from the database
 $maid_email = $_SESSION['email']; // Assuming the email is stored in the session
-
-$sql = "SELECT fname, lname, email FROM maid WHERE email='$maid_email'";
+$sql = "SELECT fname, lname, cnum, email FROM maid WHERE email='$maid_email'";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
@@ -27,6 +48,7 @@ if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
     $fname = $row['fname'];
     $lname = $row['lname'];
+    $cnum = $row['cnum'];
     $email = $row['email'];
 } else {
     echo "No records found!";
@@ -63,7 +85,7 @@ $conn->close();
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="dashboard.html">Dashboard</a>
+                    <a class="nav-link" href="dashboard.php">Dashboard</a>
                 </li>
                 <li class="nav-item active">
                     <a class="nav-link" href="profile.php">Profile</a>
@@ -73,7 +95,6 @@ $conn->close();
         <div class="row">
             <div class="col-lg-4 text-center">
                 <img class="img-profile rounded-circle" src="img/undraw_profile.svg" alt="User profile image" width="150">
-                <!-- Add rating stars below the profile picture -->
                 <div class="rating-stars mt-3">
                     <i class="bi bi-star-fill"></i>
                     <i class="bi bi-star-fill"></i>
@@ -83,16 +104,23 @@ $conn->close();
                 </div>
             </div>
             <div class="col-lg-8">
-                <form id="profileForm">
+                <form id="profileForm" method="POST" action="profile.php">
                     <div class="form-group">
-                        <br><label for="name">Name</label>
-                        <input type="text" class="form-control" id="name" value="<?php echo $fname . ' ' . $lname; ?>" readonly>
-                    </div><br>
+                        <br><label for="fname">First Name</label>
+                        <input type="text" class="form-control" id="fname" name="fname" value="<?php echo $fname; ?>" readonly>
+                    </div>
                     <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" class="form-control" id="email" value="<?php echo $email; ?>" readonly>
-                    </div><br>
-                    <!-- Buttons -->
+                        <br><label for="lname">Last Name</label>
+                        <input type="text" class="form-control" id="lname" name="lname" value="<?php echo $lname; ?>" readonly>
+                    </div>
+                    <div class="form-group">
+                        <br><label for="email">Email</label>
+                        <input type="email" class="form-control" id="email" name="email" value="<?php echo $email; ?>" readonly>
+                    </div>
+                    <div class="form-group">
+                        <br><label for="cnum">Phone Number</label>
+                        <input type="text" class="form-control" id="cnum" name="cnum" value="<?php echo $cnum; ?>" readonly>
+                    </div>
                     <button type="button" class="btn btn-primary mt-3" id="editButton">Edit Profile</button>
                     <button type="submit" class="btn btn-secondary mt-3 d-none" id="saveButton">Save Profile</button>
                     <button type="button" class="btn btn-danger mt-3 d-none" id="cancelButton">Cancel</button>
@@ -100,7 +128,7 @@ $conn->close();
             </div>
         </div>
     </div>
-            
+
     <!-- Add JS and Bootstrap JS scripts here -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
@@ -125,16 +153,10 @@ $conn->close();
             cancelButton.classList.add('d-none');
             editButton.classList.remove('d-none');
             // Reset values to initial database values
-            document.getElementById('name').value = '<?php echo $fname . ' ' . $lname; ?>';
+            document.getElementById('fname').value = '<?php echo $fname; ?>';
+            document.getElementById('lname').value = '<?php echo $lname; ?>';
             document.getElementById('email').value = '<?php echo $email; ?>';
-        });
-
-        // Form submission logic
-        document.getElementById('profileForm').addEventListener('submit', function(e) {
-            e.preventDefault();  // Prevent page refresh
-            // Logic to save updated data (e.g., sending data to a server)
-            // Redirect to index.html after saving
-            window.location.href = 'index.html';
+            document.getElementById('cnum').value = '<?php echo $cnum; ?>';
         });
     </script>
 </body>
