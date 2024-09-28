@@ -1,3 +1,40 @@
+<?php
+// Start the session
+session_start();
+
+// Include your database connection
+$servername = "localhost";
+$username = "wp2024";
+$password = "@webprogramming";
+$dbname = "mysister";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Fetch maid details from the database
+$maid_email = $_SESSION['email']; // Assuming the email is stored in the session
+
+$sql = "SELECT fname, lname, email FROM maid WHERE email='$maid_email'";
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+    // Fetch data for display
+    $row = $result->fetch_assoc();
+    $fname = $row['fname'];
+    $lname = $row['lname'];
+    $email = $row['email'];
+} else {
+    echo "No records found!";
+}
+
+$conn->close();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,8 +46,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <style type="text/css">
-        .ml-auto {
-        }
+        .ml-auto {}
         .rating-stars {
             color: gold;
             font-size: 24px;
@@ -30,7 +66,7 @@
                     <a class="nav-link" href="dashboard.html">Dashboard</a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="profile.html">Profile</a>
+                    <a class="nav-link" href="profile.php">Profile</a>
                 </li>
             </ul>
         </div>
@@ -50,12 +86,12 @@
                 <form id="profileForm">
                     <div class="form-group">
                         <br><label for="name">Name</label>
-                        <input type="text" class="form-control" id="name" value="MAID'S NAME" readonly>
-                    </div>
+                        <input type="text" class="form-control" id="name" value="<?php echo $fname . ' ' . $lname; ?>" readonly>
+                    </div><br>
                     <div class="form-group">
                         <label for="email">Email</label>
-                        <input type="email" class="form-control" id="email" value="maid123@example.com" readonly>
-                    </div>
+                        <input type="email" class="form-control" id="email" value="<?php echo $email; ?>" readonly>
+                    </div><br>
                     <!-- Buttons -->
                     <button type="button" class="btn btn-primary mt-3" id="editButton">Edit Profile</button>
                     <button type="submit" class="btn btn-secondary mt-3 d-none" id="saveButton">Save Profile</button>
@@ -88,9 +124,9 @@
             saveButton.classList.add('d-none');
             cancelButton.classList.add('d-none');
             editButton.classList.remove('d-none');
-            // Reset values to initial (static example values)
-            document.getElementById('name').value = 'MAIDS NAME';
-            document.getElementById('email').value = 'maid123@example.com';
+            // Reset values to initial database values
+            document.getElementById('name').value = '<?php echo $fname . ' ' . $lname; ?>';
+            document.getElementById('email').value = '<?php echo $email; ?>';
         });
 
         // Form submission logic
@@ -100,7 +136,6 @@
             // Redirect to index.html after saving
             window.location.href = 'index.html';
         });
-
     </script>
 </body>
 </html>
