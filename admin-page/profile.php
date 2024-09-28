@@ -60,14 +60,46 @@ $conn->close();
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Admin Profile</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #231a6f;
+        }
+        .profile-container {
+            margin-top: 50px;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .img-profile {
+            border-radius: 50%;
+            border: 4px solid #007bff;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <img src="img/logo.png" style="width: 100px; height: 33px;">
+    <nav class="navbar navbar-expand-lg navbar-light bg-dark shadow-sm ">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img src="img/logo.png" alt="Logo" style="width: 100px; height: 33px;">
+            </a>
+        </div>
     </nav>
-
-    <div class="container">
-        <h1 class="mt-5">Admin Profile</h1>
+	
+    <div class="container profile-container">
+	<div class="d-flex justify-content-between align-items-center mb-3">
+        <div class="d-flex flex-row align-items-center back"><i class="fa fa-long-arrow-left mr-1 mb-1"></i>
+            <a href="index.html"><b>Back to home</b></a>
+		</div>
+	</div>
+        <h1 class="text-center mb-5">Admin Profile</h1>
 
         <?php if ($message): ?>
             <div class="alert alert-info" role="alert">
@@ -75,41 +107,36 @@ $conn->close();
             </div>
         <?php endif; ?>
 
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="dashboard.html">Dashboard</a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="profile.php">Profile</a>
-                </li>
-            </ul>
-        </div>
         <div class="row">
-            <div class="col-lg-4">
-                <img class="img-profile rounded-circle" src="img/undraw_profile.svg" alt="Admin profile image" width="150">
+            <div class="col-md-4 text-center">
+                <img class="img-profile" src="img/undraw_profile.svg" alt="Admin profile image" width="150">
             </div>
-            <div class="col-lg-8">
+            <div class="col-md-8">
                 <form id="profileForm" method="POST" action="profile.php">
-                    <div class="form-group">
-                        <br><label for="fname">First Name</label>
+					
+                    <div class="form-group mb-3">
+                        <label for="fname">First Name</label>
                         <input type="text" class="form-control" name="fname" id="fname" value="<?php echo $fname; ?>" readonly>
-                    </div><br>
-                    <div class="form-group">
+                    </div>
+                    <div class="form-group mb-3">
                         <label for="lname">Last Name</label>
                         <input type="text" class="form-control" name="lname" id="lname" value="<?php echo $lname; ?>" readonly>
-                    </div><br>
-                    <div class="form-group">
+                    </div>
+                    <div class="form-group mb-3">
                         <label for="email">Email</label>
                         <input type="email" class="form-control" id="email" value="<?php echo $email; ?>" readonly>
-                    </div><br>
-                    <div class="form-group">
+                    </div>
+                    <div class="form-group mb-3">
                         <label for="cnum">Phone Number</label>
                         <input type="number" class="form-control" name="cnum" id="cnum" value="<?php echo $cnum; ?>" readonly>
-                    </div><br>
-                    <button type="button" class="btn btn-primary mt-3" id="editButton">Edit Profile</button>
-                    <button type="submit" class="btn btn-secondary mt-3 d-none" id="saveButton">Save Profile</button>
-                    <button type="button" class="btn btn-danger mt-3 d-none" id="cancelButton">Cancel</button>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <button type="button" class="btn btn-primary" id="editButton">Edit Profile</button>
+                        <div>
+                            <button type="submit" class="btn btn-secondary d-none" id="saveButton">Save Profile</button>
+                            <button type="button" class="btn btn-danger d-none" id="cancelButton">Cancel</button>
+                        </div>
+                    </div>
                 </form>
             </div>
         </div>
@@ -134,7 +161,6 @@ $conn->close();
             saveButton.classList.add('d-none');
             cancelButton.classList.add('d-none');
             editButton.classList.remove('d-none');
-            document.getElementById('profileForm').reset();
             document.querySelector("input[name='fname']").value = '<?php echo $fname; ?>';
             document.querySelector("input[name='lname']").value = '<?php echo $lname; ?>';
             document.querySelector("input[name='cnum']").value = '<?php echo $cnum; ?>';
