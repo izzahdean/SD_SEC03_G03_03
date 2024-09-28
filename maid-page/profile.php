@@ -30,12 +30,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->bind_param("ssss", $new_fname, $new_lname, $new_phone, $new_email);
 
     if ($stmt->execute()) {
-        echo "<script>alert('Profile updated successfully!');</script>";
+        $_SESSION['message'] = "Profile updated successfully!";
     } else {
-        echo "<script>alert('Failed to update profile.');</script>";
+        $_SESSION['message'] = "Failed to update profile.";
     }
 
     $stmt->close();
+
+    // Redirect to the same page to refresh data and show the message
+    header("Location: profile.php");
+    exit();
 }
 
 // Fetch maid details from the database
@@ -54,6 +58,9 @@ if ($result->num_rows > 0) {
     echo "No records found!";
 }
 
+// Check for message in session
+$message = isset($_SESSION['message']) ? $_SESSION['message'] : '';
+unset($_SESSION['message']); // Clear message after displaying
 $conn->close();
 ?>
 
@@ -64,7 +71,6 @@ $conn->close();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>MYKAKAKS Maid - User Profile</title>
-    <!-- Add CSS and Bootstrap links here -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <style type="text/css">
@@ -82,6 +88,14 @@ $conn->close();
 
     <div class="container">
         <h1 class="mt-5">User Profile</h1>
+
+        <!-- Display message if it exists -->
+        <?php if ($message): ?>
+            <div class="alert alert-info" role="alert">
+                <?php echo $message; ?>
+            </div>
+        <?php endif; ?>
+
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
@@ -129,7 +143,6 @@ $conn->close();
         </div>
     </div>
 
-    <!-- Add JS and Bootstrap JS scripts here -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         // Get elements
