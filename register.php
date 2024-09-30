@@ -129,15 +129,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link href="styling.css" rel="stylesheet">
     <style>
         .password-checklist {
-            display: none; /* Initially hidden */
-            font-size: 14px; /* Adjust the font size as needed */
+            display: none;
+            font-size: 14px;
 			margin-right: 120px;
         }
         .password-checklist input[type="checkbox"] {
             margin-right: 10px;
         }
         .password-checklist li {
-            margin-bottom: 5px; /* Add some spacing between items */
+            margin-bottom: 5px;
         }
         .password-checklist li.valid {
             color: green;

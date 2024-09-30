@@ -85,6 +85,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
     <link href="styling.css" rel="stylesheet">
+    <style>
+        .checklist {
+            list-style: none;
+            padding: 0;
+			font-size: 14px;
+			margin-right: 140px;
+        }
+        .checklist li {
+            color: red; 
+        }
+        .checklist li.valid {
+            color: green;
+        }
+        .progress {
+            height: 20px;
+            margin-top: 10px;
+        }
+    </style>
 </head>
 <body class="bg-gradient-primary">
     <div class="container">
@@ -96,7 +114,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <div class="col-lg-12">
                                 <div class="p-5">
                                     <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-2">Reset Your Password</h1>
+                                        <h1 class="h4 text-gray-900 mb-2"><b>Reset Your Password</b></h1>
                                     </div>
 
                                     <!-- Display messages -->
@@ -108,13 +126,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         <div class="alert alert-success mt-3"><?php echo $successMessage; ?></div>
                                     <?php endif; ?>
 
-                                    <form action="reset-password.php" method="POST" class="user">
+                                    <form action="reset-password.php" method="POST" class="user" onsubmit="return validatePassword();">
                                         <input type="hidden" name="token" value="<?php echo htmlspecialchars($token); ?>">
                                         <div class="form-group">
-                                            <input type="password" class="form-control form-control-user" name="new_password" placeholder="New Password" required>
+                                            <input type="password" id="new_password" class="form-control form-control-user" name="new_password" placeholder="New Password" required>
+                                            <ul class="checklist" id="password-requirements">
+                                                <li id="length">At least 8 characters</li>
+                                                <li id="uppercase">At least one uppercase letter</li>
+                                                <li id="number">At least one number</li>
+                                                <li id="special">At least one special character</li>
+                                            </ul>
                                         </div>
                                         <div class="form-group">
-                                            <input type="password" class="form-control form-control-user" name="confirm_password" placeholder="Confirm Password" required>
+                                            <input type="password" id="confirm_password" class="form-control form-control-user" name="confirm_password" placeholder="Confirm Password" required>
                                         </div>
                                         <button type="submit" class="btn btn-primary btn-user btn-block">
                                             Reset Password
@@ -133,6 +157,51 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
     </div>
 
+    <script>
+        const passwordInput = document.getElementById('new_password');
+        const requirements = {
+            length: false,
+            uppercase: false,
+            number: false,
+            special: false
+        };
+
+        passwordInput.addEventListener('input', () => {
+            const password = passwordInput.value;
+            let validCount = 0;
+
+            // Check password length
+            requirements.length = password.length >= 8;
+            if (requirements.length) validCount++;
+            document.getElementById('length').classList.toggle('valid', requirements.length);
+
+            // Check for uppercase letter
+            requirements.uppercase = /[A-Z]/.test(password);
+            if (requirements.uppercase) validCount++;
+            document.getElementById('uppercase').classList.toggle('valid', requirements.uppercase);
+
+            // Check for number
+            requirements.number = /[0-9]/.test(password);
+            if (requirements.number) validCount++;
+            document.getElementById('number').classList.toggle('valid', requirements.number);
+
+            // Check for special character
+            requirements.special = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+            if (requirements.special) validCount++;
+            document.getElementById('special').classList.toggle('valid', requirements.special);
+
+            // Update progress bar
+            const progressPercent = (validCount / Object.keys(requirements).length) * 100;
+            const progressBar = document.getElementById('progress-bar');
+            progressBar.style.width = progressPercent + '%';
+            progressBar.setAttribute('aria-valuenow', progressPercent);
+        });
+
+        function validatePassword() {
+            return Object.values(requirements).every(Boolean);
+        }
+    </script>
+
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -143,3 +212,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 </body>
 </html>
+
