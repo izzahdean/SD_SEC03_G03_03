@@ -1,21 +1,7 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+session_start();
 
-// Database connection parameters
-$servername = "localhost";
-$username = "wp2024";
-$password = "@webprogramming"; // Update with your MySQL password
-$dbname = "mysister";
-
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+include '../connect-db.php';
 
 // Handle OTP verification
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action']) && $_POST['action'] === 'verify') {

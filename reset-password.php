@@ -1,17 +1,7 @@
 <?php
-// Include database connection parameters
-$servername = "localhost";
-$username = "wp2024";
-$password = "@webprogramming";
-$dbname = "mysister";
+session_start();
 
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+include 'connect-db.php';
 
 // Initialize message variables
 $errorMessage = '';

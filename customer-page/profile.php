@@ -2,19 +2,7 @@
 // Start the session
 session_start();
 
-// Include your database connection
-$servername = "localhost";
-$username = "wp2024";
-$password = "@webprogramming";
-$dbname = "mysister";
-
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+include '../connect-db.php';
 
 // Check if the user is logged in
 if (isset($_SESSION['email'])) {

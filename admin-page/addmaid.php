@@ -1,16 +1,7 @@
 <?php
-// Database connection
-$servername = "localhost";
-$username = "web2";
-$password = "web2";
-$dbname = "mysister";
+session_start();
 
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+include '../connect-db.php';
 
 // Handle form submission
 if ($_SERVER["REQUEST_METHOD"] == "POST") {

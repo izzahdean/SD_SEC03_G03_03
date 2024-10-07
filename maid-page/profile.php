@@ -1,16 +1,7 @@
 <?php
 session_start();
 
-$servername = "localhost";
-$username = "wp2024";
-$password = "@webprogramming";
-$dbname = "mysister";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+include '../connect-db.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $new_fname = $_POST['fname'];

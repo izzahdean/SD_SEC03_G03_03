@@ -1,8 +1,8 @@
 <?php
 $servername = "localhost";
-$username = "your_db_username";
-$password = "your_db_password";
-$dbname = "mykakaks_db";
+$username = "wp2024";
+$password = "@webprogramming";
+$dbname = "mysister";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 

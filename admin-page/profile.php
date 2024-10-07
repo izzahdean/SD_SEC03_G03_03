@@ -1,16 +1,7 @@
 <?php
 session_start();
 
-$servername = "localhost";
-$username = "wp2024";
-$password = "@webprogramming";
-$dbname = "mysister";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+include '../connect-db.php';
 
 $admin_email = $_SESSION['email'];
 $sql = "SELECT fname, lname, cnum, email FROM admin WHERE email='$admin_email'";
