@@ -1,9 +1,9 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+
 date_default_timezone_set('Asia/Kuala_Lumpur');
-// Include PHPMailer files
+
+require_once 'connect-db.php';
+
 require_once 'PHPMailer/src/PHPMailer.php';
 require_once 'PHPMailer/src/SMTP.php';
 require_once 'PHPMailer/src/Exception.php';
@@ -11,19 +11,7 @@ require_once 'PHPMailer/src/Exception.php';
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-// Database connection parameters
-$servername = "localhost";
-$username = "wp2024";
-$password = "@webprogramming";
-$dbname = "mysister";
 
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
 
 // Initialize message variables
 $errorMessage = '';
