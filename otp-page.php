@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-include '../connect-db.php';
+include 'connect-db.php';
 
 // Handle OTP verification
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action']) && $_POST['action'] === 'verify') {
