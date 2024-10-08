@@ -12,20 +12,45 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $start_date = $_POST['start_date'];
     $salary = $_POST['salary'];
 
-    $sql = "INSERT INTO maid (fname, lname, cnum, email, pass, start_date, salary) 
-            VALUES ('$fname', '$lname', '$cnum', '$email', '$pass', '$start_date', '$salary')";
+    // Start a transaction
+    $conn->begin_transaction();
 
-    if ($conn->query($sql) === TRUE) {
-        echo "New maid added successfully";
-        header("Location: index.php");
-        exit(); 
-    } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
+    try {
+        // Insert into maid table
+        $sql_maid = "INSERT INTO maid (fname, lname, cnum, email, pass, start_date, salary) 
+                      VALUES ('$fname', '$lname', '$cnum', '$email', '$pass', '$start_date', '$salary')";
+        
+        if ($conn->query($sql_maid) === TRUE) {
+            // Get the last inserted id for the maid
+            $maid_id = $conn->insert_id;
+
+            // Insert into users table
+            $user_type = 'maid'; // Set user type to 'maid'
+            $sql_user = "INSERT INTO users (email, pass, user_type) 
+                         VALUES ('$email', '$pass', '$user_type')";
+            
+            if ($conn->query($sql_user) === TRUE) {
+                // Commit the transaction
+                $conn->commit();
+                echo "New maid added successfully";
+                header("Location: maid.php");
+                exit(); 
+            } else {
+                throw new Exception("Error inserting into users table: " . $conn->error);
+            }
+        } else {
+            throw new Exception("Error inserting into maid table: " . $conn->error);
+        }
+    } catch (Exception $e) {
+        // Rollback the transaction in case of an error
+        $conn->rollback();
+        echo $e->getMessage();
     }
 }
 
 $conn->close();
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -38,7 +63,6 @@ $conn->close();
         body {
             background-color: #231a6f;
         }
-
         .container {
             margin-top: 50px;
             background-color: white;
@@ -46,41 +70,35 @@ $conn->close();
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
-
         h2 {
             text-align: center;
             margin-bottom: 20px;
             font-weight: bold;
         }
-
         .btn-secondary {
             width: 10%;
         }
-		
-		.btn-cancel {
+        .btn-cancel {
             background-color: #ed3c3b;
             border-color: #d62321;
-			color: white;
+            color: white;
             width: 10%;
-			margin-left: 1150px;
+            margin-left: 1150px;
         }
-
         .form-group label {
             font-weight: bold;
         }
-
         .btn-secondary:hover {
             background-color: #0056b3;
         }
-		
-		.bg-dark {
-		background-color: #00204a !important;
-		}
+        .bg-dark {
+            background-color: #00204a !important;
+        }
     </style>
 </head>
 
 <body>
-	<nav class="navbar navbar-expand-lg navbar-light bg-dark shadow-sm">
+    <nav class="navbar navbar-expand-lg navbar-light bg-dark shadow-sm">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">
                 <img src="img/logo.png" alt="Logo" style="width: 100px; height: 33px;">
@@ -119,10 +137,10 @@ $conn->close();
                 <input type="text" class="form-control" id="salary" name="salary" placeholder="Enter salary" required>
             </div>
             <button type="submit" class="btn btn-secondary">Add</button>
-        </form>	
+        </form>
     </div>
-	<br>
-	<button type="button" class="btn btn-cancel" onclick="window.location.href='maid.html'">Cancel</button>
+    <br>
+    <button type="button" class="btn btn-cancel" onclick="window.location.href='maid.php'">Cancel</button>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
