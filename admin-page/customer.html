@@ -31,7 +31,7 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
                   <img src="img/logo.png" style="width: 800px; height: 30px;">
                 <div class="sidebar-brand-text mx-3">ADMIN</div>
             </a>
@@ -86,12 +86,12 @@
 			
 			<!-- Nav Item - Service Status Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
-                    aria-expanded="true" aria-controls="collapseUtilities">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseService"
+                    aria-expanded="true" aria-controls="collapseService">
                     <i class="fas fa-fw fa-wrench"></i>
                     <span>Service Status</span>
                 </a>
-                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
+                <div id="collapseService" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="booking.html">Book Services</a>
@@ -107,7 +107,7 @@
                 Others
             </div>
 			
-			<!-- Nav Item - Feedback -->
+			<!-- Nav Item - Rating -->
             <li class="nav-item">
                 <a class="nav-link" href="feedback.html">
                     <i class="fas fa-fw fa-star"></i>
@@ -279,12 +279,12 @@
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="profile.php">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Profile
                                 </a>
-                               <a class="dropdown-item" href="change-password.html">
-                                    <i class="fas fa-lock fa-sm fa-fw mr-2 text-gray-400"></i>
+								<a class="dropdown-item" href="change-password.html">
+                                   <i class="fas fa-lock fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Change Password
                                 </a>
                                 <div class="dropdown-divider"></div>
@@ -299,92 +299,89 @@
 
                 </nav>
                 <!-- End of Topbar -->
-	    <body>
+
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-
-                    <!-- Page Heading -->
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+					<div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">MyKakaks Customer</h1>
                     </div>
-						<div class="container-fluid">
-							<div class="card shadow mb-4">
-								<div class="card-header py-3">
-                            	<h6 class="m-0 font-weight-bold text-primary">List of Customer&nbsp;</h6>
-                        </div>
-        					<div class="d-flex justify-content-between align-items-center mb-4">
-           						
-        </div>
-
-        <!-- Customer Table -->
-		<div class="card-body">
-        <div class="table-responsive">
-            <table class="table table-striped">
-                <thead class="thead-light">
-                    <tr>
-                        <th scope="col">Name</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Address</th>
-                        <th scope="col">Subscription</th>
-                        <th scope="col">Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><img src="https://i.pravatar.cc/40?u=1" class="rounded-circle" alt="avatar">&nbsp;Customer Name</td>
-                        <td>emailcust@gmail.com</td>
-                        <td>No.12, Jalan kampung pisang,
-							Bukit Utama</td>
-                        <td><span class="subscription-status status-active"><i class="fas fa-circle"></i> Active</span></td>
-                        <td class="actions">
-                            <i class="fas fa-edit action-icons text-primary"></i>
-                            <i class="fas fa-trash action-icons text-danger"></i>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><img src="https://i.pravatar.cc/40?u=2" class="rounded-circle" alt="avatar"> Customer Name</td>
-                        <td>emailcust@gmail.com</td>
-                        <td>No.5, Jalan Kent 1, Permai Jaya</td>
-                        <td><span class="subscription-status status-active"><i class="fas fa-circle"></i> Active</span></td>
-                        <td class="actions">
-                            <i class="fas fa-edit action-icons text-primary"></i>
-                            <i class="fas fa-trash action-icons text-danger"></i>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><img src="https://i.pravatar.cc/40?u=3" class="rounded-circle" alt="avatar"> Customer Name</td>
-                        <td>emailcust@gmail.com</td>
-                        <td>No.33, Jalan BJ 1/2, Bukit Mewah</td>
-                        <td><span class="subscription-status status-active"><i class="fas fa-circle"></i> Active</span></td>
-                        <td class="actions">
-                            <i class="fas fa-edit action-icons text-primary"></i>
-                            <i class="fas fa-trash action-icons text-danger"></i>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><img src="https://i.pravatar.cc/40?u=4" class="rounded-circle" alt="avatar"> Customer Name</td>
-                        <td>emailcust@gmail.com</td>
-                        <td>Block A, Jalan PPR 101, Gombak</td>
-                        <td><span class="subscription-status status-inactive"><i class="fas fa-circle"></i> Inactive</span></td>
-                        <td class="actions">
-                            <i class="fas fa-edit action-icons text-primary"></i>
-                            <i class="fas fa-trash action-icons text-danger"></i>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><img src="https://i.pravatar.cc/40?u=5" class="rounded-circle" alt="avatar"> Customer Name</td>
-                        <td>emailcust@gmail.com</td>
-                        <td>No.10, Jalan Permata 5, Taman Permata</td>
-                        <td><span class="subscription-status status-inactive"><i class="fas fa-circle"></i> Inactive</span></td>
-                        <td class="actions">
-                            <i class="fas fa-edit action-icons text-primary"></i>
-                            <i class="fas fa-trash action-icons text-danger"></i>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
+					<div class="container-fluid">
+						<div class="card shadow mb-4">
+							<div class="card-header py-3">
+								<h6 class="m-0 font-weight-bold text-primary">List of Customer&nbsp;</h6>
+							</div>
+					
+							<div class="card-body">
+								<div class="table-responsive">
+									<table class="table table-striped">
+										<thead class="thead-light">
+											<tr>
+												<th scope="col">Name</th>
+												<th scope="col">Email</th>
+												<th scope="col">Address</th>
+												<th scope="col">Subscription</th>
+												<th scope="col">Actions</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td><img src="https://i.pravatar.cc/40?u=1" class="rounded-circle" alt="avatar">&nbsp;Customer Name</td>
+												<td>emailcust@gmail.com</td>
+												<td>No.12, Jalan kampung pisang,
+													Bukit Utama</td>
+												<td><span class="subscription-status status-active"><i class="fas fa-circle"></i> Active</span></td>
+												<td class="actions">
+													<i class="fas fa-edit action-icons text-primary"></i>
+													<i class="fas fa-trash action-icons text-danger"></i>
+												</td>
+											</tr>
+											<tr>
+												<td><img src="https://i.pravatar.cc/40?u=2" class="rounded-circle" alt="avatar"> Customer Name</td>
+												<td>emailcust@gmail.com</td>
+												<td>No.5, Jalan Kent 1, Permai Jaya</td>
+												<td><span class="subscription-status status-active"><i class="fas fa-circle"></i> Active</span></td>
+												<td class="actions">
+													<i class="fas fa-edit action-icons text-primary"></i>
+													<i class="fas fa-trash action-icons text-danger"></i>
+												</td>
+											</tr>
+											<tr>
+												<td><img src="https://i.pravatar.cc/40?u=3" class="rounded-circle" alt="avatar"> Customer Name</td>
+												<td>emailcust@gmail.com</td>
+												<td>No.33, Jalan BJ 1/2, Bukit Mewah</td>
+												<td><span class="subscription-status status-active"><i class="fas fa-circle"></i> Active</span></td>
+												<td class="actions">
+													<i class="fas fa-edit action-icons text-primary"></i>
+													<i class="fas fa-trash action-icons text-danger"></i>
+												</td>
+											</tr>
+											<tr>
+												<td><img src="https://i.pravatar.cc/40?u=4" class="rounded-circle" alt="avatar"> Customer Name</td>
+												<td>emailcust@gmail.com</td>
+												<td>Block A, Jalan PPR 101, Gombak</td>
+												<td><span class="subscription-status status-inactive"><i class="fas fa-circle"></i> Inactive</span></td>
+												<td class="actions">
+													<i class="fas fa-edit action-icons text-primary"></i>
+													<i class="fas fa-trash action-icons text-danger"></i>
+												</td>
+											</tr>
+											<tr>
+												<td><img src="https://i.pravatar.cc/40?u=5" class="rounded-circle" alt="avatar"> Customer Name</td>
+												<td>emailcust@gmail.com</td>
+												<td>No.10, Jalan Permata 5, Taman Permata</td>
+												<td><span class="subscription-status status-inactive"><i class="fas fa-circle"></i> Inactive</span></td>
+												<td class="actions">
+													<i class="fas fa-edit action-icons text-primary"></i>
+													<i class="fas fa-trash action-icons text-danger"></i>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
                 <!-- /.container-fluid -->
 
             </div>
@@ -431,18 +428,17 @@
         </div>
     </div>
 
-	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Core plugin JavaScript-->
     <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
-    <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
+
+    <script src="vendor/chart.js/Chart.min.js"></script>
+
+    <script src="js/demo/chart-area-demo.js"></script>
+    <script src="js/demo/chart-pie-demo.js"></script>
 
 </body>
 
