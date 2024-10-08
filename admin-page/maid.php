@@ -1,9 +1,41 @@
 <?php
-session_start(); // Start the session at the very beginning
+session_start(); 
 
-include '../connect-db.php'; // Include the database connection
+include '../connect-db.php'; 
 
+if (isset($_GET['delete_id'])) {
+    $delete_id = $_GET['delete_id'];
+    $sql_fetch_email = "SELECT email FROM maid WHERE id = ?";
+    $stmt_fetch_email = $conn->prepare($sql_fetch_email);
+    $stmt_fetch_email->bind_param("i", $delete_id);
+    $stmt_fetch_email->execute();
+    $result = $stmt_fetch_email->get_result();
+    $maid_email = $result->fetch_assoc()['email'];
+
+    $sql_delete_maid = "DELETE FROM maid WHERE id = ?";
+    $stmt_delete_maid = $conn->prepare($sql_delete_maid);
+    $stmt_delete_maid->bind_param("i", $delete_id);
+
+    if ($stmt_delete_maid->execute()) {
+        $sql_delete_user = "DELETE FROM users WHERE email = ?";
+        $stmt_delete_user = $conn->prepare($sql_delete_user);
+        $stmt_delete_user->bind_param("s", $maid_email);
+
+        if ($stmt_delete_user->execute()) {
+            echo "<script>alert('Maid deleted successfully.'); window.location.href='maid.php';</script>";
+        } else {
+            echo "<script>alert('Error deleting maid from users table.'); window.location.href='maid.php';</script>";
+        }
+    } else {
+        echo "<script>alert('Error deleting maid.'); window.location.href='maid.php';</script>";
+    }
+
+    $stmt_fetch_email->close();
+    $stmt_delete_maid->close();
+    $stmt_delete_user->close();
+}
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -310,38 +342,35 @@ include '../connect-db.php'; // Include the database connection
                                 <div class="card-body">
                                     <div class="table-responsive">
                                         <table class="table table-striped">
-                                            <thead class="thead-light">
+                                            <thead class="thead-dark">
                                                 <tr>
-                                                    <th>Name</th>
+                                                    <th>First Name</th>
+                                                    <th>Last Name</th>
+                                                    <th>Contact Number</th>
                                                     <th>Email</th>
-                                                    <th>Rating</th>
-                                                    <th>Start Date</th>
-                                                    <th>Salary (RM)</th>
-                                                    <th>Options</th> 
+                                                    <th>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <?php
-                                                $sql = "SELECT id, fname, lname, email, start_date, salary FROM maid"; // Include id for edit/delete
+                                                $sql = "SELECT * FROM maid";
                                                 $result = $conn->query($sql);
 
                                                 if ($result->num_rows > 0) {
                                                     while ($row = $result->fetch_assoc()) {
-                                                        $fullName = $row['fname'] . ' ' . $row['lname'];
-                                                        echo "<tr>
-                                                                <td>{$fullName}</td>
-                                                                <td>{$row['email']}</td>
-                                                                <td>N/A</td> <!-- Rating placeholder -->
-                                                                <td>{$row['start_date']}</td>
-                                                                <td>{$row['salary']}</td>
-                                                                <td>
-                                                                    <a href='edit-maid.php?id={$row['id']}' class='btn btn-warning btn-sm fas fa-edit action-icons text-primary'></a>
-                                                                    <a href='delete-maid.php?id={$row['id']}' class='btn btn-danger btn-sm' onclick='return confirm(\"Are you sure you want to delete this maid?\")'><i class='fas fa-trash-alt'></i> Delete</a>
-                                                                </td>
-                                                              </tr>";
+                                                        echo "<tr>";
+                                                        echo "<td>" . $row['fname'] . "</td>";
+                                                        echo "<td>" . $row['lname'] . "</td>";
+                                                        echo "<td>" . $row['cnum'] . "</td>";
+                                                        echo "<td>" . $row['email'] . "</td>";
+                                                        echo "<td>";
+                                                        echo "<a href='edit-maid.php?id=" . $row['id'] . "' class='btn btn-warning btn-sm'><i class='fas fa-edit'></i> Edit</a> ";
+                                                        echo "<a href='maid.php?delete_id=" . $row['id'] . "' onclick=\"return confirm('Are you sure you want to delete this maid?');\" class='btn btn-danger btn-sm'><i class='fas fa-trash'></i> Delete</a>";
+                                                        echo "</td>";
+                                                        echo "</tr>";
                                                     }
                                                 } else {
-                                                    echo "<tr><td colspan='6'>No maids found</td></tr>"; 
+                                                    echo "<tr><td colspan='6'>No maids found.</td></tr>";
                                                 }
 
                                                 $conn->close();
