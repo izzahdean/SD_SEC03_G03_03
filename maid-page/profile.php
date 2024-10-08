@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 $maid_email = $_SESSION['email']; 
-$sql = "SELECT fname, lname, cnum, email FROM maid WHERE email='$maid_email'";
+$sql = "SELECT fname, lname, cnum, email, start_date, salary FROM maid WHERE email='$maid_email'";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
@@ -34,6 +34,8 @@ if ($result->num_rows > 0) {
     $lname = $row['lname'];
     $cnum = $row['cnum'];
     $email = $row['email'];
+	$start_date = $row['start_date'];
+    $salary = $row['salary'];
 } else {
     echo "No records found!";
 }
@@ -128,6 +130,14 @@ $conn->close();
                         <label for="cnum">Phone Number</label>
                         <input type="text" class="form-control" id="cnum" name="cnum" value="<?php echo $cnum; ?>" readonly>
                     </div>
+					<div class="form-group mb-3">
+                        <label for="start_date">Start Date</label>
+                        <input type="text" class="form-control" id="start_date" name="start_date" value="<?php echo $start_date; ?>" readonly>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="salary">Salary</label>
+                        <input type="text" class="form-control" id="salary" name="salary" value="<?php echo $salary; ?>" readonly>
+                    </div>
                     <button type="button" class="btn btn-primary btn-custom" id="editButton">Edit Profile</button>
                     <button type="submit" class="btn btn-secondary btn-custom d-none" id="saveButton">Save Profile</button>
                     <button type="button" class="btn btn-danger btn-custom d-none" id="cancelButton">Cancel</button>
@@ -145,7 +155,11 @@ $conn->close();
         const formInputs = document.querySelectorAll('#profileForm input');
 
         editButton.addEventListener('click', function() {
-            formInputs.forEach(input => input.removeAttribute('readonly'));
+            formInputs.forEach(input => {
+                if (input.id !== 'start_date' && input.id !== 'salary') {
+                    input.removeAttribute('readonly');
+                }
+            });
             editButton.classList.add('d-none');
             saveButton.classList.remove('d-none');
             cancelButton.classList.remove('d-none');
