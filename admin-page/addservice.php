@@ -52,15 +52,15 @@ $conn->close();
         }
 
         .btn-secondary {
-            width: 10%;
+            width: 15%;
         }
 		
 		.btn-cancel {
             background-color: #ed3c3b;
             border-color: #d62321;
 			color: white;
-            width: 10%;
-			margin-left: 1150px;
+            width: auto;
+			
         }
 
         .form-group label {
@@ -105,12 +105,21 @@ $conn->close();
                 <label for="start_date">Price:</label>
                 <input type="text" class="form-control" id="price" name="price" required>
             </div>
-            <button type="submit" class="btn btn-secondary">Add</button>
+			
+			<div class="form-row">
+                <div class="col text-left ">
+				<button type="submit" class="btn btn-secondary">Add</button>
+				</div>
+				<div class="col text-right ">
+				<button type="button" class="btn btn-cancel">Cancel</button>
+				</div>
+			</div>
+			
         </form>	
     </div>
 	
 		<br>
-		<button type="button" class="btn btn-cancel">Cancel</button>
+		
 
     <!-- Bootstrap JS and dependencies (Optional for interactive features) -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

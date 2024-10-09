@@ -76,14 +76,13 @@ $conn->close();
             font-weight: bold;
         }
         .btn-secondary {
-            width: 10%;
+            width: 15%;
         }
         .btn-cancel {
             background-color: #ed3c3b;
             border-color: #d62321;
             color: white;
-            width: 10%;
-            margin-left: 1150px;
+            width: auto;
         }
         .form-group label {
             font-weight: bold;
@@ -94,6 +93,9 @@ $conn->close();
         .bg-dark {
             background-color: #00204a !important;
         }
+		.bottom-padding{
+			padding-bottom: 20px;
+		}
     </style>
 </head>
 
@@ -136,12 +138,19 @@ $conn->close();
                 <label for="salary">Salary:</label>
                 <input type="text" class="form-control" id="salary" name="salary" placeholder="Enter salary" required>
             </div>
-            <button type="submit" class="btn btn-secondary">Add</button>
+			<div class="form-row">
+				<div class="col text-left ">
+				<button type="submit" class="btn btn-secondary">Add</button>
+				</div>
+				<div class="col text-right ">
+				<button type="button" class="btn btn-cancel" onclick="window.location.href='maid.php'">Cancel</button>
+				</div>
+			</div>
         </form>
     </div>
     <br>
-    <button type="button" class="btn btn-cancel" onclick="window.location.href='maid.php'">Cancel</button>
-
+    
+	
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
