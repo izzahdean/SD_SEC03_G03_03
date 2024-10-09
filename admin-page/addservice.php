@@ -35,7 +35,7 @@ $conn->close();
     <!-- Custom CSS -->
     <style>
         body {
-            background-color: #231a6f;
+            background: linear-gradient(to bottom right, #00204a 0%, #660066 100%);
         }
 
         .container {
@@ -44,9 +44,13 @@ $conn->close();
             padding: 30px;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+			max-width: 800px;
         }
-
-        h2 {
+		.form-control {
+			width: 100%; 
+			max-width: 800px;
+		}
+        h3 {
             text-align: center;
             margin-bottom: 20px;
             font-weight: bold;
@@ -88,7 +92,7 @@ $conn->close();
     </nav>
 	
     <div class="container">
-        <h2>Add a New Service</h2>
+        <h3>Add a New Service</h3>
         <form action="addservice.php" method="POST">
             <div class="form-group">
                 <label for="name">Service Name:</label>
@@ -118,16 +122,14 @@ $conn->close();
 			
         </form>	
     </div>
-	
-		<br>
-		
-
-    <!-- Bootstrap JS and dependencies (Optional for interactive features) -->
+	<br>
+	<br>
+	<br>
+	<br>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 </body>
-
 </html>
 

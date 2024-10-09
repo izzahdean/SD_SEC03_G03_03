@@ -56,7 +56,7 @@ $conn->close();
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-            background-color: #231a6f;
+            background: linear-gradient(to bottom right, #00204a 0%, #660066 100%);
         }
         .container {
             margin-top: 50px;
@@ -64,20 +64,25 @@ $conn->close();
             padding: 30px;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+			max-width: 800px;
         }
-        h2 {
+		.form-control {
+			width: 100%; 
+			max-width: 800px;
+		}
+        h3 {
             text-align: center;
             margin-bottom: 20px;
             font-weight: bold;
         }
         .btn-secondary {
-            width: 15%;
+            width: auto%;
         }
         .btn-cancel {
             background-color: #ed3c3b;
             border-color: #d62321;
             color: white;
-            width: 15%;
+            width: auto%;
         }
         .form-group label {
             font-weight: bold;
@@ -100,7 +105,7 @@ $conn->close();
         </div>
     </nav>
     <div class="container">
-        <h2>Add a New Maid</h2>
+        <h3>Add a New Maid</h3>
         <form action="addmaid.php" method="POST">
             <div class="form-group">
                 <label for="fname">First Name:</label>
