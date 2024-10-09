@@ -3,14 +3,10 @@ session_start();
 
 include 'connect-db.php';
 
-// Initialize error message variable
 $error_message = "";
-
-// Check if user is already logged in via cookie
 if (isset($_COOKIE['user'])) {
     list($email, $hashed_password) = explode('|', $_COOKIE['user']);
 
-    // Verify cookie credentials
     $stmt = $conn->prepare("SELECT pass, user_type FROM users WHERE email = ?");
     $stmt->bind_param("s", $email);
     $stmt->execute();
@@ -24,31 +20,47 @@ if (isset($_COOKIE['user'])) {
             $_SESSION['email'] = $email;
             $_SESSION['user_type'] = $user_type;
 
-            // Redirect based on user type
-            if ($user_type === 'admin') {
-                header("Location: admin-page/index.html");
-                exit();
-            } elseif ($user_type === 'customer') {
-                header("Location: customer-page/index.html");
-                exit();
-            } elseif ($user_type === 'maid') {
-                header("Location: maid-page/index.html");
-                exit();
+            $stmt = $conn->prepare("UPDATE users SET last_login = NOW() WHERE email = ?");
+            $stmt->bind_param("s", $email);
+            if ($stmt->execute()) {
+                echo "Last login updated successfully.";
             } else {
-                $error_message = "Unknown user type!";
+                echo "Error updating last_login: " . $stmt->error;
+            }
+            $stmt->close();
+
+            if (isset($_POST['remember_me'])) {
+                $cookie_name = "user";
+                $cookie_value = $email . "|" . $hashed_password;
+                setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/");
+            } else {
+                if (isset($_COOKIE['user'])) {
+                    setcookie('user', '', time() - 3600, '/'); 
+                }
+            }
+
+            switch ($user_type) {
+                case 'admin':
+                    header("Location: admin-page/index.html");
+                    exit();
+                case 'customer':
+                    header("Location: customer-page/index.html");
+                    exit();
+                case 'maid':
+                    header("Location: maid-page/index.html");
+                    exit();
+                default:
+                    $error_message = "Unknown user type!";
             }
         }
     }
 }
 
-// Process login form submission
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Get form data
     $email = $_POST['email'];
     $password = $_POST['password'];
     $remember_me = isset($_POST['remember_me']);
 
-    // Prepare and execute query to check credentials
     $stmt = $conn->prepare("SELECT pass, user_type FROM users WHERE email = ?");
     $stmt->bind_param("s", $email);
     $stmt->execute();
@@ -58,35 +70,41 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->bind_result($hashed_password, $user_type);
         $stmt->fetch();
         
-        // Verify the password
         if (password_verify($password, $hashed_password)) {
-            // Password is correct, set session variables
             $_SESSION['email'] = $email;
             $_SESSION['user_type'] = $user_type;
 
-            // Set a cookie for "Remember Me"
+            $stmt = $conn->prepare("UPDATE users SET last_login = NOW() WHERE email = ?");
+            $stmt->bind_param("s", $email);
+            if ($stmt->execute()) {
+                echo "Last login updated successfully.";
+            } else {
+                echo "Error updating last_login: " . $stmt->error;
+            }
+            $stmt->close();
+
             if ($remember_me) {
                 $cookie_name = "user";
                 $cookie_value = $email . "|" . $hashed_password;
-                setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/"); // 30 days
+                setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/");
             } else {
                 if (isset($_COOKIE['user'])) {
-                    setcookie('user', '', time() - 3600, '/'); // Delete cookie if "Remember Me" is not checked
+                    setcookie('user', '', time() - 3600, '/'); 
                 }
             }
 
-            // Redirect based on user type
-            if ($user_type === 'admin') {
-                header("Location: admin-page/index.html");
-                exit();
-            } elseif ($user_type === 'customer') {
-                header("Location: customer-page/index.html");
-                exit();
-            } elseif ($user_type === 'maid') {
-                header("Location: maid-page/index.html");
-                exit();
-            } else {
-                $error_message = "Unknown user type!";
+            switch ($user_type) {
+                case 'admin':
+                    header("Location: admin-page/index.html");
+                    exit();
+                case 'customer':
+                    header("Location: customer-page/index.html");
+                    exit();
+                case 'maid':
+                    header("Location: maid-page/index.html");
+                    exit();
+                default:
+                    $error_message = "Unknown user type!";
             }
         } else {
             $error_message = "Invalid password!";
@@ -111,23 +129,21 @@ $conn->close();
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
     <link href="styling.css" rel="stylesheet">
     <script>
-        // Display error message if there is one
         <?php if (!empty($error_message)): ?>
         window.onload = function() {
             alert("<?php echo addslashes($error_message); ?>");
         };
         <?php endif; ?>
 
-        // Client-side validation
         function validateForm() {
             var email = document.getElementById('email').value;
             var password = document.getElementById('password').value;
             
             if (!email || !password) {
                 alert('Both email and password are required!');
-                return false; // Prevent form submission
+                return false;
             }
-            return true; // Allow form submission
+            return true;
         }
     </script>
 </head>
