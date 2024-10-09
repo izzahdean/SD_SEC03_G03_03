@@ -95,7 +95,7 @@ if (isset($_GET['delete_id'])) {
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="maid.php">Maid</a>
-                        <a class="collapse-item" href="customer.html">Customer</a>
+                        <a class="collapse-item" href="customer.php">Customer</a>
                     </div>
                 </div>
             </li>
