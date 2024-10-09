@@ -74,6 +74,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         .bg-dark {
             background-color: #00204a !important;
         }
+		.save-btn {
+        width: auto;
+        white-space: nowrap;
+        padding-left: 10px;
+        padding-right: 10px;
+		}
+		
     </style>
 </head>
 <body>
@@ -109,8 +116,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </div>
 
             <div class="form-row">
-                <div class="col text-left">
-                    <input type="submit" value="Update" class="btn btn-primary">
+                <div class="col text-left ">
+                    <input type="submit" value="Save" class="btn btn-primary save-btn">
                 </div>
                 <div class="col text-right">
                     <button type="button" class="btn btn-danger" onclick="window.location.href='maid.php'">Cancel</button>
