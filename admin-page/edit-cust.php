@@ -54,22 +54,81 @@ $conn->close();
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
     <link href="css/mykakaks-admin.css" rel="stylesheet">
 	<link rel="shortcut icon" href="img/favicon.png" type="">
+	<style>
+		body {
+            background: linear-gradient(to bottom right, #00204a 0%, #660066 100%);
+        }
+		.container {
+            margin-top: 50px;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+			max-width: 600px;
+        }
+		.form-control {
+			width: 100%; 
+			max-width: 600px;
+		}
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+		h3 {
+			font-weight: bold;
+			text-align: center;
+            color: black;
+        }
+		.color {
+            color: black;
+        }
+        .form-group label {
+            font-weight: bold;
+        }
+        .btn-primary {
+            width: auto%;
+        }
+        .bg-dark {
+            background-color: #00204a !important;
+        }
+		.save-btn {
+        width: auto;
+        white-space: nowrap;
+        padding-left: 10px;
+        padding-right: 10px;
+		}
+	</style>
+	
 </head>
 
 <body>
-
-    <div class="container mt-5">
-        <h2>Edit Customer Status</h2>
+	<nav class="navbar navbar-expand-lg navbar-light bg-dark shadow-sm">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img src="img/logo.png" alt="Logo" style="width: 100px; height: 33px;">
+            </a>
+        </div>
+    </nav>
+    <div class="container">
+        <h3>Edit Customer Status</h3>
         <form method="POST" action="edit-cust.php?id=<?php echo $customerId; ?>">
             <div class="form-group">
-                <label for="status">Status:</label>
+                <label for="status" class="color">Status:</label>
                 <select class="form-control" id="status" name="status" required>
                     <option value="active" <?php echo ($customer['status'] === 'active') ? 'selected' : ''; ?>>Active</option>
                     <option value="inactive" <?php echo ($customer['status'] === 'inactive') ? 'selected' : ''; ?>>Inactive</option>
                 </select>
             </div>
-            <button type="submit" class="btn btn-primary">Update Status</button>
-            <a href="customer.php" class="btn btn-secondary">Cancel</a>
+			
+			<div class="form-row">
+                <div class="col text-left ">
+                    <input type="submit" value="Update" class="btn btn-primary save-btn">
+                </div>
+                <div class="col text-right">
+                    <button type="button" class="btn btn-danger" onclick="window.location.href='maid.php'">Cancel</button>
+                </div>
+            </div>
         </form>
     </div>
 

@@ -52,26 +52,46 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-            background-color: #231a6f;
+            background: linear-gradient(to bottom right, #00204a 0%, #660066 100%);
         }
-        .container {
+		.container {
             margin-top: 50px;
             background-color: white;
             padding: 30px;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+			max-width: 600px;
         }
+		.form-control {
+			width: 100%; 
+			max-width: 600px;
+		}
         h1 {
             text-align: center;
             margin-bottom: 20px;
             font-weight: bold;
         }
+		h3 {
+			font-weight: bold;
+			text-align: center;
+            color: black;
+        }
+		.color {
+            color: black;
+        }
         .form-group label {
             font-weight: bold;
         }
         .btn-primary {
-            width: 100%;
+			background-color: #00204a !important;
+            width: auto%;
         }
+		.btn-primary:hover {
+		  color: #fff;
+		  background-color: #2e59d9;
+		  border-color: #224abe;
+		}
+
         .bg-dark {
             background-color: #00204a !important;
         }
@@ -93,7 +113,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </div>
     </nav>
     <div class="container">
-        <h1 class="text-center">Edit Maid</h1>
+        <h3 class="text-center">Edit Maid</h3>
         <form action="edit-maid.php?id=<?php echo $maid['id']; ?>" method="POST">
             <input type="hidden" name="id" value="<?php echo $maid['id']; ?>">
             <div class="form-group">
@@ -126,7 +146,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </div>
         </form>
     </div>
-    
+    <br>
+	<br>
+	<br>
+	<br>
+	<br>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
