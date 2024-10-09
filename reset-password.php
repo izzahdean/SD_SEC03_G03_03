@@ -3,38 +3,29 @@ session_start();
 
 include 'connect-db.php';
 
-// Initialize message variables
 $errorMessage = '';
 $successMessage = '';
 
-// Handle form submission
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Get the token and passwords from the form
     $token = $_POST['token'];
     $newPassword = $_POST['new_password'];
     $confirmPassword = $_POST['confirm_password'];
 
-    // Check if the token is valid and not expired
     $stmt = $conn->prepare("SELECT email FROM password_resets WHERE token = ? AND expires_at > NOW()");
     $stmt->bind_param("s", $token);
     $stmt->execute();
     $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
-        // Token is valid
         if ($newPassword === $confirmPassword) {
-            // Update the password in the users table
             $row = $result->fetch_assoc();
             $email = $row['email'];
 
-            // Hash the new password
             $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
 
-            // Update the password in the database
             $stmt = $conn->prepare("UPDATE users SET pass = ? WHERE email = ?");
             $stmt->bind_param("ss", $hashedPassword, $email);
             if ($stmt->execute()) {
-                // Optionally, delete the token from password_resets table
                 $stmt = $conn->prepare("DELETE FROM password_resets WHERE token = ?");
                 $stmt->bind_param("s", $token);
                 $stmt->execute();
@@ -53,7 +44,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->close();
     $conn->close();
 } else {
-    // If the token is not set, redirect to the forgot password page
     if (!isset($_GET['token'])) {
         header("Location: forgot-password.php");
         exit();
@@ -79,8 +69,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         .checklist {
             list-style: none;
             padding: 0;
-			font-size: 14px;
-			margin-right: 140px;
+            font-size: 14px;
+            margin-right: 140px;
         }
         .checklist li {
             color: red; 
@@ -107,7 +97,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         <h1 class="h4 text-gray-900 mb-2"><b>Reset Your Password</b></h1>
                                     </div>
 
-                                    <!-- Display messages -->
                                     <?php if (!empty($errorMessage)): ?>
                                         <div class="alert alert-danger mt-3"><?php echo $errorMessage; ?></div>
                                     <?php endif; ?>
@@ -130,7 +119,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         <div class="form-group">
                                             <input type="password" id="confirm_password" class="form-control form-control-user" name="confirm_password" placeholder="Confirm Password" required>
                                         </div>
-                                        <button type="submit" class="btn btn-primary btn-user btn-block">
+                                        <button type="submit" class="btn btn-primary btn-user btn-block" disabled>
                                             Reset Password
                                         </button>
                                     </form>
@@ -149,6 +138,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <script>
         const passwordInput = document.getElementById('new_password');
+        const confirmPasswordInput = document.getElementById('confirm_password');
+        const resetButton = document.querySelector('button[type="submit"]');
+        resetButton.disabled = true;  // Disable the button initially
+
         const requirements = {
             length: false,
             uppercase: false,
@@ -156,50 +149,40 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             special: false
         };
 
-        passwordInput.addEventListener('input', () => {
+        function validateRequirements() {
             const password = passwordInput.value;
             let validCount = 0;
 
-            // Check password length
             requirements.length = password.length >= 8;
             if (requirements.length) validCount++;
             document.getElementById('length').classList.toggle('valid', requirements.length);
 
-            // Check for uppercase letter
             requirements.uppercase = /[A-Z]/.test(password);
             if (requirements.uppercase) validCount++;
             document.getElementById('uppercase').classList.toggle('valid', requirements.uppercase);
 
-            // Check for number
             requirements.number = /[0-9]/.test(password);
             if (requirements.number) validCount++;
             document.getElementById('number').classList.toggle('valid', requirements.number);
 
-            // Check for special character
             requirements.special = /[!@#$%^&*(),.?":{}|<>]/.test(password);
             if (requirements.special) validCount++;
             document.getElementById('special').classList.toggle('valid', requirements.special);
 
-            // Update progress bar
-            const progressPercent = (validCount / Object.keys(requirements).length) * 100;
-            const progressBar = document.getElementById('progress-bar');
-            progressBar.style.width = progressPercent + '%';
-            progressBar.setAttribute('aria-valuenow', progressPercent);
-        });
-
-        function validatePassword() {
-            return Object.values(requirements).every(Boolean);
+            const allRequirementsMet = Object.values(requirements).every(Boolean);
+            const passwordsMatch = passwordInput.value === confirmPasswordInput.value;
+            
+            resetButton.disabled = !(allRequirementsMet && passwordsMatch);
         }
+
+        passwordInput.addEventListener('input', validateRequirements);
+        confirmPasswordInput.addEventListener('input', validateRequirements);
     </script>
 
-    <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <!-- Core plugin JavaScript-->
     <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-    <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
 
 </body>
 </html>
-
