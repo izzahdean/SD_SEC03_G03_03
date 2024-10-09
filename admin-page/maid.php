@@ -46,6 +46,7 @@ if (isset($_GET['delete_id'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
+	<link rel="shortcut icon" href="img/favicon.png" type="">
 
     <title>MYKAKAKS Admin - Maid Management</title>
 
@@ -95,7 +96,7 @@ if (isset($_GET['delete_id'])) {
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="maid.php">Maid</a>
-                        <a class="collapse-item" href="customer.php">Customer</a>
+                        <a class="collapse-item" href="customer.html">Customer</a>
                     </div>
                 </div>
             </li>
