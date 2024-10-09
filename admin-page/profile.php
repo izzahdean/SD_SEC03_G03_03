@@ -1,6 +1,5 @@
 <?php
 session_start();
-
 include '../connect-db.php';
 
 $admin_email = $_SESSION['email'];
@@ -33,13 +32,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     $stmt->close();
-
     header("Location: profile.php");
     exit();
 }
 
 $message = isset($_SESSION['message']) ? $_SESSION['message'] : '';
-unset($_SESSION['message']); 
+unset($_SESSION['message']);
 $conn->close();
 ?>
 
@@ -49,7 +47,7 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<link rel="shortcut icon" href="img/favicon.png" type="">
+    <link rel="shortcut icon" href="img/favicon.png" type="">
     <title>Admin Profile</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
@@ -74,23 +72,28 @@ $conn->close();
         .btn-primary:hover {
             background-color: #0056b3;
         }
+        .error-message {
+            color: red;
+            font-size: 0.875em;
+            margin-top: 5px;
+        }
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-dark shadow-sm ">
+    <nav class="navbar navbar-expand-lg navbar-light bg-dark shadow-sm">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">
                 <img src="img/logo.png" alt="Logo" style="width: 100px; height: 33px;">
             </a>
         </div>
     </nav>
-	
+
     <div class="container profile-container">
-	<div class="d-flex justify-content-between align-items-center mb-3">
-        <div class="d-flex flex-row align-items-center back"><i class="fa fa-long-arrow-left mr-1 mb-1"></i>
-            <a href="index.html"><b>Back to home</b></a>
-		</div>
-	</div>
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <div class="d-flex flex-row align-items-center back">
+                <a href="index.html"><b>Back to home</b></a>
+            </div>
+        </div>
         <h1 class="text-center mb-5">Admin Profile</h1>
 
         <?php if ($message): ?>
@@ -105,14 +108,15 @@ $conn->close();
             </div>
             <div class="col-md-8">
                 <form id="profileForm" method="POST" action="profile.php">
-					
                     <div class="form-group mb-3">
                         <label for="fname">First Name</label>
                         <input type="text" class="form-control" name="fname" id="fname" value="<?php echo $fname; ?>" readonly>
+                        <span class="error-message" id="fname-error"></span>
                     </div>
                     <div class="form-group mb-3">
                         <label for="lname">Last Name</label>
                         <input type="text" class="form-control" name="lname" id="lname" value="<?php echo $lname; ?>" readonly>
+                        <span class="error-message" id="lname-error"></span>
                     </div>
                     <div class="form-group mb-3">
                         <label for="email">Email</label>
@@ -121,16 +125,17 @@ $conn->close();
                     <div class="form-group mb-3">
                         <label for="cnum">Phone Number</label>
                         <input type="number" class="form-control" name="cnum" id="cnum" value="<?php echo $cnum; ?>" readonly>
+                        <span class="error-message" id="cnum-error"></span>
                     </div>
                     <div class="d-flex justify-content-between">
                         <button type="button" class="btn btn-primary" id="editButton">Edit Profile</button>
                         <div>
-                            <button type="submit" class="btn btn-secondary d-none" id="saveButton">Save Profile</button>
+                            <button type="submit" class="btn btn-secondary d-none" id="saveButton">Save Changes</button>
                             <button type="button" class="btn btn-danger d-none" id="cancelButton">Cancel</button>
                         </div>
                     </div>
                 </form>
-				<br>
+                <br>
             </div>
         </div>
     </div>
@@ -157,6 +162,36 @@ $conn->close();
             document.querySelector("input[name='fname']").value = '<?php echo $fname; ?>';
             document.querySelector("input[name='lname']").value = '<?php echo $lname; ?>';
             document.querySelector("input[name='cnum']").value = '<?php echo $cnum; ?>';
+        });
+
+        document.getElementById('profileForm').addEventListener('submit', function(e) {
+            const fname = document.getElementById('fname').value.trim();
+            const lname = document.getElementById('lname').value.trim();
+            const cnum = document.getElementById('cnum').value.trim();
+            let valid = true;
+
+            document.getElementById('fname-error').textContent = '';
+            document.getElementById('lname-error').textContent = '';
+            document.getElementById('cnum-error').textContent = '';
+
+            if (!fname) {
+                document.getElementById('fname-error').textContent = "First name is required.";
+                valid = false;
+            }
+
+            if (!lname) {
+                document.getElementById('lname-error').textContent = "Last name is required.";
+                valid = false;
+            }
+
+            if (!cnum) {
+                document.getElementById('cnum-error').textContent = "Phone number is required.";
+                valid = false;
+            }
+
+            if (!valid) {
+                e.preventDefault();
+            }
         });
     </script>
 </body>

@@ -139,7 +139,7 @@ $conn->close();
                         <input type="text" class="form-control" id="salary" name="salary" value="<?php echo $salary; ?>" readonly>
                     </div>
                     <button type="button" class="btn btn-primary btn-custom" id="editButton">Edit Profile</button>
-                    <button type="submit" class="btn btn-secondary btn-custom d-none" id="saveButton">Save Profile</button>
+                    <button type="submit" class="btn btn-secondary btn-custom d-none" id="saveButton">Save Changes</button>
                     <button type="button" class="btn btn-danger btn-custom d-none" id="cancelButton">Cancel</button>
                 </form>
 				<br>
