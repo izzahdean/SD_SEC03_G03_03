@@ -53,6 +53,7 @@ $conn->close();
     <title>Edit Customer Status</title>
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
     <link href="css/mykakaks-admin.css" rel="stylesheet">
+	<link rel="shortcut icon" href="img/favicon.png" type="">
 </head>
 
 <body>
