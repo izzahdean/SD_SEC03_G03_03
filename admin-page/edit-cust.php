@@ -126,7 +126,7 @@ $conn->close();
                     <input type="submit" value="Update" class="btn btn-primary save-btn">
                 </div>
                 <div class="col text-right">
-                    <button type="button" class="btn btn-danger" onclick="window.location.href='maid.php'">Cancel</button>
+                    <button type="button" class="btn btn-danger" onclick="window.location.href='customer.php'">Cancel</button>
                 </div>
             </div>
         </form>
