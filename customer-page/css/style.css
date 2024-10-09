@@ -959,10 +959,31 @@ a:focus {
 	border-radius: 20px;
 }
 
-.contact-left textarea{
-	height: 400px;
-	padding-top: 15px;
-	border-radius: 20px;
+.detail-box {
+  display: flex;
+  justify-content: center; /* Centers horizontally */
+  align-items: center; /* Centers vertically if needed */
+}
+
+.info_contact {
+  display: flex;
+  flex-direction: column; /* Keeps content stacked */
+  align-items: center;    /* Centers the content horizontally */
+  justify-content: center; /* Centers the content vertically */
+  margin: 0 auto;         /* Centers the container horizontally */
+  text-align: center;      /* Centers the text inside */
+}
+
+.contact_link_box {
+  display: inline-block; /* Ensures the contact box is centered as a block */
+  text-align: center;
+	left-margin: auto;
+	right-margin:auto;
+}
+
+.row {
+  display: flex;
+  justify-content: center; /* Centers the entire row content */
 }
 
 .contact-inputs:focus{
