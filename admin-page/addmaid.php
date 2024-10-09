@@ -51,6 +51,7 @@ $conn->close();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="shortcut icon" href="img/favicon.png" type="">
     <title>Add Maid</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
@@ -70,14 +71,13 @@ $conn->close();
             font-weight: bold;
         }
         .btn-secondary {
-            width: 10%;
+            width: 15%;
         }
         .btn-cancel {
             background-color: #ed3c3b;
             border-color: #d62321;
             color: white;
-            width: 10%;
-            margin-left: 1150px;
+            width: 15%;
         }
         .form-group label {
             font-weight: bold;
@@ -130,11 +130,19 @@ $conn->close();
                 <label for="salary">Salary:</label>
                 <input type="text" class="form-control" id="salary" name="salary" placeholder="Enter salary" required>
             </div>
-            <button type="submit" class="btn btn-secondary">Add</button>
+			
+			<div class="form-row">
+                <div class="col text-left ">
+                    <button type="submit" class="btn btn-secondary">Add</button>
+                </div>
+                <div class="col text-right">
+                    <button type="button" class="btn btn-cancel" onclick="window.location.href='maid.php'">Cancel</button>
+                </div>
+            </div>
         </form>
     </div>
     <br>
-    <button type="button" class="btn btn-cancel" onclick="window.location.href='maid.php'">Cancel</button>
+    
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
