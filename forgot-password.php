@@ -11,42 +11,30 @@ require_once 'PHPMailer/src/Exception.php';
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-
-
-// Initialize message variables
 $errorMessage = '';
 $successMessage = '';
 
-// Function to generate a random password reset token
 function generateToken() {
     return bin2hex(random_bytes(16));
 }
-
-// Handle form submission
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Get email from form
     $email = $_POST['email'];
 
-    // Check if email exists in the database
     $stmt = $conn->prepare("SELECT email FROM users WHERE email = ?");
     $stmt->bind_param("s", $email);
     $stmt->execute();
     $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
-        // Email exists, generate password reset token
         $token = generateToken();
         $expiry_time = date("Y-m-d H:i:s", strtotime("+1 hour"));
 
-        // Store token in the database
         $stmt = $conn->prepare("INSERT INTO password_resets (email, token, expires_at) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE token = ?, expires_at = ?");
         $stmt->bind_param("sssss", $email, $token, $expiry_time, $token, $expiry_time);
         $stmt->execute();
 
-        // Send email with password reset link
         $mail = new PHPMailer(true);
         try {
-            // SMTP settings
             $mail->isSMTP();
             $mail->Host = 'smtp.gmail.com';
             $mail->SMTPAuth = true;
@@ -55,11 +43,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $mail->SMTPSecure = 'tls';
             $mail->Port = 587;
 
-            // Recipients
             $mail->setFrom('nrulizzh35@gmail.com', 'MyKakaks');
             $mail->addAddress($email);
 
-            // Email content
             $reset_link = "http://localhost/SD_SEC03_G03_03/reset-password.php?token=" . $token;
             $mail->isHTML(true);
             $mail->Subject = 'Password Reset Request';
@@ -111,7 +97,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         <p class="mb-4">We get it, stuff happens. Just enter your email address below and we'll send you a link to reset your password!</p>
                                     </div>
                                     
-                                    <!-- Display messages -->
                                     <?php if (!empty($errorMessage)): ?>
                                         <div class="alert alert-danger mt-3"><?php echo $errorMessage; ?></div>
                                     <?php endif; ?>
@@ -144,12 +129,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
     </div>
 
-    <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <!-- Core plugin JavaScript-->
     <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-    <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
 
 </body>
