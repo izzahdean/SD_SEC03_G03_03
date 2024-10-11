@@ -337,9 +337,10 @@ if (isset($_GET['delete_id'])) {
                     <div class="row">
                         <div class="container-fluid">
                             <div class="card shadow mb-4">
-                                <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">List of Maids&nbsp;</h6>
-                                </div>
+								<div class="card-header py-3 d-flex justify-content-between align-items-center">
+									<h6 class="m-0 font-weight-bold text-primary">List of Maids</h6>
+									<button type="button" class="btn btn-primary" onclick="window.location.href='addmaid.php';">Add</button>
+								</div>
                                 <div class="card-body">
                                     <div class="table-responsive">
                                         <table class="table table-striped">
@@ -365,8 +366,8 @@ if (isset($_GET['delete_id'])) {
                                                         echo "<td>" . $row['cnum'] . "</td>";
                                                         echo "<td>" . $row['email'] . "</td>";
                                                         echo "<td>";
-                                                        echo "<a href='edit-maid.php?id=" . $row['id'] . "' class='btn btn-warning btn-sm'><i class='fas fa-edit'></i> Edit</a> ";
-                                                        echo "<a href='maid.php?delete_id=" . $row['id'] . "' onclick=\"return confirm('Are you sure you want to delete this maid?');\" class='btn btn-danger btn-sm'><i class='fas fa-trash'></i> Delete</a>";
+                                                        echo "<a href='edit-maid.php?id=" . $row['id'] . "' class='btn btn-warning btn-sm'><i class='fas fa-edit'></i></a> ";
+                                                        echo "<a href='maid.php?delete_id=" . $row['id'] . "' onclick=\"return confirm('Are you sure you want to delete this maid?');\" class='btn btn-danger btn-sm'><i class='fas fa-trash'></i></a>";
                                                         echo "</td>";
                                                         echo "</tr>";
                                                     }
@@ -379,7 +380,6 @@ if (isset($_GET['delete_id'])) {
                                             </tbody>
                                         </table>
                                     </div>
-									<button type="button" class="btn btn-primary" onclick="window.location.href='addmaid.php';">Add Maid</button>
                                 </div>
                             </div>
                         </div>
