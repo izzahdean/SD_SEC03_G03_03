@@ -125,29 +125,40 @@ $conn->close();
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<link rel="shortcut icon" href="image/favicon.png" type="image/png">
-
-	
     <title>Login</title>
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
     <link href="styling.css" rel="stylesheet">
     <script>
-        <?php if (!empty($error_message)): ?>
-        window.onload = function() {
-            alert("<?php echo addslashes($error_message); ?>");
-        };
-        <?php endif; ?>
-
         function validateForm() {
             var email = document.getElementById('email').value;
             var password = document.getElementById('password').value;
+            var emailError = document.getElementById('email-error');
+            var passwordError = document.getElementById('password-error');
             
-            if (!email || !password) {
-                alert('Both email and password are required!');
-                return false;
+            emailError.textContent = "";
+            passwordError.textContent = "";
+
+            var isValid = true;
+
+            if (!email) {
+                emailError.textContent = "Email is required!";
+                isValid = false;
             }
-            return true;
+
+            if (!password) {
+                passwordError.textContent = "Password is required!";
+                isValid = false;
+            }
+
+            return isValid;
         }
+
+        <?php if (!empty($error_message)): ?>
+        document.addEventListener("DOMContentLoaded", function() {
+            document.getElementById('php-error-message').textContent = "<?php echo addslashes($error_message); ?>";
+        });
+        <?php endif; ?>
     </script>
 </head>
 <body class="bg-gradient-primary">
@@ -157,7 +168,7 @@ $conn->close();
                 <div class="row">
                     <div class="col-xl-6 d-flex align-items-center justify-content-center">
                         <img src="image/login.png" alt="Logo" class="img-fluid">
-                    </div><br>
+                    </div>
                     <div class="col-lg-6 d-flex align-items-center justify-content-center">
                         <div class="p-4 w-100">
                             <div class="p-5">
@@ -167,10 +178,13 @@ $conn->close();
                                 <form id="loginForm" class="user" action="login.php" method="POST" onsubmit="return validateForm();">
                                     <div class="form-group">
                                         <input type="email" class="form-control form-control-user" id="email" name="email" placeholder="Email Address" required>
+                                        <div id="email-error" class="text-danger"></div> <!-- Email error message -->
                                     </div>
                                     <div class="form-group">
                                         <input type="password" class="form-control form-control-user" id="password" name="password" placeholder="Password" required>
+                                        <div id="password-error" class="text-danger"></div> <!-- Password error message -->
                                     </div>
+                                    <div id="php-error-message" class="text-danger"></div> <!-- PHP Error message container -->
                                     <div class="form-group row">
                                         <div class="col-sm-6 mb-3 mb-sm-0">
                                             <div class="custom-control custom-checkbox small">
