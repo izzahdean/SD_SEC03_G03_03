@@ -2,6 +2,32 @@
 session_start();
 include '../connect-db.php';
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $new_fname = trim($_POST['fname']);
+    $new_lname = trim($_POST['lname']);
+    $new_cnum = trim($_POST['cnum']);
+    
+	if (empty($new_fname) || empty($new_lname) || empty($new_cnum)) {
+        $_SESSION['message'] = "All fields are required!";
+        header("Location: profile.php");
+        exit();
+    }
+
+    $update_sql = "UPDATE admin SET fname = ?, lname = ?, cnum = ? WHERE email = ?";
+    $stmt = $conn->prepare($update_sql);
+    $stmt->bind_param("ssss", $new_fname, $new_lname, $new_cnum, $admin_email);
+     
+    if ($stmt->execute()) {
+        $_SESSION['message'] = "Profile updated successfully!";
+    } else {
+        $_SESSION['message'] = "Failed to update profile.";
+    }
+
+    $stmt->close();
+    header("Location: profile.php");
+    exit();
+}
+
 $admin_email = $_SESSION['email'];
 $sql = "SELECT fname, lname, cnum, email FROM admin WHERE email='$admin_email'";
 $result = $conn->query($sql);
@@ -15,29 +41,8 @@ if ($result->num_rows > 0) {
 } else {
     echo "No records found!";
 }
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $new_fname = $_POST['fname'];
-    $new_lname = $_POST['lname'];
-    $new_cnum = $_POST['cnum'];
-    
-    $update_sql = "UPDATE admin SET fname = ?, lname = ?, cnum = ? WHERE email = ?";
-    $stmt = $conn->prepare($update_sql);
-    $stmt->bind_param("ssss", $new_fname, $new_lname, $new_cnum, $admin_email);
-    
-    if ($stmt->execute()) {
-        $_SESSION['message'] = "Profile updated successfully!";
-    } else {
-        $_SESSION['message'] = "Failed to update profile.";
-    }
-
-    $stmt->close();
-    header("Location: profile.php");
-    exit();
-}
-
 $message = isset($_SESSION['message']) ? $_SESSION['message'] : '';
-unset($_SESSION['message']);
+unset($_SESSION['message']); 
 $conn->close();
 ?>
 
@@ -110,27 +115,27 @@ $conn->close();
                 <form id="profileForm" method="POST" action="profile.php">
                     <div class="form-group mb-3">
                         <label for="fname">First Name</label>
-                        <input type="text" class="form-control" name="fname" id="fname" value="<?php echo $fname; ?>" readonly>
+                        <input type="text" class="form-control" name="fname" id="fname" value="<?php echo htmlspecialchars($fname); ?>" readonly required>
                         <span class="error-message" id="fname-error"></span>
                     </div>
                     <div class="form-group mb-3">
                         <label for="lname">Last Name</label>
-                        <input type="text" class="form-control" name="lname" id="lname" value="<?php echo $lname; ?>" readonly>
+                        <input type="text" class="form-control" name="lname" id="lname" value="<?php echo htmlspecialchars($lname); ?>" readonly required>
                         <span class="error-message" id="lname-error"></span>
                     </div>
                     <div class="form-group mb-3">
                         <label for="email">Email</label>
-                        <input type="email" class="form-control" id="email" value="<?php echo $email; ?>" readonly>
+                        <input type="email" class="form-control" id="email" value="<?php echo htmlspecialchars($email); ?>" readonly>
                     </div>
                     <div class="form-group mb-3">
                         <label for="cnum">Phone Number</label>
-                        <input type="number" class="form-control" name="cnum" id="cnum" value="<?php echo $cnum; ?>" readonly>
+                        <input type="number" class="form-control" name="cnum" id="cnum" value="<?php echo htmlspecialchars($cnum); ?>" readonly required>
                         <span class="error-message" id="cnum-error"></span>
                     </div>
                     <div class="d-flex justify-content-between">
                         <button type="button" class="btn btn-primary" id="editButton">Edit Profile</button>
                         <div>
-                            <button type="submit" class="btn btn-secondary d-none" id="saveButton">Save Changes</button>
+                            <button type="submit" class="btn btn-secondary d-none" id="saveButton">Save</button>
                             <button type="button" class="btn btn-danger d-none" id="cancelButton">Cancel</button>
                         </div>
                     </div>
@@ -148,49 +153,38 @@ $conn->close();
         const formInputs = document.querySelectorAll('#profileForm input');
 
         editButton.addEventListener('click', function() {
-            formInputs.forEach(input => input.removeAttribute('readonly'));
+            formInputs.forEach(input => {
+                if (input.id !== 'email') {
+                    input.removeAttribute('readonly');
+                }
+            });
             editButton.classList.add('d-none');
             saveButton.classList.remove('d-none');
             cancelButton.classList.remove('d-none');
         });
 
         cancelButton.addEventListener('click', function() {
-            formInputs.forEach(input => input.setAttribute('readonly', true));
+            formInputs.forEach(input => {
+                if (input.id !== 'email') {
+                    input.setAttribute('readonly', true);
+                }
+            });
             saveButton.classList.add('d-none');
             cancelButton.classList.add('d-none');
             editButton.classList.remove('d-none');
-            document.querySelector("input[name='fname']").value = '<?php echo $fname; ?>';
-            document.querySelector("input[name='lname']").value = '<?php echo $lname; ?>';
-            document.querySelector("input[name='cnum']").value = '<?php echo $cnum; ?>';
+            document.querySelector("input[name='fname']").value = '<?php echo htmlspecialchars($fname); ?>';
+            document.querySelector("input[name='lname']").value = '<?php echo htmlspecialchars($lname); ?>';
+            document.querySelector("input[name='cnum']").value = '<?php echo htmlspecialchars($cnum); ?>';
         });
 
-        document.getElementById('profileForm').addEventListener('submit', function(e) {
+        document.getElementById('profileForm').addEventListener('submit', function(event) {
             const fname = document.getElementById('fname').value.trim();
             const lname = document.getElementById('lname').value.trim();
             const cnum = document.getElementById('cnum').value.trim();
-            let valid = true;
 
-            document.getElementById('fname-error').textContent = '';
-            document.getElementById('lname-error').textContent = '';
-            document.getElementById('cnum-error').textContent = '';
-
-            if (!fname) {
-                document.getElementById('fname-error').textContent = "First name is required.";
-                valid = false;
-            }
-
-            if (!lname) {
-                document.getElementById('lname-error').textContent = "Last name is required.";
-                valid = false;
-            }
-
-            if (!cnum) {
-                document.getElementById('cnum-error').textContent = "Phone number is required.";
-                valid = false;
-            }
-
-            if (!valid) {
-                e.preventDefault();
+            if (fname === '' || lname === '' || cnum === '') {
+                alert('All fields are required!');
+                event.preventDefault();
             }
         });
     </script>

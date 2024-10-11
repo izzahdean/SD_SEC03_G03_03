@@ -98,7 +98,7 @@ $conn->close();
                     <br>
                     <div class="mt-5 text-right">
                         <button type="button" class="btn btn-primary profile-button" id="editButton">Edit Profile</button>
-                        <button type="submit" class="btn btn-success d-none" id="saveButton">Save Changes</button>
+                        <button type="submit" class="btn btn-success d-none" id="saveButton">Save</button>
                         <button type="button" class="btn btn-danger d-none" id="cancelButton">Cancel</button>
                     </div>
                 </form>
