@@ -136,7 +136,7 @@ $conn->close();
                         <button type="button" class="btn btn-primary" id="editButton">Edit Profile</button>
                         <div>
 							<button type="button" class="btn btn-danger d-none" id="cancelButton">Cancel</button>
-                            <button type="submit" class="btn btn-secondary d-none" id="saveButton">Save</button>
+                            <button type="submit" class="btn btn-primary d-none" id="saveButton">Update</button>
                         </div>
                     </div>
                 </form>
