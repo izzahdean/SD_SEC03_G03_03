@@ -347,7 +347,7 @@ $result = $conn->query($sql);
                                                     echo "<td>" . htmlspecialchars($row['address']) . "</td>";
                                                     echo "<td>" . htmlspecialchars($row['status']) . "</td>";
                                                     echo "<td>
-													    <a href='edit-cust.php?id=" . $row['id'] . "' class='btn btn-warning btn-sm'><i class='fas fa-edit'></i></a>
+													    <a href='edit-cust.php?id=" . $row['id'] . "' class='btn btn-primary btn-sm'><i class='fas fa-edit'></i></a>
                                                         <a href='customer.php?delete_id=" . $row['id'] . "' onclick=\"return confirm('Are you sure you want to delete this customer?');\" class='btn btn-danger btn-sm'>
                                                             <i class='fas fa-trash'></i>
 														</a>

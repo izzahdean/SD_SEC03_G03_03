@@ -123,7 +123,7 @@ $conn->close();
 			
 			<div class="form-row">
                 <div class="col text-left ">
-                    <input type="submit" value="Update" class="btn btn-primary save-btn">
+                    <input type="submit" value="Update" class="btn btn-primary save-btn bg-dark">
                 </div>
                 <div class="col text-right">
                     <button type="button" class="btn btn-danger" onclick="window.location.href='customer.php'">Cancel</button>

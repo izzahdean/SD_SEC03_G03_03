@@ -16,6 +16,7 @@
   --secondary: #858796;
   --success: #1cc88a;
   --info: #36b9cc;
+  --edit: #24a0ed;
   --warning: #f6c23e;
   --danger: #e74a3b;
   --light: #f8f9fc;
@@ -2491,6 +2492,43 @@ fieldset:disabled a.btn {
   box-shadow: 0 0 0 0.2rem rgba(84, 196, 212, 0.5);
 }
 
+.btn-edit{
+	color: #fff;
+	background-color: #00204a;
+	border-color: #00204a;
+}
+
+.btn-edit:hover {
+  color: #fff;
+  background-color: #00204a;
+  border-color: ##091b32;
+}
+
+.btn-edit:focus, .btn-edit.focus {
+  color: #fff;
+  background-color: #00204a;
+  border-color: ##091b32;
+  box-shadow: 0 0 0 0.2rem rgba(247, 203, 91, 0.5);
+}
+
+.btn-edit.disabled, .btn-edit:disabled {
+  color: #fff;
+  background-color: #f6c23e;
+  border-color: #f6c23e;
+}
+
+.btn-edit:not(:disabled):not(.disabled):active, .btn-edit:not(:disabled):not(.disabled).active,
+.show > .btn-edit.dropdown-toggle {
+  color: #fff;
+  background-color: ##091b32;
+  border-color: #e9aa0b;
+}
+
+.btn-edit:not(:disabled):not(.disabled):active:focus, .btn-edit:not(:disabled):not(.disabled).active:focus,
+.show > .btn-edit.dropdown-toggle:focus {
+  box-shadow: 0 0 0 0.2rem rgba(247, 203, 91, 0.5);
+}
+
 .btn-warning {
   color: #fff;
   background-color: #f6c23e;
@@ -2765,6 +2803,38 @@ fieldset:disabled a.btn {
 .btn-outline-info:not(:disabled):not(.disabled):active:focus, .btn-outline-info:not(:disabled):not(.disabled).active:focus,
 .show > .btn-outline-info.dropdown-toggle:focus {
   box-shadow: 0 0 0 0.2rem rgba(54, 185, 204, 0.5);
+}
+
+.btn-outline-edit {
+  color: #24a0ed;
+  border-color: #24a0ed;
+}
+
+.btn-outline-edit:hover {
+  color: #fff;
+  background-color: #24a0ed;
+  border-color: #24a0ed;
+}
+
+.btn-outline-edit:focus, .btn-outline-edit.focus {
+  box-shadow: 0 0 0 0.2rem rgba(246, 194, 62, 0.5);
+}
+
+.btn-outline-edit.disabled, .btn-outline-edit:disabled {
+  color: #24a0ed;
+  background-color: transparent;
+}
+
+.btn-outline-edit:not(:disabled):not(.disabled):active, .btn-outline-edit:not(:disabled):not(.disabled).active,
+.show > .btn-outline-edit.dropdown-toggle {
+  color: #fff;
+  background-color: #24a0ed;
+  border-color: #24a0ed;
+}
+
+.btn-outline-edit:not(:disabled):not(.disabled):active:focus, .btn-outline-edit:not(:disabled):not(.disabled).active:focus,
+.show > .btn-outline-edit.dropdown-toggle:focus {
+  box-shadow: 0 0 0 0.2rem rgba(246, 194, 62, 0.5);
 }
 
 .btn-outline-warning {
@@ -4925,6 +4995,21 @@ a.badge-info:focus, a.badge-info.focus {
   box-shadow: 0 0 0 0.2rem rgba(54, 185, 204, 0.5);
 }
 
+.badge-edit {
+  color: #fff;
+  background-color: #24a0ed;
+}
+
+a.badge-edit:hover, a.badge-edit:focus {
+  color: #fff;
+  background-color: #24a0ed;
+}
+
+a.badge-edit:focus, a.badge-edit.focus {
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(246, 194, 62, 0.5);
+}
+
 .badge-warning {
   color: #fff;
   background-color: #f6c23e;
@@ -6436,6 +6521,16 @@ a.bg-info:hover, a.bg-info:focus,
 button.bg-info:hover,
 button.bg-info:focus {
   background-color: #2a96a5 !important;
+}
+
+.bg-edit {
+  background-color: #24a0ed !important;
+}
+
+a.bg-edit:hover, a.bg-edit:focus,
+button.bg-edit:hover,
+button.bg-edit:focus {
+  background-color: #091b32 !important;
 }
 
 .bg-warning {
