@@ -99,7 +99,7 @@ $conn->close();
                 <a href="index.html"><b>Back to home</b></a>
             </div>
         </div>
-        <h1 class="text-center mb-5">Admin Profile</h1>
+        <h2 class="text-center mb-5">ADMIN PROFILE</h2>
 
         <?php if ($message): ?>
             <div class="alert alert-info" role="alert">
@@ -135,8 +135,8 @@ $conn->close();
                     <div class="d-flex justify-content-between">
                         <button type="button" class="btn btn-primary" id="editButton">Edit Profile</button>
                         <div>
+							<button type="button" class="btn btn-danger d-none" id="cancelButton">Cancel</button>
                             <button type="submit" class="btn btn-secondary d-none" id="saveButton">Save</button>
-                            <button type="button" class="btn btn-danger d-none" id="cancelButton">Cancel</button>
                         </div>
                     </div>
                 </form>

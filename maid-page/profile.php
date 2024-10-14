@@ -82,6 +82,7 @@ $conn->close();
         .btn-primary:hover {
             background-color: #0056b3;
         }
+		
     </style>
 </head>
 <body>
@@ -99,7 +100,7 @@ $conn->close();
                 <a href="index.html"><b>Back to home</b></a>
             </div>
         </div>
-        <h1 class="text-center mb-5">Maid Profile</h1>
+        <h2 class="text-center mb-5">MAID PROFILE</h2>
             
         <?php if ($message): ?>
             <div class="alert alert-info" role="alert">
@@ -145,8 +146,8 @@ $conn->close();
                         <input type="text" class="form-control" id="salary" name="salary" value="<?php echo $salary; ?>" readonly>
                     </div>
                     <button type="button" class="btn btn-primary btn-custom" id="editButton">Edit Profile</button>
+					<button type="button" class="btn btn-danger btn-custom d-none" id="cancelButton">Cancel</button>
                     <button type="submit" class="btn btn-secondary btn-custom d-none" id="saveButton">Save</button>
-                    <button type="button" class="btn btn-danger btn-custom d-none" id="cancelButton">Cancel</button>
                 </form>
                 <br>
             </div>
