@@ -55,6 +55,13 @@ $conn->close();
     <link href="css/responsive.css" rel="stylesheet" />
 </head>
 <body>
+<nav class="navbar navbar-expand-lg shadow-sm">
+          <a class="navbar-brand" href="index.html">
+            <span>
+				<img src="images/logo.png">
+            </span>
+          </a>
+</nav>		  
 <div class="container rounded bg-white mt-5">
     <div class="row">
         <div class="col-md-4 border-right">
@@ -97,9 +104,9 @@ $conn->close();
                     </div>
                     <br>
                     <div class="mt-5 text-right">
-                        <button type="button" class="btn btn-primary profile-button" id="editButton">Edit Profile</button>
-                        <button type="submit" class="btn btn-success d-none" id="saveButton">Save</button>
-                        <button type="button" class="btn btn-danger d-none" id="cancelButton">Cancel</button>
+                        <button type="button" class="btn btn-primary" id="editButton">Edit Profile</button>
+						<button type="button" class="btn btn-danger d-none" id="cancelButton">Cancel</button>
+                        <button type="submit" class="btn btn-primary d-none" id="saveButton">Update</button>
                     </div>
                 </form>
             </div>

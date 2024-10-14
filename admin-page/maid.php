@@ -339,7 +339,7 @@ if (isset($_GET['delete_id'])) {
                             <div class="card shadow mb-4">
 								<div class="card-header py-3 d-flex justify-content-between align-items-center">
 									<h6 class="m-0 font-weight-bold text-primary">List of Maids</h6>
-									<button type="button" class="btn btn-primary btn-indigo" onclick="window.location.href='addmaid.php';">Add</button>
+									<button type="button" class="btn btn-primary btn-add" onclick="window.location.href='addmaid.php';">Add</button>
 								</div>
                                 <div class="card-body">
                                     <div class="table-responsive">
