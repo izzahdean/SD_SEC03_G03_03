@@ -1,7 +1,6 @@
 <?php
 require_once 'connect-db.php';
 
-// Include PHPMailer files
 require_once 'PHPMailer/src/PHPMailer.php';
 require_once 'PHPMailer/src/SMTP.php';
 require_once 'PHPMailer/src/Exception.php';
@@ -9,18 +8,14 @@ require_once 'PHPMailer/src/Exception.php';
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-// Function to generate a 4-digit OTP code
 function generateOtp() {
     return str_pad(rand(0, 9999), 4, '0', STR_PAD_LEFT);
 }
 
-// Initialize variables to retain form data
 $first_name = $last_name = $contact_number = $address = $email = $password = $repeat_password = '';
 $error_message = '';
 
-// Handle form submission
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Get form data
     $first_name = $_POST['first_name'];
     $last_name = $_POST['last_name'];
     $contact_number = $_POST['contact_number'];
@@ -29,43 +24,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = $_POST['password'];
     $repeat_password = $_POST['repeat_password'];
 
-    // Server-side password validation
     if (strlen($password) < 8 || !preg_match('/[A-Z]/', $password) || !preg_match('/[a-z]/', $password) || !preg_match('/[0-9]/', $password) || !preg_match('/[@$!%*?&]/', $password)) {
         echo "<script>alert('Password must be at least 8 characters long, contain an uppercase letter, a lowercase letter, a number, and a special character!');</script>";
     } 
-    // Check if passwords match
     elseif ($password !== $repeat_password) {
         $error_message = "Passwords do not match!";
     } else {
-        // Hash the password
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-        // Prepare and bind SQL statement to insert into `customer` table
         $stmt = $conn->prepare("INSERT INTO customer (fname, lname, cnum, address, email, pass, verified) VALUES (?, ?, ?, ?, ?, ?, ?)");
-        $verified = 1; // Set verified to 1
+        $verified = 1; 
         $stmt->bind_param("ssssssi", $first_name, $last_name, $contact_number, $address, $email, $hashed_password, $verified);
 
-        // Execute the query
         if ($stmt->execute()) {
-            // Prepare and bind SQL statement to insert into `users` table
-            $user_type = 'customer'; // Assuming a default user type for new users
+            $user_type = 'customer'; 
             $stmt = $conn->prepare("INSERT INTO users (email, pass, user_type) VALUES (?, ?, ?)");
             $stmt->bind_param("sss", $email, $hashed_password, $user_type);
             $stmt->execute();
 
-            // Generate a 4-digit OTP code
             $verification_code = generateOtp();
 
-            // Prepare and execute SQL to insert OTP into `otp_codes` table
             $stmt = $conn->prepare("INSERT INTO otp_codes (email, code, created_at) VALUES (?, ?, NOW())");
             $stmt->bind_param("ss", $email, $verification_code);
             $stmt->execute();
 
-            // Send OTP email using PHPMailer
             $mail = new PHPMailer(true);
 
             try {
-                // Server settings
                 $mail->isSMTP(); 
                 $mail->Host = 'smtp.gmail.com'; 
                 $mail->SMTPAuth = true; 
@@ -74,11 +59,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $mail->SMTPSecure = 'tls'; 
                 $mail->Port = 587; 
 
-                // Recipients
                 $mail->setFrom('nrulizzh35@gmail.com', 'MyKakaks');
                 $mail->addAddress($email); 
 
-                // Content
                 $mail->isHTML(true); 
                 $mail->Subject = 'Your account authentication Code';
                 $mail->Body    = 'Your OTP code is: ' . $verification_code;
@@ -86,7 +69,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 $mail->send();
 
-                // Redirect to OTP verification page with email as query string
                 header("Location: otp-page.php?email=" . urlencode($email));
                 exit();
             } catch (Exception $e) {
@@ -100,7 +82,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $conn->close();
     }
 } else {
-    // Display the registration form with the password validation
 }
 ?>
 <!DOCTYPE html>
@@ -203,7 +184,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
     </div>
     <script>
-        // Password validation checks
         const passwordInput = document.getElementById('password');
         const repeatPasswordInput = document.getElementById('repeatPassword');
         const passwordChecklist = document.querySelector('.password-checklist');
