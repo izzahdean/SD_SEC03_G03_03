@@ -3,21 +3,8 @@ session_start();
 
 include '../connect-db.php';
 
-// Handle form submission
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $name = $_POST['name'];
-    $description = $_POST['description'];
-    $start_date = $_POST['start_date'];
-	$price = $_POST['price'];
-
-    $sql = "INSERT INTO services (name, description, start_date, price) VALUES ('$name', '$description', '$start_date', '$price')";
-
-    if ($conn->query($sql) === TRUE) {
-        echo "New service added successfully";
-        header("Location: index.php"); // Redirect back to the maid list page
-    } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
-    }
+    
 }
 
 $conn->close();
@@ -30,9 +17,7 @@ $conn->close();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="shortcut icon" href="img/favicon.png" type="">
     <title>Add Service</title>
-    <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Custom CSS -->
     <style>
         body {
             background: linear-gradient(to bottom right, #00204a 0%, #660066 100%);
@@ -93,7 +78,7 @@ $conn->close();
 	
     <div class="container">
         <h3>Add a New Service</h3>
-        <form action="addservice.php" method="POST">
+        <form action="addservice.php" method="POST" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="name">Service Name:</label>
                 <input type="text" class="form-control" id="name" name="name" placeholder="Enter service name" required>
@@ -102,21 +87,25 @@ $conn->close();
                 <label for="description">Description:</label>
                 <input type="text" class="form-control" id="description" name="description" placeholder="Enter service description" required>
             </div>
-            <div class="form-group">
-                <label for="start_date">Start Date:</label>
-                <input type="date" class="form-control" id="start_date" name="start_date" required>
-            </div>
 			<div class="form-group">
-                <label for="start_date">Price:</label>
+                <label for="price">Price:</label>
                 <input type="text" class="form-control" id="price" name="price" required>
             </div>
-			
+			<div class="form-group">
+                <label for="image">Upload Service Image</label>
+                <input type="file" class="form-control" id="image" name="image" required>
+            </div>
+			<div class="form-group">
+                <label for="status">Status [checked=hidden , un-checked=visible]</label>
+				<br>
+                <input type="checkbox" style="width:30px;height:30px" id="status" name="status" required>
+            </div>
 			<div class="form-row">
                 <div class="col text-left ">
-				<button type="submit" class="btn btn-secondary">Add</button>
+				<button type="submit" class="btn btn-primary">Save</button>
 				</div>
 				<div class="col text-right ">
-				<button type="button" class="btn btn-cancel">Cancel</button>
+				<button type="button" class="btn btn-danger" onclick="window.location.href='service.html'">Cancel</button>
 				</div>
 			</div>
 			
