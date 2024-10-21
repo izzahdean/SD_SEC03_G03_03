@@ -44,7 +44,7 @@ if (isset($_COOKIE['user'])) {
                     header("Location: admin-page/index.html");
                     exit();
                 case 'customer':
-                    header("Location: customer-page/index.html");
+                    header("Location: cust-page/index.html");
                     exit();
                 case 'maid':
                     header("Location: maid-page/index.html");
@@ -98,7 +98,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     header("Location: admin-page/index.html");
                     exit();
                 case 'customer':
-                    header("Location: customer-page/index.html");
+                    header("Location: cust-page/index.html");
                     exit();
                 case 'maid':
                     header("Location: maid-page/index.html");
