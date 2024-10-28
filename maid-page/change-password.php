@@ -1,65 +1,42 @@
 <?php
-// Start session to use session variables if necessary
 session_start();
-
-// Database connection
-$servername = "localhost";
-$username = "wp2024";
-$password = "@webprogramming"; // Update with your MySQL password
-$dbname = "mysister";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
-$errorMessage = "";
-$successMessage = "";
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Get posted form data
+include '../connect-db.php';
+$message = "";  
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $oldPassword = $_POST['oldPassword'];
     $newPassword = $_POST['newPassword'];
     $confirmPassword = $_POST['confirmPassword'];
+    $email = $_SESSION['email'];  
 
-    // Assuming you're identifying the logged-in user with their email from the session
-    $userEmail = $_SESSION['email']; // Ensure session has 'email'
-
-    // Fetch the user's current hashed password from the database
-    $stmt = $conn->prepare("SELECT pass FROM maid WHERE email = ?");
-    $stmt->bind_param("s", $userEmail);
+    $query = "SELECT * FROM users WHERE email = ?";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("s", $email);
     $stmt->execute();
-    $stmt->bind_result($hashedPasswordFromDB);
-    $stmt->fetch();
-    $stmt->close();
+    $result = $stmt->get_result();
+    $user = $result->fetch_assoc();
 
-    // Validate old password
-    if (!password_verify($oldPassword, $hashedPasswordFromDB)) {
-        $errorMessage = "The old password you entered is incorrect.";
-    } elseif ($newPassword !== $confirmPassword) {
-        // Validate if new password and confirm password match
-        $errorMessage = "New password and confirm password do not match.";
-    } elseif (strlen($newPassword) < 6) {
-        // Optional: Add a length check for the new password
-        $errorMessage = "New password must be at least 6 characters long.";
-    } else {
-        // Hash the new password and update in the database
-        $newHashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
-        
-        $stmt = $conn->prepare("UPDATE maid SET pass = ? WHERE email = ?");
-        $stmt->bind_param("ss", $newHashedPassword, $userEmail);
-        
-        if ($stmt->execute()) {
-            $successMessage = "Your password has been successfully changed!";
+    if (password_verify($oldPassword, $user['pass'])) {
+        if ($newPassword === $confirmPassword) {
+            $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
+
+            $updateUser = "UPDATE users SET pass = ? WHERE email = ?";
+            $stmtUser = $conn->prepare($updateUser);
+            $stmtUser->bind_param("ss", $hashedPassword, $email);
+            $stmtUser->execute();
+
+            $updateMaid = "UPDATE maid SET pass = ? WHERE email = ?";
+            $stmtMaid = $conn->prepare($updateMaid);
+            $stmtMaid->bind_param("ss", $hashedPassword, $email);
+            $stmtMaid->execute();
+
+            $message = "Password changed successfully!";
         } else {
-            $errorMessage = "There was a problem changing your password. Please try again.";
+            $message = "New passwords do not match.";
         }
-        $stmt->close();
+    } else {
+        $message = "Old password is incorrect.";
     }
 }
-
-$conn->close();
 ?>
 
 <!DOCTYPE html>
@@ -67,6 +44,7 @@ $conn->close();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="img/favicon.png" type="">
     <title>Change Password</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
@@ -143,50 +121,67 @@ $conn->close();
         .bg-dark {
             background-color: #00204a !important;
         }
+        .message {
+            color: green;
+            font-weight: bold;
+            text-align: center;
+        }
+        .error {
+            color: red;
+            font-weight: bold;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
-
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-lg-6">
-            <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold">Change Your Password</h6>
-                </div>
-                <div class="card-body">
-                    <form action="" method="POST">
-                        <div class="form-group">
-                            <label for="oldPassword">Old Password</label>
-                            <input type="password" class="form-control" id="oldPassword" name="oldPassword" required>
+    <div id="wrapper">
+        <div id="content-wrapper" class="d-flex flex-column">
+            <div id="content">
+                <nav class="navbar navbar-expand navbar-light bg-dark topbar mb-4 static-top shadow">
+                    <h1><img src="img/logo.png" style="width: 100px; height: 33px;"></h1>
+                    <button class="btn btn-primary ml-auto" onclick="window.location.href='index.html'">
+                        Back to Dashboard
+                    </button>
+                </nav>
+                <div class="container-fluid">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-6">
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold">Change Your Password</h6>
+                                </div>
+                                <div class="card-body">
+                                    <?php if ($message): ?>
+                                        <p class="<?= ($message === 'Password changed successfully!') ? 'message' : 'error' ?>">
+                                            <?= htmlspecialchars($message) ?>
+                                        </p>
+                                    <?php endif; ?>
+                                    <form action="" method="POST">
+                                        <div class="form-group">
+                                            <label for="oldPassword">Old Password</label>
+                                            <input type="password" class="form-control" id="oldPassword" name="oldPassword" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="newPassword">New Password</label>
+                                            <input type="password" class="form-control" id="newPassword" name="newPassword" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="confirmPassword">Confirm New Password</label>
+                                            <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary btn-block">Change Password</button>
+                                    </form>
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="newPassword">New Password</label>
-                            <input type="password" class="form-control" id="newPassword" name="newPassword" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="confirmPassword">Confirm New Password</label>
-                            <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary btn-block">Change Password</button>
-                    </form>
-                    
-                    <!-- Display error or success messages -->
-                    <?php if (!empty($errorMessage)): ?>
-                        <div class="alert alert-danger mt-3"><?php echo $errorMessage; ?></div>
-                    <?php endif; ?>
-                    
-                    <?php if (!empty($successMessage)): ?>
-                        <div class="alert alert-success mt-3"><?php echo $successMessage; ?></div>
-                    <?php endif; ?>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
-
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
