@@ -1,13 +1,62 @@
+<?php
+session_start();
+include '../connect-db.php';
+$message = "";  // Variable to store messages
+
+// Handle the form submission
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $oldPassword = $_POST['oldPassword'];
+    $newPassword = $_POST['newPassword'];
+    $confirmPassword = $_POST['confirmPassword'];
+    $email = $_SESSION['email'];  // Assuming the admin's email is stored in the session after login
+
+    // Verify the old password
+    $query = "SELECT * FROM users WHERE email = ?";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $user = $result->fetch_assoc();
+
+    if (password_verify($oldPassword, $user['pass'])) {
+        // Check if new password matches the confirm password
+        if ($newPassword === $confirmPassword) {
+            // Hash the new password
+            $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
+
+            // Update password in users table
+            $updateUser = "UPDATE users SET pass = ? WHERE email = ?";
+            $stmtUser = $conn->prepare($updateUser);
+            $stmtUser->bind_param("ss", $hashedPassword, $email);
+            $stmtUser->execute();
+
+            // Update password in admin table
+            $updateAdmin = "UPDATE admin SET pass = ? WHERE email = ?";
+            $stmtAdmin = $conn->prepare($updateAdmin);
+            $stmtAdmin->bind_param("ss", $hashedPassword, $email);
+            $stmtAdmin->execute();
+
+            // Success message
+            $message = "Password changed successfully!";
+        } else {
+            $message = "New passwords do not match.";
+        }
+    } else {
+        $message = "Old password is incorrect.";
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="shortcut icon" href="img/favicon.png" type="">
+    <link rel="shortcut icon" href="img/favicon.png" type="">
     <title>Change Password</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-	<style>
-	body {
+    <style>
+        body {
             background-color: #231a6f;
             font-family: 'Arial', sans-serif;
         }
@@ -26,7 +75,6 @@
             background-color: #0f054c;
             border-color: #2653d4;
         }
-        /* Card styling */
         .card {
             border: none;
             border-radius: 10px;
@@ -51,7 +99,6 @@
             padding: 10px;
             font-weight: bold;
         }
-        /* Modal styling */
         .modal-header {
             background-color: #4e73df;
             color: white;
@@ -73,46 +120,38 @@
             border-radius: 10px;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
         }
-        /* Back to Dashboard Button */
         .dashboard-btn {
             margin-left: auto;
             padding: 10px 20px;
             border-radius: 10px;
             font-weight: bold;
         }
-		
-		.bg-dark {
-			background-color: #00204a !important;
-		}
-		
+        .bg-dark {
+            background-color: #00204a !important;
+        }
+        .message {
+            color: green;
+            font-weight: bold;
+            text-align: center;
+        }
+        .error {
+            color: red;
+            font-weight: bold;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
-    <!-- Page Wrapper -->
     <div id="wrapper">
-
-        <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
-
-            <!-- Main Content -->
             <div id="content">
-
-                <!-- Topbar -->
                 <nav class="navbar navbar-expand navbar-light bg-dark topbar mb-4 static-top shadow">
-                    <!-- Page Heading -->
                     <h1><img src="img/logo.png" style="width: 100px; height: 33px;"></h1>
-
-                    <!-- Back to Dashboard Button -->
-                    <button class="btn btn-primary ml-auto " onclick="window.location.href='index.html'">
+                    <button class="btn btn-primary ml-auto" onclick="window.location.href='index.html'">
                         Back to Dashboard
                     </button>
-
                 </nav>
-                <!-- End of Topbar -->
-
-                <!-- Begin Page Content -->
                 <div class="container-fluid">
-                    <!-- Page Content -->
                     <div class="row justify-content-center">
                         <div class="col-lg-6">
                             <div class="card shadow mb-4">
@@ -120,8 +159,12 @@
                                     <h6 class="m-0 font-weight-bold">Change Your Password</h6>
                                 </div>
                                 <div class="card-body">
-                                    <!-- Form for changing password -->
-                                    <form action="change-password.php" method="POST" id="changePasswordForm">
+                                    <?php if ($message): ?>
+                                        <p class="<?= ($message === 'Password changed successfully!') ? 'message' : 'error' ?>">
+                                            <?= htmlspecialchars($message) ?>
+                                        </p>
+                                    <?php endif; ?>
+                                    <form action="" method="POST">
                                         <div class="form-group">
                                             <label for="oldPassword">Old Password</label>
                                             <input type="password" class="form-control" id="oldPassword" name="oldPassword" required>
@@ -141,71 +184,12 @@
                         </div>
                     </div>
                 </div>
-                <!-- /.container-fluid -->
-
-            </div>
-            <!-- End of Main Content -->
-
-        </div>
-        <!-- End of Content Wrapper -->
-
-    </div>
-    <!-- End of Page Wrapper -->
-
-    <!-- Success Modal -->
-    <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Password Changed</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    Your password has been successfully changed!
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
-                </div>
             </div>
         </div>
     </div>
 
-    <!-- Bootstrap and JavaScript -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-    <script>
-        // Simulate a successful password change after form submission
-        document.getElementById('changePasswordForm').addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevent actual form submission for this demo
-
-            // Perform your AJAX or form validation here
-
-            // Simulate success and trigger modal
-            $('#successModal').modal('show');
-        });
-    </script>
 </body>
 </html>
-
-
-<?php
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Fetch POST data
-    $oldPassword = $_POST['oldPassword'];
-    $newPassword = $_POST['newPassword'];
-    $confirmPassword = $_POST['confirmPassword'];
-
-    // Validate and check passwords (this is an example; actual implementation may differ)
-    if ($newPassword === $confirmPassword) {
-        // Perform password change logic (hashing and database update)
-        // Use password_hash() in PHP for security
-        echo "Password successfully changed!";
-    } else {
-        echo "Passwords do not match!";
-    }
-}
-?>
