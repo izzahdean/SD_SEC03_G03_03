@@ -46,7 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $mail->setFrom('nrulizzh35@gmail.com', 'MyKakaks');
             $mail->addAddress($email);
 
-            $reset_link = "http://localhost/SD_SEC03_G03_03/reset-password.php?token=" . $token;
+            $reset_link = "http://localhost/master/reset-password.php?token=" . $token;
             $mail->isHTML(true);
             $mail->Subject = 'Password Reset Request';
             $mail->Body    = "Dear User,<br><br> We received a request to reset your password.<br> Kindly click <a href='" . $reset_link . "'>here</a> 
