@@ -1,16 +1,13 @@
 <?php
 session_start();
 include '../connect-db.php';
-$message = "";  // Variable to store messages
-
-// Handle the form submission
+$message = "";  
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $oldPassword = $_POST['oldPassword'];
     $newPassword = $_POST['newPassword'];
     $confirmPassword = $_POST['confirmPassword'];
-    $email = $_SESSION['email'];  // Assuming the admin's email is stored in the session after login
+    $email = $_SESSION['email'];  
 
-    // Verify the old password
     $query = "SELECT * FROM users WHERE email = ?";
     $stmt = $conn->prepare($query);
     $stmt->bind_param("s", $email);
@@ -19,24 +16,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $user = $result->fetch_assoc();
 
     if (password_verify($oldPassword, $user['pass'])) {
-        // Check if new password matches the confirm password
         if ($newPassword === $confirmPassword) {
-            // Hash the new password
             $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
 
-            // Update password in users table
             $updateUser = "UPDATE users SET pass = ? WHERE email = ?";
             $stmtUser = $conn->prepare($updateUser);
             $stmtUser->bind_param("ss", $hashedPassword, $email);
             $stmtUser->execute();
 
-            // Update password in admin table
             $updateAdmin = "UPDATE admin SET pass = ? WHERE email = ?";
             $stmtAdmin = $conn->prepare($updateAdmin);
             $stmtAdmin->bind_param("ss", $hashedPassword, $email);
             $stmtAdmin->execute();
 
-            // Success message
             $message = "Password changed successfully!";
         } else {
             $message = "New passwords do not match.";
