@@ -314,7 +314,7 @@ if (isset($_GET['delete_id'])) {
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Profile
                                 </a>
-								<a class="dropdown-item" href="change-password.html">
+								<a class="dropdown-item" href="change-password.php">
                                    <i class="fas fa-lock fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Change Password
                                 </a>
