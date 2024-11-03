@@ -18,8 +18,213 @@
         rel="stylesheet">
 
     <!-- Custom styles for this template-->
-     <link href="css/mykakaks-maid.css" rel="stylesheet">
+    <link href="css/mykakaks-maid.css" rel="stylesheet">
+	
+	<style>
+		.appointments-container {
+		  display: grid;
+		  grid-template-columns: repeat(3, 1fr); /* 3 columns */
+		  gap: 20px; /* Space between the cards */
+		  padding: 20px;
+		}
 
+		.appointment-card {
+		  background-color: #ffffff;
+		  padding: 15px;
+		  border-radius: 10px;
+		  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+		}
+
+		.appointment-header {
+		  display: flex;
+		  justify-content: space-between;
+		  align-items: center;
+		}
+
+		.doctor-name {
+		  font-weight: bold;
+		  color: #2e3b4e;
+		}
+
+		.status {
+		  font-weight: bold;
+		  padding: 5px 10px;
+		  border-radius: 12px;
+		}
+
+		.ongoing {
+		  color: #ff9800; /* Orange */
+		}
+
+		.completed {
+		  color: #28a745; /* Green */
+		}
+
+		.appointment-info {
+		  display: flex;
+		  justify-content: space-between;
+		  align-items: center;
+		  margin-top: 10px;
+		  color: #9e9e9e;
+		}
+
+		.time,
+		.date {
+		margin-bottom: 7px;		
+		  display: flex;
+		  align-items: center;
+		}
+
+		.icon {
+		  margin-right: 5px;
+		}
+
+		.full-info {
+		  color: #2196f3; /* Blue */
+		  font-weight: bold;
+		  text-decoration: none;
+		  align-self: flex-end;
+		}
+
+		.full-info:hover {
+		  text-decoration: underline;
+		}
+		
+			.cr-wrapper *,
+			.cr-wrapper *::before,
+			.cr-wrapper *::after {
+				box-sizing: content-box !important;
+			}
+
+			.cr-wrapper input {
+				position: absolute;
+				z-index: -1;
+				opacity: 0;
+			}
+
+			.cr-wrapper span {
+				font-size: 14px;
+			}
+
+			.cr-wrapper {
+				display: table;
+				position: relative;
+				padding-left: 31px;
+				cursor: pointer;
+				margin-bottom: 5px;
+			}
+
+			.cr-wrapper input[type="checkbox"] ~ .cr-input {
+				position: absolute;
+				top: 50%;
+				left: 0;
+				height: 21px;
+				width: 21px;
+				background: #94A3B8;
+				transition: background 250ms;
+				border: 1px solid #F1F5F9;
+				border-radius: 5px;
+				transform: translate(0, -50%);
+			}
+
+			.cr-wrapper input[type="radio"] ~ .cr-input {
+				position: absolute;
+				top: 50%;
+				left: 0;
+				height: 21px;
+				width: 21px;
+				background: #94A3B8;
+				transition: background 250ms;
+				border: 1px solid #F1F5F9;
+				border-radius: 20px;
+				transform: translate(0, -50%);
+			}
+
+			.cr-wrapper input[type="checkbox"] ~ .cr-input::after {
+				content: "";
+				position: absolute;
+				display: none;
+				left: 4px;
+				top: 4px;
+				width: 13px;
+				height: 13px;
+				transition: background 250ms;
+				background-color: #FFFFFF;
+				clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+			}
+
+			.cr-wrapper input[type="radio"] ~ .cr-input::after {
+				content: "";
+				position: absolute;
+				display: none;
+				left: 4px;
+				top: 4px;
+				width: 12px;
+				height: 12px;
+				border-radius: 20px;
+				background: #FFFFFF;
+				transition: background 250ms;
+			}
+
+			.cr-wrapper input:checked ~ .cr-input::after {
+				display: block;
+			}
+
+			.cr-wrapper:hover input[type="checkbox"]:not([disabled]) ~ .cr-input,
+			.cr-wrapper input[type="checkbox"]:focus ~ .cr-input {
+				background: #E2E8F0;
+				border-color: #64748B;
+			}
+
+			.cr-wrapper:hover input[type="radio"]:not([disabled]) ~ .cr-input,
+			.cr-wrapper input[type="radio"]:focus ~ .cr-input {
+				background: #E2E8F0;
+				border-color: #64748B;
+			}
+
+			.cr-wrapper input[type="checkbox"]:checked ~ .cr-input {
+				background: #00204A;
+				border-color: #06B1E1;
+			}
+
+			.cr-wrapper input[type="radio"]:checked ~ .cr-input {
+				background: #00204A;
+				border-color: #06B1E1;
+			}
+
+			.cr-wrapper input[type="checkbox"]:disabled ~ .cr-input,
+			.cr-wrapper input[type="radio"]:disabled ~ .cr-input {
+				opacity: 0.5;
+				cursor: not-allowed;
+			}
+
+			.cr-wrapper input[type="checkbox"]:disabled ~ span,
+			.cr-wrapper input[type="radio"]:disabled ~ span {
+				opacity: 0.5;
+				cursor: not-allowed;
+			}
+
+			.cr-wrapper input[type="checkbox"]:disabled ~ .cr-input::after {
+				background: #FFFFFF;
+			}
+
+			.cr-wrapper input[type="radio"]:disabled ~ .cr-input::after {
+				background: #FFFFFF;
+			}
+
+			.cr-wrapper:hover input[type="checkbox"]:not([disabled]):checked ~ .cr-input,
+			.cr-wrapper input[type="checkbox"]:checked:focus ~ .cr-input {
+				background: #24376F;
+				border-color: #06B1E1;
+			}
+
+			.cr-wrapper:hover input[type="radio"]:not([disabled]):checked ~ .cr-input,
+			.cr-wrapper input[type="radio"]:checked:focus ~ .cr-input {
+				background: #24376F;
+				border-color: #06B1E1;
+			}
+	</style>
+	
 </head>
 
 <body id="page-top">
@@ -27,11 +232,11 @@
     <!-- Page Wrapper -->
     <div id="wrapper">
 
-            <!-- Sidebar -->
+        <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
                   <img src="img/logo.png" style="width: 800px; height: 30px;">
                 <div class="sidebar-brand-text mx-3">MAID</div>
             </a>
@@ -63,7 +268,7 @@
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
     				<div class="bg-white py-2 collapse-inner rounded">
-        				<a class="collapse-item" href="task.html">Task status</a>
+        				<a class="collapse-item" href="task.html">Task Status</a>
    				 </div>
 					</div>
 
@@ -163,81 +368,137 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-4 text-gray-800">Task Status</h1>
+                    <h1 class="h3 mb-1 text-gray-800">Service Schedules&nbsp;</h1>
+                    <p class="mb-4"></p>
 
-                    <div class="row">
+					<!-- Custom Text Color Utilities -->
+					<div class="appointments-container">
+								<div class="appointment-card">
+									<div class="appointment-header">
+										<span class="doctor-name">Dr. Gautam Gahlawat</span>
+										<span class="status ongoing">On Going</span>
+									</div>
+									<div class="appointment-info">
+										<div class="time">
+											<span class="icon">⏰</span> 07:00PM to 08:00PM
+										</div>
+									</div>
+									<div class="date">
+										<span class="icon">📅</span> 16-Feb-2017
+									</div>
+									<label class="cr-wrapper">
+										<input type="checkbox" checked="unchecked"/>
+										<div class="cr-input"></div>
+										<span>Task Completed ?</span>
+									</label>
+								</div>
 
-                        <div class="col-lg-6">
+								<div class="appointment-card">
+									<div class="appointment-header">
+										<span class="doctor-name">Dr. Nishant Singh</span>
+										<span class="status completed">Completed</span>
+									</div>
+									<div class="appointment-info">
+										<div class="time">
+											<span class="icon">⏰</span> 07:00PM to 08:00PM
+										</div>
+									</div>
+									<div class="date">
+										<span class="icon">📅</span> 16-Feb-2017
+									</div>
+									<label class="cr-wrapper">
+										<input type="checkbox" checked="checked"/>
+											<div class="cr-input"></div>
+										<span>Task Completed ?</span>
+									</label>
+								</div>
+											  
+								<div class="appointment-card">
+									<div class="appointment-header">
+										<span class="doctor-name">Dr. Gautam Gahlawat</span>
+										<span class="status completed">Completed</span>
+									</div>
+									<div class="appointment-info">
+										<div class="time">
+										<span class="icon">⏰</span> 07:00PM to 08:00PM
+										</div>
+									</div>
+									<div class="date">
+										<span class="icon">📅</span> 16-Feb-2017
+									</div>
+									<label class="cr-wrapper">
+										<input type="checkbox" checked="checked"/>
+											<div class="cr-input"></div>
+										<span>Task Completed ?</span>
+									</label>
+								</div>
+					</div>
+					
+					
+					<!-- Custom Text Color Utilities for the next column of booking lists-->
+					
+					<div class="appointments-container">
+								<div class="appointment-card">
+									<div class="appointment-header">
+										<span class="doctor-name">Dr. Gautam Gahlawat</span>
+										<span class="status ongoing">On Going</span>
+									</div>
+									<div class="appointment-info">
+										<div class="time">
+											<span class="icon">⏰</span> 07:00PM to 08:00PM
+										</div>
+									</div>
+									<div class="date">
+										<span class="icon">📅</span> 16-Feb-2017
+									</div>
+									<label class="cr-wrapper">
+										<input type="checkbox" checked="unchecked"/>
+										<div class="cr-input"></div>
+										<span>Task Completed ?</span>
+									</label>
+								</div>
 
-                            <!-- Circle Buttons -->
-                            <div class="card shadow mb-4">
-                                <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Circle Buttons</h6>
-                                </div>
-                                <div class="card-body">
-                                    <p>Use Font Awesome Icons (included with this theme package) along with the circle
-                                        buttons as shown in the examples below!</p>
-                                    <!-- Circle Buttons (Default) -->
-                                    <div class="mb-2">
-                                        <code>.btn-circle</code>
-                                    </div>
-                                    <a href="#" class="btn btn-primary btn-circle">
-                                        <i class="fab fa-facebook-f"></i>
-                                    </a>
-                                    <a href="#" class="btn btn-success btn-circle">
-                                        <i class="fas fa-check"></i>
-                                    </a>
-                                    <a href="#" class="btn btn-info btn-circle">
-                                        <i class="fas fa-info-circle"></i>
-                                    </a>
-                                    <a href="#" class="btn btn-warning btn-circle">
-                                        <i class="fas fa-exclamation-triangle"></i>
-                                    </a>
-                                    <a href="#" class="btn btn-danger btn-circle">
-                                        <i class="fas fa-trash"></i>
-                                    </a>
-                                    <!-- Circle Buttons (Small) -->
-                                    <div class="mt-4 mb-2">
-                                        <code>.btn-circle .btn-sm</code>
-                                    </div>
-                                    <a href="#" class="btn btn-primary btn-circle btn-sm">
-                                        <i class="fab fa-facebook-f"></i>
-                                    </a>
-                                    <a href="#" class="btn btn-success btn-circle btn-sm">
-                                        <i class="fas fa-check"></i>
-                                    </a>
-                                    <a href="#" class="btn btn-info btn-circle btn-sm">
-                                        <i class="fas fa-info-circle"></i>
-                                    </a>
-                                    <a href="#" class="btn btn-warning btn-circle btn-sm">
-                                        <i class="fas fa-exclamation-triangle"></i>
-                                    </a>
-                                    <a href="#" class="btn btn-danger btn-circle btn-sm">
-                                        <i class="fas fa-trash"></i>
-                                    </a>
-                                    <!-- Circle Buttons (Large) -->
-                                    <div class="mt-4 mb-2">
-                                        <code>.btn-circle .btn-lg</code>
-                                    </div>
-                                    <a href="#" class="btn btn-primary btn-circle btn-lg">
-                                        <i class="fab fa-facebook-f"></i>
-                                    </a>
-                                    <a href="#" class="btn btn-success btn-circle btn-lg">
-                                        <i class="fas fa-check"></i>
-                                    </a>
-                                    <a href="#" class="btn btn-info btn-circle btn-lg">
-                                        <i class="fas fa-info-circle"></i>
-                                    </a>
-                                    <a href="#" class="btn btn-warning btn-circle btn-lg">
-                                        <i class="fas fa-exclamation-triangle"></i>
-                                    </a>
-                                    <a href="#" class="btn btn-danger btn-circle btn-lg">
-                                        <i class="fas fa-trash"></i>
-                                    </a>
-                                </div>
-                            </div>
-						</div>
-                </div>
+								<div class="appointment-card">
+									<div class="appointment-header">
+										<span class="doctor-name">Dr. Nishant Singh</span>
+										<span class="status completed">Completed</span>
+									</div>
+									<div class="appointment-info">
+										<div class="time">
+											<span class="icon">⏰</span> 07:00PM to 08:00PM
+										</div>
+									</div>
+									<div class="date">
+										<span class="icon">📅</span> 16-Feb-2017
+									</div>
+									<label class="cr-wrapper">
+										<input type="checkbox" checked="checked"/>
+											<div class="cr-input"></div>
+										<span>Task Completed ?</span>
+									</label>
+								</div>
+											  
+								<div class="appointment-card">
+									<div class="appointment-header">
+										<span class="doctor-name">Dr. Gautam Gahlawat</span>
+										<span class="status completed">Completed</span>
+									</div>
+									<div class="appointment-info">
+										<div class="time">
+										<span class="icon">⏰</span> 07:00PM to 08:00PM
+										</div>
+									</div>
+									<div class="date">
+										<span class="icon">📅</span> 16-Feb-2017
+									</div>
+									<label class="cr-wrapper">
+										<input type="checkbox" checked="checked"/>
+											<div class="cr-input"></div>
+										<span>Task Completed ?</span>
+									</label>
+								</div>
+					</div>
+				</div>
                 <!-- /.container-fluid -->
 
             </div>
