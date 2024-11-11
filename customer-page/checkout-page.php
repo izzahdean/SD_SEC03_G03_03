@@ -289,7 +289,8 @@
 												<div class=""><br>
 													<input type="text" class="form-control contact-inputs col-sm-15" id="cvv" name="cvv" placeholder="CVV" required> 
 												</div>
-									</div>	
+									</div>
+												<div id="paypal-button-container"></div>
 								</div>	
 					</div><br>
 				  </div>
@@ -395,7 +396,47 @@
   <!-- owl slider -->
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js">
   </script>
-  <!-- custom js -->
+  <script>
+document.addEventListener("DOMContentLoaded", function () {
+  // Render PayPal button
+  paypal.Buttons({
+    style: {
+      shape: 'rect',
+      color: 'gold',
+      layout: 'vertical',
+      label: 'paypal'
+    },
+
+    createOrder: function(data, actions) {
+      // Set up the transaction amount (replace '100.00' with dynamic value if needed)
+      return actions.order.create({
+        purchase_units: [{
+          amount: { value: '100.00' }
+        }]
+      });
+    },
+
+    onApprove: function(data, actions) {
+      return actions.order.capture().then(function(details) {
+        // Display a success message
+        alert('Transaction completed by ' + details.payer.name.given_name);
+      });
+    },
+
+    onCancel: function(data) {
+      // Show cancel message
+      alert('Payment was canceled.');
+    },
+
+    onError: function(err) {
+      // Handle error
+      console.error('An error occurred during the transaction:', err);
+      alert('An error occurred. Please try again.');
+    }
+  }).render('#paypal-button-container'); // Render PayPal button into the specified container
+});
+</script>
+
 
 </body>
 
