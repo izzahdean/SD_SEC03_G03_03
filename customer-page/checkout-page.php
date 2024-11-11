@@ -31,90 +31,72 @@
   <link href="csscheckout/style.css" rel="stylesheet" />
   <!-- responsive style -->
   <link href="css/responsive.css" rel="stylesheet" />
-  
-	<script>
-    // Get today's date in YYYY-MM-DD format
-    var today = new Date().toISOString().split('T')[0];
-    // Set the minimum selectable date to today's date
-    document.getElementById("service").setAttribute("min", today);
-	
-	function confirmSubmission() {
-        if (confirm("Are you sure you want to proceed with the payment?")) {
-            alert("Payment successful! Your booking is confirmed.");
-        } else {
-            alert("Payment canceled.");
+
+  <!-- PayPal SDK for Sandbox -->
+ <script src="https://www.paypal.com/sdk/js?client-id=AZ0hXyRIjA08ZtVkluPK7VtF2N3lM-WIheD5A_YQtskgVBAGP9QCAhdVofs3tBFPO-C-DRgz2ViB_ST8&currency=USD"></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // Render PayPal button
+      paypal.Buttons({
+        style: {
+          shape: 'rect',
+          color: 'gold',
+          layout: 'vertical',
+          label: 'paypal'
+        },
+        createOrder: function (data, actions) {
+          return actions.order.create({
+            purchase_units: [{
+              amount: { value: '100.00' }
+            }]
+          });
+        },
+        onApprove: function (data, actions) {
+          return actions.order.capture().then(function (details) {
+            alert('Transaction completed by ' + details.payer.name.given_name);
+          });
+        },
+        onCancel: function (data) {
+          alert('Payment was canceled.');
+        },
+        onError: function (err) {
+          console.error('An error occurred during the transaction:', err);
+          alert('An error occurred. Please try again.');
         }
+      }).render('#paypal-button-container');
+    });
+  </script>
+
+  <style>
+    .submitbutton {
+      font-family: "Open Sans", sans-serif;
+      color: #fff !important;
+      font-size: 16px;
+      text-shadow: 0px 0px 0px #7CACDE;
+      padding: 10px 25px;
+      border-radius: 20px;
+      border: 0px solid #3866A3;
+      background: #00bbf0;
     }
-	
-	document.addEventListener("DOMContentLoaded", function () {
-	  // Render PayPal button
-	  paypal.Buttons({
-		style: {
-		  shape: 'rect',
-		  color: 'gold',
-		  layout: 'vertical',
-		  label: 'paypal'
-		},
 
-		createOrder: function(data, actions) {
-		  // Set up the transaction amount (replace '100.00' with dynamic value if needed)
-		  return actions.order.create({
-			purchase_units: [{
-			  amount: { value: '100.00' }
-			}]
-		  });
-		},
-
-		onApprove: function(data, actions) {
-		  return actions.order.capture().then(function(details) {
-			// Display a success message
-			alert('Transaction completed by ' + details.payer.name.given_name);
-		  });
-		},
-
-		onCancel: function(data) {
-		  // Show cancel message
-		  alert('Payment was canceled.');
-		},
-
-		onError: function(err) {
-		  // Handle error
-		  console.error('An error occurred during the transaction:', err);
-		  alert('An error occurred. Please try again.');
-		}
-	  }).render('#paypal-button-container'); // Render PayPal button into the specified container
-	});
-	
-	</script>
-	<style>
-	.submitbutton {
-	  font-family: "Open Sans", sans-serif;
-	  color: #fff !important;
-	  font-size: 16px;
-	  text-shadow: 0px 0px 0px #7CACDE;
-	  padding: 10px 25px;
-	  border-radius: 20px;
-	  border: 0px solid #3866A3;
-	  background: #00bbf0;
-	}
-	.submitbutton:hover {
-	  color: #fff !important;
-	  background: #224abe;
-	}
-	</style>
+    .submitbutton:hover {
+      color: #fff !important;
+      background: #224abe;
+    }
+  </style>
 </head>
 
 <body class="sub_page">
 
   <div class="hero_area">
-
     <div class="hero_bg_box">
       <div class="bg_img_box">
         <img src="images/hero-bg.png" alt="">
       </div>
     </div>
 
-    <!-- header section strats -->
+    <!-- header section starts -->
     <header class="header_section">
       <div class="container-fluid">
         <nav class="navbar navbar-expand-lg custom_nav-container ">
@@ -123,28 +105,17 @@
               <img src="images/logo.png">
             </span>
           </a>
-
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class=""> </span>
           </button>
-
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav  ">
-              <li class="nav-item ">
-                <a class="nav-link" href="index.html">Home </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="service.html">Services</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="feedback.html">Feedback</a>
-              </li>
-			  <li class="nav-item">
-                <a class="nav-link" href="about.html"> About Us</a>
-              </li>
-              <li class="nav-item active">
-                <a class="nav-link" href="contact-us.html">Contact Us</a>
-              </li>
+            <ul class="navbar-nav">
+              <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+              <li class="nav-item"><a class="nav-link" href="service.html">Services</a></li>
+              <li class="nav-item"><a class="nav-link" href="feedback.html">Feedback</a></li>
+              <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
+              <li class="nav-item active"><a class="nav-link" href="contact-us.html">Contact Us</a></li>
+			  
 			  <li class="nav-item dropdown no-arrow">
 			        <div class="topbar-divider d-none d-sm-block"></div>
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
@@ -182,7 +153,8 @@
     <!-- end header section -->
   </div>
 
-	<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  <!-- Booking Details section -->
+  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -328,7 +300,6 @@
 				  </div>
               </div>
             </div>
-			
 			<div class="box ">
               <div class="detail-box">
 				  <div class="responsive-container-block container">
@@ -354,116 +325,25 @@
 													<input type="text" class="form-control contact-inputs col-sm-15" id="cvv" name="cvv" placeholder="CVV" required> 
 												</div>
 									</div>
-												<div id="paypal-button-container"></div>
-									<div class="btn-box"><br>			
-									<button class="submitbutton" onclick="confirmSubmission()">Submit</button>
-									</div>
-								</div>	
-					</div><br>
-				  </div>
+                <div id="paypal-button-container"></div> <!-- PayPal Button Container -->
               </div>
-            </div>
-        </div>
-  </section>
-  <!-- end contact-us section -->
-
-  <!-- info section -->
-
-  <section class="info_section layout_padding2">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-6 col-lg-3 info_col">
-          <div class="info_contact">
-            <h4>
-              Address
-            </h4>
-            <div class="contact_link_box">
-              <a href="">
-                <i class="fa fa-map-marker" aria-hidden="true"></i>
-                <span>
-                  Location<br>
-					Office 2, Ground Floor, Chan Sow Lin,
-					55200 Kuala Lumpur
-                </span>
-              </a>
-              <a href="">
-                <i class="fa fa-phone" aria-hidden="true"></i>
-                <span>
-                  Call +03-84085545
-                </span>
-              </a>
-              <a href="">
-                <i class="fa fa-envelope" aria-hidden="true"></i>
-                <span>
-                  info@mykakaks.com
-                </span>
-              </a>
-            </div>
-          </div>
-          <div class="info_social">
-            <a href="https://www.facebook.com/share/PD2qhTrcmcLgzUrr/?mibextid=LQQJ4d">
-              <i class="fa fa-facebook" aria-hidden="true"></i>
-            </a>
-            <a href="https://api.whatsapp.com/send?phone=60198885313&text=Hi%20MyKakaks,%20I%20want%20to%20book%20an%20appointment.">
-              <i class="fa fa-whatsapp" aria-hidden="true"></i>
-            </a>
-            <a href="https://www.instagram.com/mykakaks.hq/">
-              <i class="fa fa-instagram" aria-hidden="true"></i>
-            </a>
-          </div>
-        </div>
-        <div class="col-md-6 col-lg-2 mx-auto info_col">
-          <div class="info_link_box">
-            <h4>
-              Links
-            </h4>
-            <div class="info_links">
-              <a class="active" href="index.html">
-                Home
-              </a>
-              <a class="" href="service.html">
-                Services
-              </a>
-              <a class="" href="feedback.html">
-                Rating
-              </a>
-			  <a class="" href="about.html">
-                About Us
-              </a>
-              <a class="" href="contact-us.html">
-                Contact Us
-              </a>
             </div>
           </div>
         </div>
       </div>
-    </div>
   </section>
+  <!-- End Booking Details section -->
 
-  <!-- end info section -->
-
-  <!-- footer section -->
+  <!-- Footer Section -->
   <section class="footer_section">
     <div class="container">
-      <p>
-        &copy; <span id="displayYear"></span> All Rights Reserved By
-        <a href="https://html.design/">MyKakaks</a>
-      </p>
+      <p>&copy; <span id="displayYear"></span> All Rights Reserved By <a href="https://html.design/">MyKakaks</a></p>
     </div>
   </section>
-  <!-- footer section -->
+  <!-- End Footer Section -->
 
-  <!-- jQery -->
-  <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
-  <!-- popper js -->
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
-  </script>
-  <!-- bootstrap js -->
-  <script type="text/javascript" src="js/bootstrap.js"></script>
-  <!-- owl slider -->
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js">
-  </script>
-
+  <!-- jQuery and Bootstrap scripts -->
+  <script src="js/jquery-3.4.1.min.js"></script>
+  <script src="js/bootstrap.js"></script>
 </body>
-
 </html>
