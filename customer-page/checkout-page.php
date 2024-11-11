@@ -287,7 +287,7 @@
 													<input type="date" class="form-control contact-inputs" id="date" name="date" placeholder="Valid Until" required>
 												</div><br>
 												<div class=""><br>
-													<input type="text" class="form-control contact-inputs col-sm-15" id="cvc" name="cvc" placeholder="CVC" required> 
+													<input type="text" class="form-control contact-inputs col-sm-15" id="cvv" name="cvv" placeholder="CVV" required> 
 												</div>
 									</div>	
 								</div>	
