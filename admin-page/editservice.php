@@ -22,14 +22,12 @@ if (isset($_GET['edit_id'])) {
     exit();
 }
 
-// Handle form submission for updating service
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = $_POST['name'];
     $description = $_POST['description'];
     $price = $_POST['price'];
     $status = isset($_POST['status']) ? 1 : 0;
 
-    // Check if a new image is uploaded
     if ($_FILES['image']['name']) {
         $target_dir = "uploads/";
         $target_file = $target_dir . time() . '_' . basename($_FILES["image"]["name"]);
@@ -37,24 +35,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
             $image = $target_file;
         } else {
-            echo "Sorry, there was an error uploading your file.";
+            $_SESSION['success'] = false;
+            header("Location: editservice.php?edit_id=$service_id");
             exit();
         }
     } else {
-        $image = $service['image']; // Use existing image if no new image is uploaded
+        $image = $service['image'];
     }
 
-    // Update service details in database
     $update_sql = "UPDATE services SET name = ?, description = ?, price = ?, image = ?, status = ? WHERE id = ?";
     $stmt = $conn->prepare($update_sql);
     $stmt->bind_param("ssdsii", $name, $description, $price, $image, $status, $service_id);
 
     if ($stmt->execute()) {
         $_SESSION['success'] = true;
-        header("Location: service.php"); // Redirect to service.php after updating
+        header("Location: editservice.php?edit_id=$service_id");
         exit();
     } else {
-        echo "Error updating service: " . $conn->error;
+        $_SESSION['success'] = false;
+        header("Location: editservice.php?edit_id=$service_id");
+        exit();
     }
 }
 
@@ -72,7 +72,6 @@ $conn->close();
         body {
             background: linear-gradient(to bottom right, #00204a 0%, #660066 100%);
         }
-
         .container {
             margin-top: 50px;
             background-color: white;
@@ -86,17 +85,28 @@ $conn->close();
             margin-bottom: 20px;
             font-weight: bold;
         }
-        .btn-secondary {
-            width: 15%;
+        .alert {
+            display: none;
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
         }
-        .btn-secondary:hover {
-            background-color: #0056b3;
+        .alert-success {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .alert-fail {
+            background-color: #f44336;
+            color: white;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <h3>Edit Service</h3>
+		<div id="successAlert" class="alert alert-success">Service updated successfully!</div>
+        <div id="failAlert" class="alert alert-fail">Failed to update service. Please try again.</div>
+		
         <form action="editservice.php?edit_id=<?php echo $service_id; ?>" method="POST" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="name">Service Name:</label>
@@ -122,7 +132,25 @@ $conn->close();
             </div>
             <button type="submit" class="btn btn-primary">Save Changes</button>
             <a href="service.php" class="btn btn-secondary">Cancel</a>
-        </form>  
+        </form>        
     </div>
+
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        <?php if (isset($_SESSION['success'])): ?>
+            <?php if ($_SESSION['success']): ?>
+                const successAlert = document.getElementById("successAlert");
+                successAlert.style.display = "block";
+                setTimeout(() => successAlert.style.display = "none", 3000); // Hide after 3 seconds
+            <?php else: ?>
+                const failAlert = document.getElementById("failAlert");
+                failAlert.style.display = "block";
+                setTimeout(() => failAlert.style.display = "none", 3000); // Hide after 3 seconds
+            <?php endif; ?>
+            <?php unset($_SESSION['success']); ?>
+        <?php endif; ?>
+    });
+</script>
+
 </body>
 </html>

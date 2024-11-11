@@ -1,4 +1,4 @@
-<?php
+<?php 
 session_start();
 include '../connect-db.php';
 
@@ -7,7 +7,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = $_POST['name'];
     $description = $_POST['description'];
     $price = $_POST['price'];
-    $status = isset($_POST['status']) ? 1 : 0; // checkbox is checked, set status as 1
+    $status = isset($_POST['status']) ? 1 : 0; // Checkbox is checked, set status as 1
     $image = $_FILES['image']['name'];
     
     // Handle image upload
@@ -20,7 +20,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Image uploaded successfully
     } else {
         $uploadOk = 0;
-        echo "Sorry, there was an error uploading your file.";
+        $_SESSION['message'] = "Sorry, there was an error uploading your file.";
+        $_SESSION['message_type'] = "error";
     }
 
     // If everything is ok, insert into database
@@ -29,20 +30,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 VALUES ('$name', '$description', '$price', '$target_file', '$status')";
         
         if (mysqli_query($conn, $sql)) {
-            $_SESSION['success'] = true;
-            // Redirect to service.php after success
-            header("Location: service.php");
-            exit(); // Make sure the script stops executing here
+            $_SESSION['message'] = "Service added successfully!";
+            $_SESSION['message_type'] = "success";
+            header("Location: addservice.php");
+            exit();
         } else {
-            $_SESSION['success'] = false;
-            echo "Error: " . mysqli_error($conn);
+            $_SESSION['message'] = "Error adding service: " . mysqli_error($conn);
+            $_SESSION['message_type'] = "error";
         }
     }
 }
 
 $conn->close();
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -56,7 +56,6 @@ $conn->close();
         body {
             background: linear-gradient(to bottom right, #00204a 0%, #660066 100%);
         }
-
         .container {
             margin-top: 50px;
             background-color: white;
@@ -65,7 +64,7 @@ $conn->close();
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             max-width: 800px;
         }
-        .form-control {
+		.form-control {
             width: 100%;
             max-width: 800px;
         }
@@ -97,11 +96,25 @@ $conn->close();
         .bg-dark {
             background-color: #00204a !important;
         }
+    
+        .alert-box {
+            display: none;
+            padding: 15px;
+            margin-top: 10px;
+            text-align: center;
+            border-radius: 5px;
+            color: white;
+        }
+        .alert-success {
+            background-color: #28a745;
+        }
+        .alert-error {
+            background-color: #dc3545;
+        }
     </style>
 </head>
-
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-dark shadow-sm ">
+    <nav class="navbar navbar-expand-lg navbar-light bg-dark shadow-sm">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">
                 <img src="img/logo.png" alt="Logo" style="width: 100px; height: 33px;">
@@ -111,6 +124,10 @@ $conn->close();
     
     <div class="container">
         <h3>Add a New Service</h3>
+
+        <!-- Alert box for success/error messages -->
+        <div id="alertBox" class="alert-box"></div>
+
         <form action="addservice.php" method="POST" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="name">Service Name:</label>
@@ -129,7 +146,7 @@ $conn->close();
                 <input type="file" class="form-control" id="image" name="image" required>
             </div>
             <div class="form-group">
-                <label for="status">Status [checked=hidden , un-checked=visible]</label>
+                <label for="status">Status [checked=hidden, unchecked=visible]</label>
                 <br>
                 <input type="checkbox" style="width:30px;height:30px" id="status" name="status">
             </div>
@@ -143,6 +160,21 @@ $conn->close();
             </div>
         </form>  
     </div>
+
+    <script>
+        // Show alert message if there is a message in session
+        document.addEventListener("DOMContentLoaded", function() {
+            <?php if (isset($_SESSION['message'])): ?>
+                let alertBox = document.getElementById("alertBox");
+                alertBox.textContent = "<?php echo $_SESSION['message']; ?>";
+                alertBox.classList.add("alert-" + "<?php echo $_SESSION['message_type']; ?>");
+                alertBox.style.display = "block";
+                <?php unset($_SESSION['message'], $_SESSION['message_type']); ?>
+                // Hide the alert box after 3 seconds
+                setTimeout(() => { alertBox.style.display = "none"; }, 3000);
+            <?php endif; ?>
+        });
+    </script>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>

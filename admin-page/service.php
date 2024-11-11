@@ -3,18 +3,15 @@ session_start();
 
 include '../connect-db.php';
 
-// Check for success and redirect without showing an alert
 if (isset($_SESSION['success']) && $_SESSION['success'] == true) {
-    unset($_SESSION['success']); // Unset success message after redirecting
-    header("Location: service.php"); // Redirect back to service.php without alert
-    exit(); // Ensure the script stops executing after the redirect
+    unset($_SESSION['success']); 
+    header("Location: service.php"); 
+    exit(); 
 }
 
-// Use prepared statement to avoid SQL injection
 $sql = "SELECT id, name, description, price, image, status FROM services";
 $result = $conn->query($sql);
 
-// Handle delete service action securely
 if (isset($_GET['delete_id'])) {
     $service_id = $_GET['delete_id'];
 
