@@ -1,13 +1,16 @@
-// Set new default font family and font color to mimic Bootstrap's default styling
-Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
-Chart.defaults.global.defaultFontColor = '#858796';
+// Include this at the beginning of your script if you're using Chart.js v3+
+Chart.register(ChartDataLabels);
 
-// Pie Chart Example
+// Set default font family and color (applicable for Chart.js v2 or below)
+Chart.defaults.font.family = 'Nunito, -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif';
+Chart.defaults.color = '#858796';
+
+// Pie Chart Example with Data Labels
 var ctx = document.getElementById("myPieChart");
 var myPieChart = new Chart(ctx, {
-  type: 'doughnut',
+  type: 'doughnut',  // Doughnut is often better for showing labels
   data: {
-    labels: ["Direct", "Referral", "Social"],
+    labels: ["House Cleaning", "Office Cleaning", "Deep Cleaning"],
     datasets: [{
       data: [55, 30, 15],
       backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc'],
@@ -17,19 +20,31 @@ var myPieChart = new Chart(ctx, {
   },
   options: {
     maintainAspectRatio: false,
-    tooltips: {
-      backgroundColor: "rgb(255,255,255)",
-      bodyFontColor: "#858796",
-      borderColor: '#dddfeb',
-      borderWidth: 1,
-      xPadding: 15,
-      yPadding: 15,
-      displayColors: false,
-      caretPadding: 10,
+    plugins: {
+      tooltip: {
+        backgroundColor: "rgb(255,255,255)",
+        bodyFontColor: "#858796",
+        borderColor: '#dddfeb',
+        borderWidth: 1,
+        xPadding: 15,
+        yPadding: 15,
+        displayColors: false,
+        caretPadding: 10,
+      },
+      legend: {
+        display: false
+      },
+      datalabels: {
+        color: '#fff', // Set label color to white
+        font: {
+          weight: 'bold'
+        },
+        formatter: (value, context) => {
+          return context.chart.data.labels[context.dataIndex] + '\n' + value + '%';
+        },
+      }
     },
-    legend: {
-      display: false
-    },
-    cutoutPercentage: 80,
+    cutout: '80%',
   },
+  plugins: [ChartDataLabels]
 });
