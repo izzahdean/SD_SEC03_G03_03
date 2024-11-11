@@ -37,7 +37,71 @@
     var today = new Date().toISOString().split('T')[0];
     // Set the minimum selectable date to today's date
     document.getElementById("service").setAttribute("min", today);
-</script>
+	
+	function confirmSubmission() {
+        if (confirm("Are you sure you want to proceed with the payment?")) {
+            alert("Payment successful! Your booking is confirmed.");
+        } else {
+            alert("Payment canceled.");
+        }
+    }
+	
+	document.addEventListener("DOMContentLoaded", function () {
+	  // Render PayPal button
+	  paypal.Buttons({
+		style: {
+		  shape: 'rect',
+		  color: 'gold',
+		  layout: 'vertical',
+		  label: 'paypal'
+		},
+
+		createOrder: function(data, actions) {
+		  // Set up the transaction amount (replace '100.00' with dynamic value if needed)
+		  return actions.order.create({
+			purchase_units: [{
+			  amount: { value: '100.00' }
+			}]
+		  });
+		},
+
+		onApprove: function(data, actions) {
+		  return actions.order.capture().then(function(details) {
+			// Display a success message
+			alert('Transaction completed by ' + details.payer.name.given_name);
+		  });
+		},
+
+		onCancel: function(data) {
+		  // Show cancel message
+		  alert('Payment was canceled.');
+		},
+
+		onError: function(err) {
+		  // Handle error
+		  console.error('An error occurred during the transaction:', err);
+		  alert('An error occurred. Please try again.');
+		}
+	  }).render('#paypal-button-container'); // Render PayPal button into the specified container
+	});
+	
+	</script>
+	<style>
+	.submitbutton {
+	  font-family: "Open Sans", sans-serif;
+	  color: #fff !important;
+	  font-size: 16px;
+	  text-shadow: 0px 0px 0px #7CACDE;
+	  padding: 10px 25px;
+	  border-radius: 20px;
+	  border: 0px solid #3866A3;
+	  background: #00bbf0;
+	}
+	.submitbutton:hover {
+	  color: #fff !important;
+	  background: #224abe;
+	}
+	</style>
 </head>
 
 <body class="sub_page">
@@ -291,6 +355,9 @@
 												</div>
 									</div>
 												<div id="paypal-button-container"></div>
+									<div class="btn-box"><br>			
+									<button class="submitbutton" onclick="confirmSubmission()">Submit</button>
+									</div>
 								</div>	
 					</div><br>
 				  </div>
@@ -396,47 +463,6 @@
   <!-- owl slider -->
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js">
   </script>
-  <script>
-document.addEventListener("DOMContentLoaded", function () {
-  // Render PayPal button
-  paypal.Buttons({
-    style: {
-      shape: 'rect',
-      color: 'gold',
-      layout: 'vertical',
-      label: 'paypal'
-    },
-
-    createOrder: function(data, actions) {
-      // Set up the transaction amount (replace '100.00' with dynamic value if needed)
-      return actions.order.create({
-        purchase_units: [{
-          amount: { value: '100.00' }
-        }]
-      });
-    },
-
-    onApprove: function(data, actions) {
-      return actions.order.capture().then(function(details) {
-        // Display a success message
-        alert('Transaction completed by ' + details.payer.name.given_name);
-      });
-    },
-
-    onCancel: function(data) {
-      // Show cancel message
-      alert('Payment was canceled.');
-    },
-
-    onError: function(err) {
-      // Handle error
-      console.error('An error occurred during the transaction:', err);
-      alert('An error occurred. Please try again.');
-    }
-  }).render('#paypal-button-container'); // Render PayPal button into the specified container
-});
-</script>
-
 
 </body>
 
