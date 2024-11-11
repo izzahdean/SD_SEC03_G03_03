@@ -305,27 +305,13 @@
 				  <div class="responsive-container-block container">
 					<div class="info_contact">
 							<h4>
-							  Payment Details
+							  Payment Methods
 							  <hr style="background-color:white">
-							</h4><br>
+							</h4>
 								<div class="contact_link_box">
-									<div class="col-sm-6 mb-3 mb-sm-0">
-											<input type="text" class="form-control contact-inputs col-sm-15" id="cardnum" name="cardnum" placeholder="Card Number" required>
-									</div><br>
-									<div class="col-sm-6 mb-3 mb-sm-0">
-											<input type="text" class="form-control contact-inputs col-sm-15" id="cardname" name="cardname" placeholder="Name On Card" required>
-									</div>
 								</div><br>
 								<div class="contact_link_box">
-									<div class="form-group row">
-												<div class="">
-													<input type="date" class="form-control contact-inputs" id="date" name="date" placeholder="Valid Until" required>
-												</div><br>
-												<div class=""><br>
-													<input type="text" class="form-control contact-inputs col-sm-15" id="cvv" name="cvv" placeholder="CVV" required> 
-												</div>
-									</div>
-                <div id="paypal-button-container"></div> <!-- PayPal Button Container -->
+												<div id="paypal-button-container"></div> <!-- PayPal Button Container -->
               </div>
             </div>
           </div>
