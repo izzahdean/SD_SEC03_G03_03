@@ -37,6 +37,24 @@
         .morning-shift { background-color: #f8b7d3; } /* Light Pink */
         .afternoon-shift { background-color: #f2da98; } /* Light Yellow */
         .night-shift { background-color: #c4e7e8; } /* Light Blue */
+		
+		.sidebar-brand {
+		  display: flex;
+		  align-items: center;
+		  justify-content: center;
+		  transition: all 0.3s ease; /* Smooth transition for changes */
+		}
+		.sidebar-logo {
+		  max-width: 700px;
+		  max-height: 45px;
+		  width: 100%;
+		  height: auto;
+		  transition: max-width 0.3s ease, max-height 0.3s ease;
+		}
+		#sidebarToggle:checked ~ .sidebar-brand .sidebar-logo {
+		  max-width: 35px; 
+		  max-height: 35px; 
+		}
     </style>
 	
 </head>
@@ -51,7 +69,7 @@
 
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-                <img src="img/logo.png" alt="MYKAKAKS Logo" style="width: 800px; height: 30px;">
+                  <img src="img/logo.png" class="sidebar-logo">
             </a>
 
             <!-- Divider -->
@@ -115,7 +133,7 @@
 
             <!-- Sidebar Toggler (Sidebar) -->
             <div class="text-center d-none d-md-inline">
-                <button class="rounded-circle border-0" id="sidebarToggle" aria-label="Toggle Sidebar"></button>
+                <button class="rounded-circle border-0" id="sidebarToggle" onclick="toggleSidebar()"></button>
             </div>
 
         </ul>
@@ -238,7 +256,6 @@
 							</tbody>
 						</table>
 					</div>
-
                     <!-- Customer Details Modal -->
                     <div class="modal fade" id="customerModal" tabindex="-1" role="dialog" aria-labelledby="customerModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
@@ -263,10 +280,7 @@
                     </div>
 
                 </div>
-              
-
-            </div>
-           
+            </div>     
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
@@ -276,8 +290,6 @@
             </footer>
            
         </div>
-       
-
     </div>
 
     <!-- Scroll to Top Button-->
@@ -313,6 +325,7 @@
 
     <!-- Custom scripts for all pages-->
     <script src="js/mykakaks-maid.js"></script>
+	<script src="js/sb-admin-2.min.js"></script>
 
     <script>
         function showCustomerDetails(fname, lname, address, phone) {
