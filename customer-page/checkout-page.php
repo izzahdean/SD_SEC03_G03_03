@@ -17,6 +17,9 @@
 
   <!-- bootstrap core css -->
   <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+  
+  <!-- shopping cart icon -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" />
 
   <!-- fonts style -->
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
@@ -84,6 +87,16 @@
       color: #fff !important;
       background: #224abe;
     }
+	.topbar .topbar-divider {
+	  width: 0;
+	  border-right: 1px solid #e3e6f0;
+	  height: calc(4.375rem - 2rem);
+	  margin: auto 1rem;
+	  color: #fff !important;
+	}
+	.nav-link:hover .fa-shopping-cart {
+    color: #00bbf0;
+	}
   </style>
 </head>
 
@@ -114,7 +127,7 @@
               <li class="nav-item"><a class="nav-link" href="service.html">Services</a></li>
               <li class="nav-item"><a class="nav-link" href="feedback.html">Feedback</a></li>
               <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
-              <li class="nav-item active"><a class="nav-link" href="contact-us.html">Contact Us</a></li>
+              <li class="nav-item"><a class="nav-link" href="contact-us.html">Contact Us</a></li>
 			  
 			  <li class="nav-item dropdown no-arrow">
 			        <div class="topbar-divider d-none d-sm-block"></div>
@@ -145,6 +158,14 @@
                                 </a>
                             </div>
                 </li>
+				
+				<div class="topbar-divider d-none d-sm-block"></div>
+				
+				<li class="nav-item"><a class="nav-link" href="checkout-page.php">
+					<i class="fas fa-shopping-cart" style='font-size:20px;color:white' aria-hidden="true"></i>
+					</a>
+				</li>
+				
             </ul>
           </div>
         </nav>
@@ -177,7 +198,7 @@
   <section class="team_section layout_padding">
     <div class="container-fluid">
       <div class="heading_container heading_center">
-        <h2 class="">
+        <h2>
           Booking <span> Details</span>
         </h2>
       </div>

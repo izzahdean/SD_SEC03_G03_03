@@ -15,6 +15,9 @@
   <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
 
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+  
+  <!-- shopping cart icon -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" />
 
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
 
@@ -65,31 +68,39 @@
                 <a class="nav-link" href="contact-us.html">Contact Us</a>
               </li>
               <li class="nav-item dropdown no-arrow">
-				<div class="topbar-divider d-none d-sm-block"></div>
-				<a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					<span class="mr-2 d-none d-lg-inline">USER&nbsp;</span>
-					<img class="nav-item img-profile rounded-circle" src="">
-				</a>
-				<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                <a class="dropdown-item" href="profile.php">
-					<img src="images/user.png" style="width: 20px; height: 20px;">
-                    <i class="mr-2 text-gray-400"></i>
-                    Profile
-                </a>
-				<a class="dropdown-item" href="change-password.php">
-					<img src="images/pass.png" style="width: 20px; height: 20px;">
-                    <i class="mr-2 text-gray-400"></i>
-                    Change Password
-                </a>
-                <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="../login.php" data-toggle="modal" data-target="#logoutModal">
-                        <img src="images/logout.png" style="width: 20px; height: 20px;">
+					<div class="topbar-divider d-none d-sm-block"></div>
+					<a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<span class="mr-2 d-none d-lg-inline">USER&nbsp;</span>
+						<img class="nav-item img-profile rounded-circle" src="">
+					</a>
+					<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+					<a class="dropdown-item" href="profile.php">
+						<img src="images/user.png" style="width: 20px; height: 20px;">
 						<i class="mr-2 text-gray-400"></i>
-                        Logout
-                    </a>
-                </div>
-			</li>
+						Profile
+					</a>
+					<a class="dropdown-item" href="change-password.php">
+						<img src="images/pass.png" style="width: 20px; height: 20px;">
+						<i class="mr-2 text-gray-400"></i>
+						Change Password
+					</a>
+					<div class="dropdown-divider"></div>
+						<a class="dropdown-item" href="../login.php" data-toggle="modal" data-target="#logoutModal">
+							<img src="images/logout.png" style="width: 20px; height: 20px;">
+							<i class="mr-2 text-gray-400"></i>
+							Logout
+						</a>
+					</div>
+				</li>
+				
+				<div class="topbar-divider d-none d-sm-block"></div>
+				
+				<li class="nav-item"><a class="nav-link" href="checkout-page.php">
+					<i class="fas fa-shopping-cart" style='font-size:20px;color:white' aria-hidden="true"></i>
+					</a>
+				</li>
+				
             </ul>
           </div>
         </nav>
