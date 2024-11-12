@@ -70,15 +70,19 @@ $conn->close();
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-            background: linear-gradient(to bottom right, #00204a 0%, #660066 100%);
+            background: linear-gradient(to bottom right, #00204a 0%, #660066 80%);
         }
         .container {
             margin-top: 50px;
+			margin-bottom: 50px;
             background-color: white;
             padding: 30px;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             max-width: 800px;
+        }
+		.bg-dark {
+            background-color: #00204a !important;
         }
         h3 {
             text-align: center;
@@ -102,6 +106,14 @@ $conn->close();
     </style>
 </head>
 <body>
+	<nav class="navbar navbar-expand-lg navbar-light bg-dark shadow-sm">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img src="img/logo.png" alt="Logo" style="width: 100px; height: 33px;">
+            </a>
+        </div>
+    </nav>
+	
     <div class="container">
         <h3>Edit Service</h3>
 		<div id="successAlert" class="alert alert-success">Service updated successfully!</div>
@@ -130,8 +142,14 @@ $conn->close();
                 <br>
                 <input type="checkbox" style="width:30px;height:30px" id="status" name="status" <?php echo $service['status'] ? 'checked' : ''; ?>>
             </div>
-            <button type="submit" class="btn btn-primary">Save Changes</button>
-            <a href="service.php" class="btn btn-secondary">Cancel</a>
+			<div class="form-row">
+                <div class="col text-left">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+                <div class="col text-right">
+                    <button type="button" class="btn btn-danger" onclick="window.location.href='service.php'">Cancel</button>
+				</div>
+            </div>
         </form>        
     </div>
 

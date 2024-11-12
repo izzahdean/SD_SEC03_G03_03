@@ -54,10 +54,11 @@ $conn->close();
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-            background: linear-gradient(to bottom right, #00204a 0%, #660066 100%);
+             background: linear-gradient(to bottom right, #00204a 0%, #660066 80%);
         }
         .container {
             margin-top: 50px;
+			margin-bottom: 50px;
             background-color: white;
             padding: 30px;
             border-radius: 10px;
