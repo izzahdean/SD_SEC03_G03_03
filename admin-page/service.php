@@ -288,7 +288,9 @@ if ($result->num_rows > 0) {
                     </ul>
                 </nav>
                 <div class="container-fluid">
-                    <h1 class="h3 mb-4 text-gray-800">MyKakaks Service</h1>
+					<div class="d-sm-flex align-items-center justify-content-between mb-4">
+						<h1 class="h3 mb-0 text-gray-800">MyKakaks Service</h1>
+					</div>
                     <div class="row">
                         <div class="container-fluid">
                             <div class="card shadow mb-4">
@@ -312,7 +314,7 @@ if ($result->num_rows > 0) {
                                                         <td><?php echo htmlspecialchars($service['name']); ?></td>
                                                         <td><?php echo $service['status'] ? 'Hidden' : 'Visible'; ?></td>
                                                         <td>
-															<a href="editservice.php?edit_id=<?php echo $service['id']; ?>" class="btn btn-warning btn-sm">
+															<a href="editservice.php?edit_id=<?php echo $service['id']; ?>" class="btn btn-primary btn-sm">
 																<i class="fas fa-edit"></i>
 															</a>
 															<a href="service.php?delete_id=<?php echo $service['id']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this service?')">
