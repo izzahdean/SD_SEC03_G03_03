@@ -124,23 +124,23 @@ if ($conn) {
   </section>
 
   <!-- Modal for booking/signup -->
-  <div class="modal fade" id="signupModal" tabindex="-1" role="dialog" aria-labelledby="signupModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="signupModalLabel">Signup or Login to Book</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <p>Please login or create an account to book this service.</p>
-          <a href="login.php" class="btn btn-primary">Login</a>
-          <a href="../register.php" class="btn btn-secondary">Sign Up</a>
-        </div>
-      </div>
-    </div>
-  </div>
+	<div class="modal fade" id="signupModal" tabindex="-1" role="dialog" aria-labelledby="signupModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="signupModalLabel">Signup or Login to Book</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<p>Please login or create an account to book this service.</p>
+					<a href="../login.php" class="btn btn-primary">Login</a>
+					<a href="../register.php" class="btn btn-secondary">Sign Up</a>
+				</div>
+			</div>
+		</div>
+	</div>
 
 <section class="info_section layout_padding2">
     <div class="container">

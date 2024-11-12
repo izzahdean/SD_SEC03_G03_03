@@ -269,7 +269,7 @@ if ($conn) {
 	  
 			<div class="btn-box">
 				<a href="feedback.html">
-					Learn More
+					Read More
 				</a>
 			</div>
 		</div>
