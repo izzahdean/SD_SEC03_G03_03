@@ -35,16 +35,6 @@ if ($conn) {
 	.shadow{
 		box-shadow: 2px 3px 18px 3px rgba(0, 32, 74, 0.9);
 	}
-	.custom-pattern {
-	background:
-		  radial-gradient(35.36% 35.36% at 100% 25%,#0000 66%,#BEE1E5 68% 70%,#0000 72%) 24px 24px/calc(2*24px) calc(2*24px),
-		  radial-gradient(35.36% 35.36% at 0    75%,#0000 66%,#BEE1E5 68% 70%,#0000 72%) 24px 24px/calc(2*24px) calc(2*24px),
-		  radial-gradient(35.36% 35.36% at 100% 25%,#0000 66%,#BEE1E5 68% 70%,#0000 72%) 0 0/calc(2*24px) calc(2*24px),
-		  radial-gradient(35.36% 35.36% at 0    75%,#0000 66%,#BEE1E5 68% 70%,#0000 72%) 0 0/calc(2*24px) calc(2*24px),
-		  repeating-conic-gradient(#FFFFFF 0 25%,#0000 0 50%) 0 0/calc(2*24px) calc(2*24px),
-		  radial-gradient(#0000 66%,#BEE1E5 68% 70%,#0000 72%) 0 calc(24px/2)/24px 24px
-		  #FFFFFF;
-	}
 	</style>
 </head>
 
