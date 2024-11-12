@@ -11,7 +11,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $image = $_FILES['image']['name'];
     
     // Handle image upload
-    $target_dir = "uploads/";
+    $target_dir = "../uploads/";
     $target_file = $target_dir . time() . '_' . basename($_FILES["image"]["name"]);
     $uploadOk = 1;
     

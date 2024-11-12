@@ -25,18 +25,10 @@ if ($conn) {
   <title> MyKakaks </title>
 
   <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
-
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
-
-
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
-
-
   <link href="css/font-awesome.min.css" rel="stylesheet" />
-
- 
   <link href="css/style.css" rel="stylesheet" />
-
   <link href="css/responsive.css" rel="stylesheet" />
   
 	<style>
@@ -164,31 +156,32 @@ if ($conn) {
 					<p>The cleaning services we offer come in different varieties.</p>
 				</div>
 				<div class="row">
-					<?php if (isset($result) && $result->num_rows > 0): ?>
-					<?php 
-						$counter = 0; 
-						while ($row = $result->fetch_assoc()): 
-							if ($counter >= 3) 
-						break; 
-					?>
-					<div class="col-md-4">
-						<div class="box">
-							<div class="img-box">
-								<img src="../admin-page/uploads/<?php echo htmlspecialchars($row['image']); ?>" alt="Service Image for <?php echo htmlspecialchars($row['name']); ?>">
-							</div>
-							<div class="detail-box">
-								<h5><?php echo htmlspecialchars($row['name']); ?></h5>
-								<p><?php echo htmlspecialchars($row['description']); ?></p>
+						<?php if (isset($result) && $result->num_rows > 0): ?>
+						<?php 
+							$counter = 0; 
+							while ($row = $result->fetch_assoc()): 
+								if ($counter >= 3) 
+							break; 
+						?>
+						<div class="col-md-4">
+							<div class="box">
+								<div class="img-box">
+									<img src="../uploads/<?php echo htmlspecialchars($row['image']); ?>" alt="Service Image for <?php echo htmlspecialchars($row['name']); ?>">
+								</div>
+								<div class="detail-box">
+									<h5><?php echo htmlspecialchars($row['name']); ?></h5>
+									<p><?php echo htmlspecialchars($row['description']); ?></p>
+								</div>
 							</div>
 						</div>
-					</div>
-					<?php 
-						$counter++;
-						endwhile; 
-					?>
-					<?php else: ?>
-						<p>No services available at the moment.</p>
-					<?php endif; ?>
+						<?php 
+							$counter++;
+							endwhile; 
+						?>
+						<?php else: ?>
+							<p>No services available at the moment.</p>
+						<?php endif; ?>
+					
 				</div>
 				<div class="btn-box">
 					<a href="service.php">View More</a>
@@ -286,23 +279,22 @@ if ($conn) {
 				</p>
 			</div>
 			<div class="row">
-				<div class="col-md-6 ">
-					<div class="img-box">
-						<img src="images/abtus.jpg" alt="">
+				<div class="box shadow">
+					<div class="col-md-6 ">
+						<div class="img-box">
+							<img src="images/abtus.jpg" alt="">
+						</div>
 					</div>
-				</div>
-				<div class="col-md-6">
-					<div class="detail-box">
-						<h3>
-
-						</h3>
-						<p>
-							At MyKakaks, we take pride in delivering top-quality cleaning services that make your space shine. Our professional
-							team is committed to ensuring a spotless and hassle-free experience, every time.
-						</p>
-						<a href="about.html">
-							Read More
-						</a>
+					<div class="col-md-6">
+						<div class="detail-box">
+							<p>
+								At MyKakaks, we take pride in delivering top-quality cleaning services that make your space shine. Our professional
+								team is committed to ensuring a spotless and hassle-free experience, every time.
+							</p>
+							<a href="about.html">
+								Read More
+							</a>
+						</div>
 					</div>
 				</div>
 			</div>
