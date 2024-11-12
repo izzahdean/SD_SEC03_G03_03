@@ -60,7 +60,7 @@ if ($result->num_rows > 0) {
 
             <hr class="sidebar-divider my-0">
 
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link" href="index.html">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
@@ -86,7 +86,7 @@ if ($result->num_rows > 0) {
                 </div>
             </li>
 
-            <li class="nav-item">
+            <li class="nav-item active">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
                     aria-expanded="true" aria-controls="collapseUtilities">
                     <i class="fas fa-fw fa-cubes"></i>
@@ -95,7 +95,7 @@ if ($result->num_rows > 0) {
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="service.html">Services</a>
+                        <a class="collapse-item active" href="service.html">Services</a>
                     </div>
                 </div>
             </li>
@@ -127,7 +127,7 @@ if ($result->num_rows > 0) {
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="charts.html">
+                <a class="nav-link" href="salesreport.html">
                     <i class="fas fa-fw fa-download"></i>
                     <span>Generate Report</span></a>
             </li>

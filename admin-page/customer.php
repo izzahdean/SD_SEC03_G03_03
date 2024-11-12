@@ -80,7 +80,7 @@ $result = $conn->query($sql);
 
             <hr class="sidebar-divider my-0">
 
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link" href="index.html">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
@@ -92,7 +92,7 @@ $result = $conn->query($sql);
                 Menu
             </div>
 
-            <li class="nav-item">
+            <li class="nav-item active">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                     aria-expanded="true" aria-controls="collapseTwo">
                     <i class="fas fa-fw fa-cog"></i>
@@ -101,7 +101,7 @@ $result = $conn->query($sql);
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="maid.php">Maid</a>
-                        <a class="collapse-item" href="customer.php">Customer</a>
+                        <a class="collapse-item active" href="customer.php">Customer</a>
                     </div>
                 </div>
             </li>
@@ -147,7 +147,7 @@ $result = $conn->query($sql);
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="charts.html">
+                <a class="nav-link" href="salesreport.html">
                     <i class="fas fa-fw fa-download"></i>
                     <span>Generate Report</span></a>
             </li>
