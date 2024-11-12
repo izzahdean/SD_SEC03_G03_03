@@ -100,7 +100,7 @@ if ($conn) {
               <div class="col-md-4">
                 <div class="box">
                   <div class="img-box">
-                    <img src="../admin-page/uploads/<?php echo htmlspecialchars($row['image']); ?>" alt="Service Image for <?php echo htmlspecialchars($row['name']); ?>">
+                    <img src="../uploads/<?php echo htmlspecialchars($row['image']); ?>" alt="Service Image for <?php echo htmlspecialchars($row['name']); ?>">
                   </div>
                   <div class="detail-box">
                     <h5><?php echo htmlspecialchars($row['name']); ?></h5>
