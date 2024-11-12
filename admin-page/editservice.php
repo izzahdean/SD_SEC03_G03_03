@@ -49,11 +49,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($stmt->execute()) {
         $_SESSION['success'] = true;
-        header("Location: editservice.php?edit_id=$service_id");
+        header("Location: service.php");
         exit();
     } else {
         $_SESSION['success'] = false;
-        header("Location: editservice.php?edit_id=$service_id");
+        header("Location: service.php");
         exit();
     }
 }
@@ -116,8 +116,6 @@ $conn->close();
 	
     <div class="container">
         <h3>Edit Service</h3>
-		<div id="successAlert" class="alert alert-success">Service updated successfully!</div>
-        <div id="failAlert" class="alert alert-fail">Failed to update service. Please try again.</div>
 		
         <form action="editservice.php?edit_id=<?php echo $service_id; ?>" method="POST" enctype="multipart/form-data">
             <div class="form-group">
@@ -144,7 +142,7 @@ $conn->close();
             </div>
 			<div class="form-row">
                 <div class="col text-left">
-                    <button type="submit" class="btn btn-primary">Save</button>
+                    <input type="submit" value="Save" class="btn btn-primary save-btn">
                 </div>
                 <div class="col text-right">
                     <button type="button" class="btn btn-danger" onclick="window.location.href='service.php'">Cancel</button>
@@ -152,23 +150,9 @@ $conn->close();
             </div>
         </form>        
     </div>
-
-    <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        <?php if (isset($_SESSION['success'])): ?>
-            <?php if ($_SESSION['success']): ?>
-                const successAlert = document.getElementById("successAlert");
-                successAlert.style.display = "block";
-                setTimeout(() => successAlert.style.display = "none", 3000); // Hide after 3 seconds
-            <?php else: ?>
-                const failAlert = document.getElementById("failAlert");
-                failAlert.style.display = "block";
-                setTimeout(() => failAlert.style.display = "none", 3000); // Hide after 3 seconds
-            <?php endif; ?>
-            <?php unset($_SESSION['success']); ?>
-        <?php endif; ?>
-    });
-</script>
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 </body>
 </html>
