@@ -1,35 +1,43 @@
+<?php
+session_start();
+include '../connect-db.php';  // Adjust the path if needed
+
+if ($conn) {
+    // Query to fetch all feedback along with customer's name and service name
+    $stmt = $conn->prepare("
+        SELECT feedback.service_name, feedback.comments, feedback.date_submitted, customer.fname, customer.lname
+        FROM feedback
+        INNER JOIN customer ON feedback.customer_email = customer.email
+        ORDER BY feedback.date_submitted DESC
+    ");
+    $stmt->execute();
+    $feedback_result = $stmt->get_result();
+}
+?>
+
 <!DOCTYPE html>
 <html>
 
 <head>
-  <!-- Basic -->
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <!-- Mobile Metas -->
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-  <!-- Site Metas -->
   <meta name="keywords" content="cleaning services, feedback" />
   <meta name="description" content="Read feedback from our satisfied customers" />
   <meta name="author" content="MyKakaks" />
   <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
 
-  <title>MyKakaks - Customer Feedback</title>
+  <title>MyKakaks</title>
 
-  <!-- bootstrap core css -->
   <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
 
-  <!-- fonts style -->
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
 
-  <!-- owl slider stylesheet -->
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
 
-  <!-- font awesome style -->
   <link href="css/font-awesome.min.css" rel="stylesheet" />
 
-  <!-- Custom styles for this template -->
   <link href="css/style.css" rel="stylesheet" />
-  <!-- responsive style -->
   <link href="css/responsive.css" rel="stylesheet" />
   
   <style>
@@ -50,7 +58,6 @@
       </div>
     </div>
 
-    <!-- header section starts -->
     <header class="header_section">
       <div class="container-fluid">
         <nav class="navbar navbar-expand-lg custom_nav-container ">
@@ -73,7 +80,7 @@
                 <a class="nav-link" href="service.php">Services</a>
               </li>
               <li class="nav-item active">
-                <a class="nav-link" href="feedback.html">Feedback<span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="feedback.php">Feedback<span class="sr-only">(current)</span></a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="about.html">About Us</a>
@@ -91,89 +98,54 @@
         </nav>
       </div>
     </header>
-    <!-- end header section -->
   </div>
 
-  <!-- feedback section -->
-  <section class="service_section layout_padding">
-    <div class="service_container">
-		  <div class="container ">
+	<section class="service_section layout_padding">
+		<div class="service_container">
+			<div class="container">
 				<div class="heading_container heading_center">
 					<h2>
-					  Customer <span>Feedback</span>
+						Customer <span>Feedback</span>
 					</h2>
 					<p>See what our happy customers have to say about us!</p>
 				</div>
-		<div class="row">
-			
-			<div class="col-md-4 ">
-			<div class="box shadow">
-			  <div class="img-box">
-				<img src="images/cust.png" alt="Expert Management">
-			  </div>
-			  <div class="detail-box">
-				<h5>Expert Management</h5>
-				<p>
-				  "The team is extremely professional and managed our needs efficiently. Highly recommend for anyone looking for trustworthy cleaning services."
-				</p>
-			  </div>
+				<div class="row">
+                
+					<?php
+					if ($feedback_result && $feedback_result->num_rows > 0) {
+						// Loop through each feedback entry
+						while ($row = $feedback_result->fetch_assoc()) {
+							$customerName = htmlspecialchars($row['fname'] . ' ' . $row['lname']);
+							$serviceName = htmlspecialchars($row['service_name']);
+							$comments = htmlspecialchars($row['comments']);
+                        
+							echo '<div class="col-md-4">';
+							echo '  <div class="box shadow">';
+							echo '    <div class="img-box">';
+							echo '      <img src="images/cust.png" alt="Customer Feedback">';
+							echo '    </div>';
+							echo '    <div class="detail-box">';
+							echo '      <h5>' . $serviceName . '</h5>';  // Display the service name
+							echo '      <p>"' . $comments . '"</p>';     // Display the customer comment
+							echo '      <p><small>By: ' . $customerName . '</small></p>';  // Display the customer's name
+							echo '    </div>';
+							echo '  </div>';
+							echo '</div>';
+						}
+					} else {
+						echo '<p>No feedback available yet.</p>';
+					}
+					?>
+				</div>
 			</div>
+        
+			<div class="btn-box">
+				<a href="index.php">
+					Back
+				</a>
 			</div>
-			
-			<div class="col-md-4 ">
-			<div class="box shadow">
-			  <div class="img-box">
-				<img src="images/cust.png" alt="Secure Investment">
-			  </div>
-			  <div class="detail-box">
-				<h5>Excellent Service</h5>
-				<p>
-				  "MyKakaks provides excellent service. Their commitment to quality has been consistent, making it a great investment."
-				</p>
-			  </div>
-			</div>
-			</div>
-			
-			<div class="col-md-4 ">
-			<div class="box shadow">
-			  <div class="img-box">
-				<img src="images/cust.png" alt="Instant Trading">
-			  </div>
-			  <div class="detail-box">
-				<h5>Instant Booking</h5>
-				<p>
-				  "Booking a cleaning session is quick and easy. They’re reliable and always deliver top-notch service."
-				</p>
-			  </div>
-			</div>
-			</div>
-			
-			<div class="col-md-4 ">
-			<div class="box shadow">
-			  <div class="img-box">
-				<img src="images/cust.png" alt="Happy Customers">
-			  </div>
-			  <div class="detail-box">
-				<h5>Happy Customers</h5>
-				<p>
-				  "Our home has never felt this clean! The MyKakaks team goes above and beyond. We’re very happy with their service."
-				</p>
-			  </div>
-			</div>
-			</div>
-		</div> 	
-			</div> 
-	  
-      <div class="btn-box">
-        <a href="index.php">
-          Back
-        </a>
-      </div>
-    </div>
-  </section>
-  <!-- end feedback section -->
-
-  <!-- info section -->
+		</div>
+	</section>
   
   <section class="info_section layout_padding2">
     <div class="container">
@@ -230,7 +202,7 @@
               <a class="" href="service.php">
                 Services
               </a>
-              <a class="" href="feedback.html">
+              <a class="" href="feedback.php">
                 Feedback
               </a>
 			  <a class="" href="about.html">
@@ -246,9 +218,6 @@
     </div>
   </section>
 
-  <!-- end info section -->
-
-  <!-- footer section -->
   <section class="footer_section">
     <div class="container">
       <p>

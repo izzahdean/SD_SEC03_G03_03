@@ -72,7 +72,7 @@ if ($conn) {
                 <a class="nav-link" href="service.html">Services <span class="sr-only">(current)</span> </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="feedback.html">Feedback</a>
+                <a class="nav-link" href="feedback.php">Feedback</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="about.html"> About Us</a>
@@ -202,7 +202,7 @@ if ($conn) {
               <a class="" href="service.html">
                 Services
               </a>
-              <a class="" href="feedback.html">
+              <a class="" href="feedback.php">
                 Feedback
               </a>
 			  <a class="" href="about.html">

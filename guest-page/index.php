@@ -2,12 +2,23 @@
 session_start();
 include '../connect-db.php';
 
+
 if ($conn) {
     $stmt = $conn->prepare("SELECT * FROM services WHERE status = ?");
     $status = 0;
     $stmt->bind_param("i", $status);
     $stmt->execute();
     $result = $stmt->get_result();
+	
+	$feedback_stmt = $conn->prepare("
+        SELECT feedback.service_name, feedback.comments, feedback.date_submitted, customer.fname, customer.lname 
+        FROM feedback 
+        INNER JOIN customer ON feedback.customer_email = customer.email 
+        ORDER BY feedback.date_submitted DESC 
+        LIMIT 3
+    ");
+    $feedback_stmt->execute();
+    $feedback_result = $feedback_stmt->get_result();
 }
 ?>
 <!DOCTYPE html>
@@ -69,7 +80,7 @@ if ($conn) {
 								<a class="nav-link" href="service.php">Services</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" href="feedback.html">Feedback</a>
+								<a class="nav-link" href="feedback.php">Feedback</a>
 							</li>
 							<li class="nav-item">
 								<a class="nav-link" href="about.html">About Us</a>
@@ -192,74 +203,43 @@ if ($conn) {
   <!-- feedback section -->
 	<section class="service_section layout_padding">
 		<div class="service_container">
-			<div class="container ">
+			<div class="container">
 				<div class="heading_container heading_center">
 					<h2>
-					  Customer <span>Feedback</span>
+						Customer <span>Feedback</span>
 					</h2>
 					<p>See what our happy customers have to say about us!</p>
 				</div><br>
 				<div class="row" style="padding-bottom: 50px;">
-					<div class="col-md-4 ">
-						<div class="box shadow">
-							<div class="img-box">
-								<img src="images/cust.png" alt="Expert Management">
-							</div>
-							<div class="detail-box">
-								<h5>Expert Management</h5>
-								<p>
-									"The team is extremely professional and managed our needs efficiently. Highly recommend for anyone looking for trustworthy cleaning services."
-								</p>
-							</div>
-						</div>
-					</div>
-			
-					<div class="col-md-4 ">
-						<div class="box shadow">
-							<div class="img-box">
-								<img src="images/cust.png" alt="Secure Investment">
-							</div>
-							<div class="detail-box">
-								<h5>Excellent Service</h5>
-								<p>
-									"MyKakaks provides excellent service. Their commitment to quality has been consistent, making it a great investment."
-								</p>
-							</div>
-						</div>
-					</div>
-			
-					<div class="col-md-4 ">
-						<div class="box shadow">
-							<div class="img-box">
-								<img src="images/cust.png" alt="Instant Trading">
-							</div>
-							<div class="detail-box">
-								<h5>Instant Booking</h5>
-								<p>
-									"Booking a cleaning session is quick and easy. They’re reliable and always deliver top-notch service."
-								</p>
-							</div>
-						</div>
-					</div>
-			
-					<div class="col-md-4 ">
-						<div class="box shadow">
-							<div class="img-box">
-								<img src="images/cust.png" alt="Happy Customers">
-							</div>
-							<div class="detail-box">
-								<h5>Happy Customers</h5>
-								<p>
-									"Our home has never felt this clean! The MyKakaks team goes above and beyond. We’re very happy with their service."
-								</p>
-							</div>
-						</div>
-					</div>
-				</div> 	
-			</div> 
-	  
+
+					<?php
+					// Check if there are any feedback entries
+					if ($feedback_result && $feedback_result->num_rows > 0) {
+						// Loop through each feedback entry and display it
+						while ($row = $feedback_result->fetch_assoc()) {
+							$customerName = htmlspecialchars($row['fname'] . ' ' . $row['lname']); // Combine first and last name
+							echo '<div class="col-md-4">';
+							echo '<div class="box shadow">';
+							echo '<div class="img-box">';
+							echo '<img src="images/cust.png" alt="Customer Feedback">';
+							echo '</div>';
+							echo '<div class="detail-box">';
+							echo '<h5>' . htmlspecialchars($row['service_name']) . '</h5>';
+							echo '<p>"' . htmlspecialchars($row['comments']) . '"</p>';
+							echo '<p><small>By: ' . $customerName . '</small></p>'; // Display the customer's name
+							echo '</div>';
+							echo '</div>';
+							echo '</div>';
+						}
+					} else {
+						echo '<p>No feedback available yet.</p>';
+					}
+					?>  
+				</div>
+			</div>
+
 			<div class="btn-box">
-				<a href="feedback.html">
+				<a href="feedback.php">
 					Read More
 				</a>
 			</div>
@@ -414,7 +394,7 @@ if ($conn) {
 							<a class="" href="service.php">
 								Services
 							</a>
-							<a class="" href="feedback.html">
+							<a class="" href="feedback.php">
 								Feedback
 							</a>
 							<a class="" href="about.html">
