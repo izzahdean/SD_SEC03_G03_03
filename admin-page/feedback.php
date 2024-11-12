@@ -1,3 +1,19 @@
+<?php
+session_start();
+include '../connect-db.php';
+
+if ($conn) {
+    $stmt = $conn->prepare("
+        SELECT feedback.service_name, feedback.comments, feedback.date_submitted, customer.fname, customer.lname
+        FROM feedback
+        INNER JOIN customer ON feedback.customer_email = customer.email
+        ORDER BY feedback.date_submitted DESC
+    ");
+    $stmt->execute();
+    $feedback_result = $stmt->get_result();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -45,30 +61,24 @@
 
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
-            <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
                   <img src="img/logo.png" class="sidebar-logo">
             </a>
 
-            <!-- Divider -->
             <hr class="sidebar-divider my-0">
 
-            <!-- Nav Item - Dashboard -->
             <li class="nav-item">
                 <a class="nav-link" href="index.html">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
 
-            <!-- Divider -->
             <hr class="sidebar-divider">
 
-            <!-- Heading -->
             <div class="sidebar-heading">
                 Menu
             </div>
 
-            <!-- Nav Item - User Management Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                     aria-expanded="true" aria-controls="collapseTwo">
@@ -83,7 +93,6 @@
                 </div>
             </li>
 
-            <!-- Nav Item - Content Management Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
                     aria-expanded="true" aria-controls="collapseUtilities">
@@ -98,7 +107,6 @@
                 </div>
             </li>
 			
-			<!-- Nav Item - Service Status Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseService"
                     aria-expanded="true" aria-controls="collapseService">
@@ -113,32 +121,26 @@
                 </div>
             </li>
 
-            <!-- Divider -->
             <hr class="sidebar-divider">
 
-            <!-- Heading -->
             <div class="sidebar-heading">
                 Others
             </div>
 			
-			<!-- Nav Item - Feedback -->
             <li class="nav-item active">
                 <a class="nav-link" href="feedback.html">
                     <i class="fas fa-fw fa-star"></i>
                     <span>Feedback</span></a>
             </li>
 
-            <!-- Nav Item - Report -->
             <li class="nav-item">
                 <a class="nav-link" href="salesreport.html">
                     <i class="fas fa-fw fa-download"></i>
                     <span>Generate Report</span></a>
             </li>
 
-            <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 
-            <!-- Sidebar Toggler (Sidebar) -->
             <div class="text-center d-none d-md-inline">
                 <button class="rounded-circle border-0" id="sidebarToggle" onclick="toggleSidebar()"></button>
             </div>
@@ -205,69 +207,6 @@
                             </div>
                         </li>
 
-                        <li class="nav-item dropdown no-arrow mx-1">
-                            <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-envelope fa-fw"></i>
-                                <span class="badge badge-danger badge-counter">7</span>
-                            </a>
-                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="messagesDropdown">
-                                <h6 class="dropdown-header">
-                                    Message Center
-                                </h6>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_1.svg"
-                                            alt="...">
-                                        <div class="status-indicator bg-success"></div>
-                                    </div>
-                                    <div class="font-weight-bold">
-                                        <div class="text-truncate">Hi there! I am wondering if you can help me with a
-                                            problem I've been having.</div>
-                                        <div class="small text-gray-500">Emily Fowler · 58m</div>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_2.svg"
-                                            alt="...">
-                                        <div class="status-indicator"></div>
-                                    </div>
-                                    <div>
-                                        <div class="text-truncate">I have the photos that you ordered last month, how
-                                            would you like them sent to you?</div>
-                                        <div class="small text-gray-500">Jae Chun · 1d</div>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_3.svg"
-                                            alt="...">
-                                        <div class="status-indicator bg-warning"></div>
-                                    </div>
-                                    <div>
-                                        <div class="text-truncate">Last month's report looks great, I am very happy with
-                                            the progress so far, keep up the good work!</div>
-                                        <div class="small text-gray-500">Morgan Alvarez · 2d</div>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60"
-                                            alt="...">
-                                        <div class="status-indicator bg-success"></div>
-                                    </div>
-                                    <div>
-                                        <div class="text-truncate">Am I a good boy? The reason I ask is because someone
-                                            told me that people say this to all dogs, even if they aren't good...</div>
-                                        <div class="small text-gray-500">Chicken the Dog · 2w</div>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
-                            </div>
-                        </li>
-
                         <div class="topbar-divider d-none d-sm-block"></div>
 
                         <li class="nav-item dropdown no-arrow">
@@ -299,82 +238,32 @@
 
                 </nav>
                 <div class="container-fluid">
-
-                    <h1 class="h3 mb-2 text-gray-800">Feedbacks</h1>
-
-                    <!-- Customer Feedback Box -->
-                    <div class="card mb-3">
-                        <div class="row g-0 p-3">
-                            <!-- Customer Image -->
-                            <div class="col-md-1 container-feedback item">
-                                <img src="img/customer.jpg" class="img-fluid rounded-circle" alt="Customer Image" style="width: 60px;">
-                            </div>
-                            <!-- Customer Name and Feedback -->
-                            <div class="col-md-9">
-                                <div class="card-body">
-                                    <h5 class="card-title">Customer Name</h5>
-                                    <p class="card-text">"Excellent service! The team was punctual and very thorough. Highly recommend!"</p>
-                                </div>
-                          </div>
-                            <!-- Feedback Date -->
-                            <div class="text-right">
-                                <div class="card-body">
-                                    <p class="text-muted">2024-10-10</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-					
+					<h1 class="h3 mb-2 text-gray-800">Feedbacks</h1>
+    
+					<!-- Check if feedbacks exist -->
+					<?php if ($feedback_result && $feedback_result->num_rows > 0): ?>
+					<?php while ($row = $feedback_result->fetch_assoc()): ?>
 					<div class="card mb-3">
-                        <div class="row g-0 p-3">
-                            <!-- Customer Image -->
-                            <div class="col-md-1 container-feedback item">
-                                <img src="img/customer.jpg" class="img-fluid rounded-circle" alt="Customer Image" style="width: 60px;">
-                            </div>
-                            <!-- Customer Name and Feedback -->
-                            <div class="col-md-9">
-                                <div class="card-body">
-                                    <h5 class="card-title">Customer Name</h5>
-                                    <p class="card-text">"The cleaners went above and beyond my expectations. My home feels so much fresher and cleaner now."</p>
-                                </div>
-                            </div>
-                            <!-- Feedback Date -->
-                            <div class="text-right">
-                                <div class="card-body">
-                                    <p class="text-muted">2024-09-01</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-					
-					<div class="card mb-3">
-                        <div class="row g-0 p-3">
-                            <!-- Customer Image -->
-                            <div class="col-md-1 container-feedback item">
-                                <img src="img/customer.jpg" class="img-fluid rounded-circle" alt="Customer Image" style="width: 60px;">
-                            </div>
-                            <!-- Customer Name and Feedback -->
-                            <div class="col-md-9">
-                                <div class="card-body">
-                                    <h5 class="card-title">Customer Name</h5>
-                                    <p class="card-text">"The best cleaning service I've used. They even took care of small details, like organizing items neatly."</p>
-                                </div>
-                            </div>
-                            <!-- Feedback Date -->
-                            <div class="text-right">
-                                <div class="card-body">
-                                    <p class="text-muted">2024-07-06</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Add more customer feedback blocks if needed -->
+						<div class="row g-0 p-3">
+							<div class="col-md-1 container-feedback item">
+								<img src="img/customer.jpg" class="img-fluid rounded-circle" alt="Customer Image" style="width: 60px;">
+							</div>
+							<div class="col-md-9">
+								<h5 class="card-title"><?php echo htmlspecialchars($row['fname']) . ' ' . htmlspecialchars($row['lname']); ?></h5> <!-- Display customer name -->
+								<p><strong>Service Type: </strong><?php echo htmlspecialchars($row['service_name']); ?></p> <!-- Display service type -->
+								<p class="card-text"><?php echo htmlspecialchars($row['comments']); ?></p> <!-- Display feedback content -->
+								<p class="card-text"><small class="text-muted"><?php echo htmlspecialchars($row['date_submitted']); ?></small></p> <!-- Display feedback date -->
+							</div>
+						</div>
+					</div>
+					<?php endwhile; ?>
+					<?php else: ?>
+						<p>No feedback available.</p>
+					<?php endif; ?>
+				</div>
 
-                </div>
 
                
-
-
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
