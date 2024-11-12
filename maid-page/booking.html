@@ -32,6 +32,7 @@
             color: #fff;
             padding: 10px;
             border-radius: 5px;
+            cursor: pointer;
         }
         .morning-shift { background-color: #f8b7d3; } /* Light Pink */
         .afternoon-shift { background-color: #f2da98; } /* Light Yellow */
@@ -174,21 +175,6 @@
                     <h1 class="h3 mb-1 text-gray-800">MyKakaks Customers</h1>
                     <br>
 					
-				 <div class="container-fluid">
-
-                    <!-- Customer Information -->
-                    
-                    <div class="card mb-4">
-                        <div class="card-body">
-                            <h5>Customer: John Doe</h5>
-                            <p>Email: john@example.com</p>
-                            <p>Address: 123 Elm St, Springfield</p>
-                            <p>Service History: 5 completed services</p>
-                        </div>
-                    </div>
-                    
-                </div>
-
 					<div class="container">
 						<table class="schedule-table">
 							<thead>
@@ -204,55 +190,78 @@
 							<tbody>
 								<tr>
 									<td>Service Name</td>
-									<td><div class="shift afternoon-shift">1pm - 5pm<br>Afternoon Shift</div></td>
+									<td><div class="shift afternoon-shift" onclick="showCustomerDetails('John', 'Alex', '123 Jalan Kunyah, Springfield', '0142525337')">1pm - 5pm<br>Afternoon Shift</div></td>
 									<td>N/A</td>
-									<td><div class="shift morning-shift">8am - 12pm<br>Morning Shift</div></td>
-									<td>N/A</td>
-									<td>N/A</td>
-								</tr>
-								<tr>
-									<td>Service Name</td>
-									<td>N/A</td>
-									<td>N/A</td>
-									<td><div class="shift afternoon-shift">1pm - 5pm<br>Afternoon Shift</div></td>
-									<td><div class="shift night-shift">6pm - 10pm<br>Night Shift</div></td>
-									<td><div class="shift morning-shift">8am - 12pm<br>Morning Shift</div></td>
-								</tr>
-								<tr>
-									<td>Service Name</td>
-									<td><div class="shift morning-shift">8am - 12pm<br>Morning Shift</div></td>
-									<td>N/A</td>
-									<td><div class="shift night-shift">6pm - 10pm<br>Night Shift</div></td>
+									<td><div class="shift morning-shift" onclick="showCustomerDetails('', '', '', '')">8am - 12pm<br>Morning Shift</div></td>
 									<td>N/A</td>
 									<td>N/A</td>
 								</tr>
 								<tr>
 									<td>Service Name</td>
 									<td>N/A</td>
-									<td><div class="shift afternoon-shift">1pm - 5pm<br>Afternoon Shift</div></td>
 									<td>N/A</td>
-									<td><div class="shift morning-shift">8am - 12pm<br>Morning Shift</div></td>
+									<td><div class="shift afternoon-shift" onclick="showCustomerDetails('', '', '', '')">1pm - 5pm<br>Afternoon Shift</div></td>
+									<td><div class="shift night-shift" onclick="showCustomerDetails('', '', '', '')">6pm - 10pm<br>Night Shift</div></td>
+									<td><div class="shift morning-shift" onclick="showCustomerDetails('', '', '', '')">8am - 12pm<br>Morning Shift</div></td>
+								</tr>
+								<tr>
+									<td>Service Name</td>
+									<td><div class="shift morning-shift" onclick="showCustomerDetails('', '', '', '')">8am - 12pm<br>Morning Shift</div></td>
+									<td>N/A</td>
+									<td><div class="shift night-shift" onclick="showCustomerDetails('', '', '', '')">6pm - 10pm<br>Night Shift</div></td>
+									<td>N/A</td>
 									<td>N/A</td>
 								</tr>
 								<tr>
 									<td>Service Name</td>
-									<td><div class="shift night-shift">6pm - 10pm<br>Night Shift</div></td>
-									<td><div class="shift morning-shift">8am - 12pm<br>Morning Shift</div></td>
+									<td>N/A</td>
+									<td><div class="shift afternoon-shift" onclick="showCustomerDetails('', '', '', '')">1pm - 5pm<br>Afternoon Shift</div></td>
+									<td>N/A</td>
+									<td><div class="shift morning-shift" onclick="showCustomerDetails('', '', '', '')">8am - 12pm<br>Morning Shift</div></td>
+									<td>N/A</td>
+								</tr>
+								<tr>
+									<td>Service Name</td>
+									<td><div class="shift night-shift" onclick="showCustomerDetails('', '', '', '')">6pm - 10pm<br>Night Shift</div></td>
+									<td><div class="shift morning-shift" onclick="showCustomerDetails('', '', '', '')">8am - 12pm<br>Morning Shift</div></td>
 									<td>N/A</td>
 									<td>N/A</td>
-									<td><div class="shift afternoon-shift">1pm - 5pm<br>Afternoon Shift</div></td>
+									<td><div class="shift afternoon-shift" onclick="showCustomerDetails('', '', '', '')">1pm - 5pm<br>Afternoon Shift</div></td>
 								</tr>
 								<tr>
 									<td>Service Name</td>
 									<td>N/A</td>
-									<td><div class="shift night-shift">6pm - 10pm<br>Night Shift</div></td>
+									<td><div class="shift night-shift" onclick="showCustomerDetails('', '', '', '')">6pm - 10pm<br>Night Shift</div></td>
 									<td>N/A</td>
-									<td><div class="shift afternoon-shift">1pm - 5pm<br>Afternoon Shift</div></td>
+									<td><div class="shift afternoon-shift" onclick="showCustomerDetails('', '', '', '')">1pm - 5pm<br>Afternoon Shift</div></td>
 								    <td>N/A</td>
 								</tr>
 							</tbody>
 						</table>
 					</div>
+
+                    <!-- Customer Details Modal -->
+                    <div class="modal fade" id="customerModal" tabindex="-1" role="dialog" aria-labelledby="customerModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="customerModalLabel">Customer Information</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <p><strong>First Name:</strong> <span id="customerFName"></span></p>
+                                    <p><strong>Last Name:</strong> <span id="customerLName"></span></p>
+                                    <p><strong>Address:</strong> <span id="customerAddress"></span></p>
+                                    <p><strong>Phone Number:</strong> <span id="customerPhone"></span></p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                 </div>
               
@@ -262,17 +271,15 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; MyKakaks Website 2024</span>
+                        <span>Copyright &copy; MyKakaks Maid 2024</span>
                     </div>
                 </div>
             </footer>
-         
-
+           
         </div>
-        <!-- End of Content Wrapper -->
+       
 
     </div>
-    <!-- End of Page Wrapper -->
 
     <!-- Scroll to Top Button-->
     <a class="scroll-to-top rounded" href="#page-top">
@@ -292,16 +299,32 @@
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="../login.php">Logout</a>
+                    <a class="btn btn-primary" href="logout.html">Logout</a>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
+    <!-- Core plugin JavaScript-->
     <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
- </body>
- </html>
+    <!-- Custom scripts for all pages-->
+    <script src="js/mykakaks-maid.js"></script>
+
+    <script>
+        function showCustomerDetails(fname, lname, address, phone) {
+            document.getElementById("customerFName").textContent = fname;
+            document.getElementById("customerLName").textContent = lname;
+            document.getElementById("customerAddress").textContent = address;
+            document.getElementById("customerPhone").textContent = phone;
+            $('#customerModal').modal('show');
+        }
+    </script>
+	
+</body>
+
+</html>
