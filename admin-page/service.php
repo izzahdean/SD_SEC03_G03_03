@@ -49,12 +49,31 @@ if ($result->num_rows > 0) {
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
     <link href="css/mykakaks-admin.css" rel="stylesheet">
+	<style>
+	.sidebar-brand {
+	  display: flex;
+	  align-items: center;
+	  justify-content: center;
+	  transition: all 0.3s ease; /* Smooth transition for changes */
+	}
+	.sidebar-logo {
+	  max-width: 700px;
+	  max-height: 45px;
+	  width: 100%;
+	  height: auto;
+	  transition: max-width 0.3s ease, max-height 0.3s ease;
+	}
+	#sidebarToggle:checked ~ .sidebar-brand .sidebar-logo {
+	  max-width: 35px; 
+	  max-height: 35px; 
+	}
+	</style>
 </head>
 <body id="page-top">
     <div id="wrapper">
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-                  <img src="img/logo.png" style="width: 800px; height: 30px;">
+                  <img src="img/logo.png" class="sidebar-logo">
             </a>
 
             <hr class="sidebar-divider my-0">
@@ -134,7 +153,7 @@ if ($result->num_rows > 0) {
             <hr class="sidebar-divider d-none d-md-block">
 
             <div class="text-center d-none d-md-inline">
-                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+                <button class="rounded-circle border-0" id="sidebarToggle" onclick="toggleSidebar()"></button>
             </div>
         </ul>
         <div id="content-wrapper" class="d-flex flex-column">
