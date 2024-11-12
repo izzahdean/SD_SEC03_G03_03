@@ -37,39 +37,69 @@
 
   <!-- PayPal SDK for Sandbox -->
  <script src="https://www.paypal.com/sdk/js?client-id=AZ0hXyRIjA08ZtVkluPK7VtF2N3lM-WIheD5A_YQtskgVBAGP9QCAhdVofs3tBFPO-C-DRgz2ViB_ST8&currency=USD"></script>
-
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      // Render PayPal button
-      paypal.Buttons({
-        style: {
-          shape: 'rect',
-          color: 'gold',
-          layout: 'vertical',
-          label: 'paypal'
-        },
-        createOrder: function (data, actions) {
-          return actions.order.create({
-            purchase_units: [{
-              amount: { value: '100.00' }
-            }]
-          });
-        },
-        onApprove: function (data, actions) {
-          return actions.order.capture().then(function (details) {
-            alert('Transaction completed by ' + details.payer.name.given_name);
-          });
-        },
-        onCancel: function (data) {
-          alert('Payment was canceled.');
-        },
-        onError: function (err) {
-          console.error('An error occurred during the transaction:', err);
-          alert('An error occurred. Please try again.');
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    // Render PayPal button
+    paypal.Buttons({
+      style: {
+        shape: 'rect',
+        color: 'gold',
+        layout: 'vertical',
+        label: 'paypal'
+      },
+      createOrder: function (data, actions) {
+        // Get amount from billing details
+        const amount = parseFloat(document.getElementById('billingTotal').textContent);
+        
+        if (isNaN(amount) || amount <= 0) {
+          alert('Invalid amount. Please check billing details.');
+          return actions.reject();
         }
-      }).render('#paypal-button-container');
+
+        // Create order with fetched amount
+        return actions.order.create({
+          purchase_units: [{
+            amount: { value: amount.toFixed(2) }
+          }]
+        });
+      },
+      onApprove: function (data, actions) {
+        return actions.order.capture().then(function (details) {
+          alert('Transaction completed by ' + details.payer.name.given_name);
+          // Optionally, redirect or submit form data
+        });
+      },
+      onCancel: function (data) {
+        alert('Payment was canceled.');
+      },
+      onError: function (err) {
+        console.error('An error occurred:', err);
+        alert('An error occurred. Please try again.');
+      }
+    }).render('#paypal-button-container');
+  });
+</script>
+<!-- Service selection script -->
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const serviceSelect = document.getElementById("service");
+    const billingTotal = document.getElementById("billingTotal");
+
+    serviceSelect.addEventListener("change", function () {
+      const serviceName = serviceSelect.value;
+
+      // Fetch service price from the backend
+      fetch(`/getServicePrice?serviceName=${serviceName}`)
+        .then(response => response.json())
+        .then(data => {
+          const price = data.price; // Backend should return JSON { price: amount }
+          billingTotal.textContent = price.toFixed(2);
+        })
+        .catch(error => console.error("Error fetching service price:", error));
     });
-  </script>
+  });
+</script>
+
 
   <style>
     .submitbutton {
@@ -224,13 +254,8 @@
 								<br>
 								<div class="form-group row">
 										<div class="col-sm-6 mb-3 mb-sm-0">
-										  <label for="duration">Duration</label><br>
-										  <select id="duration" name="duration" class="form-control contact-inputs">
-											<option value="one_hour">1 Hours</option>
-											<option value="two_hour">2 Hours</option>
-											<option value="three_hour">3 Hours</option>
-											<option value="four_hour">4 Hours</option>
-										  </select>
+											<label for="price" >Price</label>
+											<input type="text" class="form-control contact-inputs" id="price" name="price" placeholder="price" readonly>
 										</div>
 										<div class="col-sm-6 mb-3 mb-sm-0">
 										  <label for="slot">Select Slot</label><br>
@@ -285,11 +310,12 @@
 							  <hr style="background-color:white">
 							</h4>
 							<div class="contact_link_box">
-								<label for="session" >Session :</label><br>
-								<label for="duration" >Duration :</label><br>
+								<label for="session" >Service :</label><br>
+								<label for="price" >Date :</label><br>
 								<hr style="background-color:white">
-								<h4>Total :	</h4>
-							</div>	
+								<label>Total:</label>
+								<span id="billingTotal">300.00</span> <!-- Replace 100.00 with dynamic value from backend if possible -->
+							</div>
 					</div><br>
 				  </div>
               </div>
