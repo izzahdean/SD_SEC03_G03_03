@@ -9,178 +9,132 @@
   <meta name="description" content="" />
   <meta name="author" content="" />
   <link rel="shortcut icon" href="images/favicon.png" type="">
-
   <title> MyKakaks </title>
-
   <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
-
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
-
-
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
-
-
   <link href="css/font-awesome.min.css" rel="stylesheet" />
-
- 
   <link href="css/style.css" rel="stylesheet" />
-
   <link href="css/responsive.css" rel="stylesheet" />
-
+  
+  <style>
+	.shadow{
+		box-shadow: 
+		3px 7px 7px 1px rgba(30, 64, 106, 1);
+	}
+  </style>
 </head>
 
 <body>
 
-  <div class="hero_area">
+	<div class="hero_area">
+		<div class="hero_bg_box">
+			<div class="bg_img_box">
+				<img src="images/hero-bg.png" alt="">
+			</div>
+		</div>
 
-    <div class="hero_bg_box">
-      <div class="bg_img_box">
-        <img src="images/hero-bg.png" alt="">
-      </div>
-    </div>
 
+		<header class="header_section">
+			<div class="container-fluid">
+				<nav class="navbar navbar-expand-lg custom_nav-container">
+					<a class="navbar-brand" href="index.html">
+						<span>
+							<img src="images/logo.png" alt="Logo">
+						</span>
+					</a>
 
-    <header class="header_section">
-  <div class="container-fluid">
-    <nav class="navbar navbar-expand-lg custom_nav-container">
-      <a class="navbar-brand" href="index.html">
-        <span>
-          <img src="images/logo.png" alt="Logo">
-        </span>
-      </a>
+					<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+						<span class=""> </span>
+					</button>
 
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class=""> </span>
-      </button>
+					<div class="collapse navbar-collapse" id="navbarSupportedContent">
+						<ul class="navbar-nav">
+							<li class="nav-item active">
+								<a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="service.php">Services</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="feedback.html">Feedback</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="about.html">About Us</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="contact-us.html">Contact Us</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="../register.php">
+									<i class="fa fa-user" aria-hidden="true"></i> Sign Up
+								</a>
+							</li>
+						</ul>
+					</div>
+				</nav>
+			</div>
+		</header>
 
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav">
-          <li class="nav-item active">
-            <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="service.html">Services</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="feedback.html">Feedback</a>
-          </li>
-		  <li class="nav-item">
-            <a class="nav-link" href="about.html">About Us</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="contact-us.html">Contact Us</a>
-          </li>
-			<li class="nav-item dropdown no-arrow">
-				<div class="topbar-divider d-none d-sm-block"></div>
-				<a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					<span class="mr-2 d-none d-lg-inline">USER&nbsp;</span>
-					<img class="nav-item img-profile rounded-circle" src="">
-				</a>
-				<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                <a class="dropdown-item" href="profile.php">
-					<img src="images/user.png" style="width: 20px; height: 20px;">
-                    <i class="mr-2 text-gray-400"></i>
-                    Profile
-                </a>
-				<a class="dropdown-item" href="change-password.php">
-					<img src="images/pass.png" style="width: 20px; height: 20px;">
-                    <i class="mr-2 text-gray-400"></i>
-                    Change Password
-                </a>
-                <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="../login.php" data-toggle="modal" data-target="#logoutModal">
-                        <img src="images/logout.png" style="width: 20px; height: 20px;">
-						<i class="mr-2 text-gray-400"></i>
-                        Logout
-                    </a>
-                </div>
-			</li>
-        </ul>
-      </div>
-    </nav>
-  </div>
-</header>
-
-<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="../login.php">Logout</a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <section class="slider_section ">
-      <div id="customCarousel1" class="carousel slide" data-ride="carousel">
-        <div class="carousel-inner">
-          <div class="carousel-item active">
-            <div class="container ">
-              <div class="row">
-                <div class="col-md-6 ">
-                  <div class="detail-box">
-                    <h1>
-                      Professional <br>
-                      Cleaners
-                    </h1>
-                    <p>
-                      MyKakaks offers a professional house cleaning service in Kuala Lumpur, with a seamless online booking system that lets you schedule cleanings anytime, anywhere. Our website makes it easy to choose the service you need, set an appointment, and securely pay—all from the comfort of your home or while on the move, giving you complete flexibility and peace of mind.
-                    </p>
-                    <div class="btn-box">
-                      <a href="service.html" class="btn1">
-                        Book Now
-                      </a>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="img-box">
-                    <img src="images/maid.png" alt="">
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="carousel-item ">
-            <div class="container ">
-              <div class="row">
-                <div class="col-md-6 ">
-                  <div class="detail-box">
-                    <h1>
-                      Booking anytime, anywhere
-                    </h1>
-                    <p>
-                      The cleaning service you can trust. Since 2014
-                    </p>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="img-box">
-                    <img src="images/girl.png" alt="">
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <ol class="carousel-indicators">
-          <li data-target="#customCarousel1" data-slide-to="0" class="active"></li>
-          <li data-target="#customCarousel1" data-slide-to="1"></li>
-		  
-        </ol>
-      </div>
-
-    </section>
-  </div>
+		<section class="slider_section ">
+			<div id="customCarousel1" class="carousel slide" data-ride="carousel">
+				<div class="carousel-inner">
+					<div class="carousel-item active">
+						<div class="container ">
+							<div class="row">
+								<div class="col-md-6 ">
+									<div class="detail-box">
+										<h1>
+											Professional <br>
+											Cleaners
+										</h1>
+										<p>
+											MyKakaks offers a professional house cleaning service in Kuala Lumpur, with a seamless online booking system that lets you schedule cleanings anytime, anywhere. Our website makes it easy to choose the service you need, set an appointment, and securely pay—all from the comfort of your home or while on the move, giving you complete flexibility and peace of mind.
+										</p>
+										<div class="btn-box">
+											<a href="service.html" class="btn1">
+												Book Now
+											</a>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="img-box">
+										<img src="images/maid.png" alt="">
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="carousel-item ">
+						<div class="container ">
+							<div class="row">
+								<div class="col-md-6 ">
+									<div class="detail-box">
+										<h1>
+											Booking anytime, anywhere
+										</h1>
+										<p>
+											The cleaning service you can trust. Since 2014
+										</p>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="img-box">
+										<img src="images/girl.png" alt="">
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<ol class="carousel-indicators">
+					<li data-target="#customCarousel1" data-slide-to="0" class="active"></li>
+					<li data-target="#customCarousel1" data-slide-to="1"></li>
+				</ol>
+			</div>
+		</section>
+	</div>
 
   <section class="service_section layout_padding">
     <div class="service_container">
