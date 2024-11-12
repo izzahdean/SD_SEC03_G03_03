@@ -48,9 +48,45 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <title>Change Password</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
-        body {
-            background-color: #231a6f;
-            font-family: 'Arial', sans-serif;
+        html, body {
+			height: 100%;
+			margin: 0;
+			background: linear-gradient(to bottom right, #00204a 0%, #660066 100%);
+		}
+		#wrapper {
+			min-height: 100vh;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+		}
+		
+		.container {
+            margin-top: 50px;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+			max-width: 600px;
+        }
+		.form-control {
+			width: 100%; 
+			max-width: 600px;
+		}
+		.form-group label {
+            font-weight: bold;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+		h3 {
+			font-weight: bold;
+			text-align: center;
+            color: black;
+        }
+		.color {
+            color: black;
         }
         .navbar {
             background-color: #4e73df !important;
@@ -134,23 +170,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </style>
 </head>
 <body>
-    <div id="wrapper">
-        <div id="content-wrapper" class="d-flex flex-column">
-            <div id="content">
-                <nav class="navbar navbar-expand navbar-light bg-dark topbar mb-4 static-top shadow">
-                    <h1><img src="img/logo.png" style="width: 100px; height: 33px;"></h1>
-                    <button class="btn btn-primary ml-auto" onclick="window.location.href='index.html'">
-                        Back to Dashboard
-                    </button>
-                </nav>
-                <div class="container-fluid">
-                    <div class="row justify-content-center">
-                        <div class="col-lg-6">
-                            <div class="card shadow mb-4">
-                                <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold">Change Your Password</h6>
-                                </div>
-                                <div class="card-body">
+    <nav class="navbar navbar-expand-lg navbar-light bg-dark shadow-sm">
+					<div class="container-fluid">
+						<a class="navbar-brand" href="#">
+							<img src="img/logo.png" alt="Logo" style="width: 100px; height: 33px;">
+						</a>
+					</div>
+				</nav>
+                <div class="container">
+                    <h3 class="text-center">Change Password</h3>
+                    <div class="card-body">
                                     <?php if ($message): ?>
                                         <p class="<?= ($message === 'Password changed successfully!') ? 'message' : 'error' ?>">
                                             <?= htmlspecialchars($message) ?>
@@ -169,16 +198,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                             <label for="confirmPassword">Confirm New Password</label>
                                             <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
                                         </div>
-                                        <button type="submit" class="btn btn-primary btn-block">Change Password</button>
+                                        <div class="form-row">
+											<div class="col text-left ">
+												<input type="submit" value="Save" class="btn btn-primary save-btn">
+											</div>
+											<div class="col text-right">
+												<button type="button" class="btn btn-danger" onclick="window.location.href='index.html'">Cancel</button>
+											</div>
+										</div>
                                     </form>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
