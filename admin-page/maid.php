@@ -159,7 +159,7 @@ if (isset($_GET['delete_id'])) {
 			
 			<!-- Nav Item - Rating -->
             <li class="nav-item">
-                <a class="nav-link" href="feedback.html">
+                <a class="nav-link" href="feedback.php">
                     <i class="fas fa-fw fa-star"></i>
                     <span>Feedback</span></a>
             </li>

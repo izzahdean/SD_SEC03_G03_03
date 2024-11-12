@@ -139,7 +139,7 @@ if ($result->num_rows > 0) {
             </div>
 			
             <li class="nav-item">
-                <a class="nav-link" href="feedback.html">
+                <a class="nav-link" href="feedback.php">
                     <i class="fas fa-fw fa-star"></i>
                     <span>Feedback</span></a>
             </li>
