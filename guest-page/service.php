@@ -34,6 +34,11 @@ if ($conn) {
 
   <link href="css/style.css" rel="stylesheet" />
   <link href="css/responsive.css" rel="stylesheet" />
+	<style>
+		.shadow{
+		box-shadow: 2px 3px 18px 3px rgba(0, 32, 74, 0.9);
+		}
+	</style>
 </head>
 
 <body class="sub_page">
@@ -98,7 +103,7 @@ if ($conn) {
           <?php if (isset($result) && $result->num_rows > 0): ?>
             <?php while ($row = $result->fetch_assoc()): ?>
               <div class="col-md-4">
-                <div class="box">
+                <div class="box shadow">
                   <div class="img-box">
                     <img src="../uploads/<?php echo htmlspecialchars($row['image']); ?>" alt="Service Image for <?php echo htmlspecialchars($row['name']); ?>">
                   </div>
