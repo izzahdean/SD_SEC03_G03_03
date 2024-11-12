@@ -29,7 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $status = isset($_POST['status']) ? 1 : 0;
 
     if ($_FILES['image']['name']) {
-        $target_dir = "uploads/";
+        $target_dir = "../uploads/";
         $target_file = $target_dir . time() . '_' . basename($_FILES["image"]["name"]);
 
         if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {

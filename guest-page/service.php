@@ -3,6 +3,7 @@ session_start();
 include '../connect-db.php';
 
 if ($conn) {
+    // Fetch services that are visible (status = 0)
     $stmt = $conn->prepare("SELECT * FROM services WHERE status = ?");
     $status = 0;
     $stmt->bind_param("i", $status);
@@ -22,16 +23,12 @@ if ($conn) {
   <meta name="author" content="" />
   <link rel="shortcut icon" href="images/favicon.png" type="">
 
-  <title> MyKakaks - Guest </title>
+  <title> MyKakaks </title>
 
   <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
-
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
-
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
-
   <link href="css/font-awesome.min.css" rel="stylesheet" />
-
   <link href="css/style.css" rel="stylesheet" />
   <link href="css/responsive.css" rel="stylesheet" />
 	<style>
@@ -105,7 +102,11 @@ if ($conn) {
               <div class="col-md-4">
                 <div class="box shadow">
                   <div class="img-box">
-                    <img src="../uploads/<?php echo htmlspecialchars($row['image']); ?>" alt="Service Image for <?php echo htmlspecialchars($row['name']); ?>">
+                    <?php
+                      // Construct the image URL dynamically
+                      $image_url = "http://localhost/master/uploads/" . htmlspecialchars($row['image']);
+                    ?>
+                    <img src="<?php echo $image_url; ?>" alt="Service Image for <?php echo htmlspecialchars($row['name']); ?>">
                   </div>
                   <div class="detail-box">
                     <h5><?php echo htmlspecialchars($row['name']); ?></h5>
@@ -128,24 +129,23 @@ if ($conn) {
     </div>
   </section>
 
-  <!-- Modal for booking/signup -->
-	<div class="modal fade" id="signupModal" tabindex="-1" role="dialog" aria-labelledby="signupModalLabel" aria-hidden="true">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="signupModalLabel">Signup or Login to Book</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					<p>Please login or create an account to book this service.</p>
-					<a href="../login.php" class="btn btn-primary">Login</a>
-					<a href="../register.php" class="btn btn-secondary">Sign Up</a>
-				</div>
-			</div>
-		</div>
-	</div>
+  <div class="modal fade" id="signupModal" tabindex="-1" role="dialog" aria-labelledby="signupModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="signupModalLabel">Signup or Login to Book</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Please login or create an account to book this service.</p>
+          <a href="../login.php" class="btn btn-primary">Login</a>
+          <a href="../register.php" class="btn btn-secondary">Sign Up</a>
+        </div>
+      </div>
+    </div>
+  </div>
 
 <section class="info_section layout_padding2">
     <div class="container">
@@ -205,7 +205,7 @@ if ($conn) {
               <a class="" href="feedback.php">
                 Feedback
               </a>
-			  <a class="" href="about.html">
+              <a class="" href="about.html">
                 About Us
               </a>
               <a class="" href="contact-us.html">
@@ -216,24 +216,15 @@ if ($conn) {
         </div>
       </div>
     </div>
-  </section>
-  
-  <section class="footer_section">
-    <div class="container">
-      <p>
-        &copy; <span id="displayYear"></span> All Rights Reserved By
-        <a href="https://html.design/">MyKakaks</a>
-      </p>
-    </div>
-  </section>
-  <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-  <script type="text/javascript" src="js/bootstrap.js"></script>
+</section>
+
+  <script src="js/jquery-3.4.1.min.js"></script>
+  <script src="js/bootstrap.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+  <script src="js/custom.js"></script>
+  <script>
+    var year = new Date().getFullYear();
+    document.getElementById("displayYear").innerHTML = year;
+  </script>
 </body>
-
 </html>
-
-<?php
-$stmt->close();
-$conn->close();
-?>
