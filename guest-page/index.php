@@ -162,7 +162,7 @@ if ($conn) {
 							break; 
 						?>
 						<div class="col-md-4">
-							<div class="box">
+							<div class="box shadow">
 								<div class="img-box">
 									<img src="../uploads/<?php echo htmlspecialchars($row['image']); ?>" alt="Service Image for <?php echo htmlspecialchars($row['name']); ?>">
 								</div>
