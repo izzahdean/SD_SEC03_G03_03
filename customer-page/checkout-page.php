@@ -217,21 +217,12 @@
 											<input type="text" class="form-control contact-inputs" id="service" name="service" placeholder="service" readonly>
 										</div>
 										<div class="col-sm-6 mb-3 mb-sm-0">
-										  <label for="session">Session</label><br>
-										  <select id="session" name="session" class="form-control contact-inputs">
-											<option value="one_maid">1 Maid</option>
-											<option value="two_maid">2 Maids</option>
-											<option value="three_maid">3 Maids</option>
-											<option value="four_maid">4 Maids</option>
-										  </select>
+											<label for="date" >Select Date</label>
+											<input type="date" class="form-control contact-inputs" id="date" name="date" placeholder="date" required min="<?= date('Y-m-d'); ?>">
 										</div>
 								</div>
 								<br>
 								<div class="form-group row">
-										<div class="col-sm-6 mb-3 mb-sm-0">
-											<label for="date" >Select Date</label>
-											<input type="date" class="form-control contact-inputs" id="date" name="date" placeholder="date" required min="<?= date('Y-m-d'); ?>">
-										</div>
 										<div class="col-sm-6 mb-3 mb-sm-0">
 										  <label for="duration">Duration</label><br>
 										  <select id="duration" name="duration" class="form-control contact-inputs">
@@ -241,10 +232,7 @@
 											<option value="four_hour">4 Hours</option>
 										  </select>
 										</div>
-								</div>
-								<br>
-								<div class="form-group row">
-									<div class="col-sm-6 mb-3 mb-sm-0">
+										<div class="col-sm-6 mb-3 mb-sm-0">
 										  <label for="slot">Select Slot</label><br>
 										  <select id="slot" name="slot" class="form-control contact-inputs">
 											<option value="eight">8:00 AM</option>
@@ -254,8 +242,8 @@
 											<option value="two">2:00 PM</option>
 										  </select>
 									</div>
-									
-								</div><br>
+								</div>
+								<br>
 								<hr style="background-color:white">
 								<br>
 								<h4>Customer Detail</h4><br>
@@ -276,26 +264,11 @@
 												<input type="tel" class="form-control contact-inputs col-sm-15" id="cnum" name="cnum" placeholder="Phone Number" required>
 										</div>
 										<div class="col-sm-6 mb-3 mb-sm-0">
-												<label for="email" >Email</label>
-												<input type="email" class="form-control contact-inputs col-sm-15" id="email" name="email" placeholder="Email Address" required>
-										</div>
-									</div>	
-								<br>	
-									<div class="form-group row">
-										<div class="col-sm-6 mb-3 mb-sm-0">
 												<label for="address" >Address</label>
 												<input type="text" class="form-control contact-inputs col-sm-15" id="address" name="address" placeholder="Enter Your Address" required>
 										</div>
-										<div class="col-sm-6 mb-3 mb-sm-0">
-												<label for="area" >Area</label>
-												<select id="area" name="city" class="form-control contact-inputs">
-													<option value="gombak">Gombak </option>
-													<option value="wangsaMaju">Wangsa Maju</option>
-													<option value="setiawangsa">Setiawangsa</option>
-													<option value="gombakSetia">Gombak Setia</option>
-												 </select>
-										</div>
-									</div><br>	
+									</div>	
+								<br>	
 							</p>
 						</div>
 				  </div>
