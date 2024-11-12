@@ -33,8 +33,17 @@ if ($conn) {
   
 	<style>
 	.shadow{
-		box-shadow: 
-		3px 7px 7px 1px rgba(30, 64, 106, 1);
+		box-shadow: 2px 3px 18px 3px rgba(0, 32, 74, 0.9);
+	}
+	.custom-pattern {
+	background:
+		  radial-gradient(35.36% 35.36% at 100% 25%,#0000 66%,#BEE1E5 68% 70%,#0000 72%) 24px 24px/calc(2*24px) calc(2*24px),
+		  radial-gradient(35.36% 35.36% at 0    75%,#0000 66%,#BEE1E5 68% 70%,#0000 72%) 24px 24px/calc(2*24px) calc(2*24px),
+		  radial-gradient(35.36% 35.36% at 100% 25%,#0000 66%,#BEE1E5 68% 70%,#0000 72%) 0 0/calc(2*24px) calc(2*24px),
+		  radial-gradient(35.36% 35.36% at 0    75%,#0000 66%,#BEE1E5 68% 70%,#0000 72%) 0 0/calc(2*24px) calc(2*24px),
+		  repeating-conic-gradient(#FFFFFF 0 25%,#0000 0 50%) 0 0/calc(2*24px) calc(2*24px),
+		  radial-gradient(#0000 66%,#BEE1E5 68% 70%,#0000 72%) 0 calc(24px/2)/24px 24px
+		  #FFFFFF;
 	}
 	</style>
 </head>
@@ -47,7 +56,6 @@ if ($conn) {
 				<img src="images/hero-bg.png" alt="">
 			</div>
 		</div>
-
 
 		<header class="header_section">
 			<div class="container-fluid">
@@ -200,8 +208,8 @@ if ($conn) {
 					  Customer <span>Feedback</span>
 					</h2>
 					<p>See what our happy customers have to say about us!</p>
-				</div>
-				<div class="row">
+				</div><br>
+				<div class="row" style="padding-bottom: 50px;">
 					<div class="col-md-4 ">
 						<div class="box shadow">
 							<div class="img-box">
@@ -267,19 +275,15 @@ if ($conn) {
 			</div>
 		</div>
 	</section>
-	
-	<section class="about_section layout_padding">
-		<div class="container  ">
+
+	<section class="about_section layout_padding" style="background-color: #ffffff;">
+		<div class="container">
 			<div class="heading_container heading_center">
-				<h2>
+				<h2 style="color: #000000;">
 					About <span>Us</span>
 				</h2>
-				<p>
-          
-				</p>
 			</div>
-			<div class="row">
-				<div class="box shadow">
+			<div class="row container-fluid shadow" style="padding-top: 50px; padding-bottom: 50px; box-shadow: 2px 3px 18px 3px rgba(0, 32, 74, 0.9);">
 					<div class="col-md-6 ">
 						<div class="img-box">
 							<img src="images/abtus.jpg" alt="">
@@ -287,7 +291,7 @@ if ($conn) {
 					</div>
 					<div class="col-md-6">
 						<div class="detail-box">
-							<p>
+							<p style="color: #000000;">
 								At MyKakaks, we take pride in delivering top-quality cleaning services that make your space shine. Our professional
 								team is committed to ensuring a spotless and hassle-free experience, every time.
 							</p>
@@ -296,23 +300,23 @@ if ($conn) {
 							</a>
 						</div>
 					</div>
-				</div>
 			</div>
 		</div>
 	</section>
 
-	<section class="team_section layout_padding">
+	<section class="team_section layout_padding " style="background-color: #ffffff;">
 		<div class="container-fluid">
 			<div class="heading_container heading_center">
-				<h2 class="">
+				<h2 class="" style="color: #000000;">
 					Contact <span> Us</span>
 				</h2>
+				<br>
 				<div class="team_container">
-					<div class="row">
+					<div class="row container-fluid shadow" style="padding-top: 20px; padding-bottom: 30px; box-shadow: 2px 3px 18px 3px rgba(0, 32, 74, 0.9);">
 						<div class="detail-box">
 							<div class="responsive-container-block container">
 								<div class="info_contact heading_container heading_center"><br>
-									<h4>
+									<h4 style="color: #1a3678;">
 										Our Address
 									</h4>
 									<div class="contact_link_box">
