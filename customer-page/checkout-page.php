@@ -281,7 +281,7 @@
 				  <div class="responsive-container-block container">
 					<div class="info_contact">
 							<h4>
-							  Booking Summary
+							  Billing Details
 							  <hr style="background-color:white">
 							</h4>
 							<div class="contact_link_box">
@@ -306,12 +306,20 @@
 								</div><br>
 								<div class="contact_link_box">
 												<div id="paypal-button-container"></div> <!-- PayPal Button Container -->
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+				  </div>
+					</div>
+				  </div>
+				</div>
+			  </div>
+			<div class="detail-box">
+				<div class="btn-box">
+					<a href="receipt.html">
+					  Next
+					</a>
+				</div>
+			</div>	
   </section>
+				
   <!-- End Booking Details section -->
 
   <!-- Footer Section -->
