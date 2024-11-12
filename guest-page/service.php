@@ -48,7 +48,7 @@ if ($conn) {
     <header class="header_section">
       <div class="container-fluid">
         <nav class="navbar navbar-expand-lg custom_nav-container ">
-          <a class="navbar-brand" href="index.html">
+          <a class="navbar-brand" href="index.php">
             <span>
               <img src="images/logo.png">
             </span>
@@ -61,7 +61,7 @@ if ($conn) {
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav  ">
               <li class="nav-item ">
-                <a class="nav-link" href="index.html">Home </a>
+                <a class="nav-link" href="index.php">Home </a>
               </li>
               <li class="nav-item active">
                 <a class="nav-link" href="service.html">Services <span class="sr-only">(current)</span> </a>
@@ -117,7 +117,7 @@ if ($conn) {
           <?php endif; ?>
         </div>
         <div class="btn-box">
-          <a href="index.html">Back</a>
+          <a href="index.php">Back</a>
         </div>
       </div>
     </div>
@@ -191,7 +191,7 @@ if ($conn) {
               Links
             </h4>
             <div class="info_links">
-              <a class="active" href="index.html">
+              <a class="active" href="index.php">
                 Home
               </a>
               <a class="" href="service.html">
