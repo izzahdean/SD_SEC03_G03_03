@@ -163,73 +163,104 @@ if ($result->num_rows > 0) {
                         <i class="fa fa-bars"></i>
                     </button>
 
-                    <ul class="navbar-nav ml-auto">
+                           <ul class="navbar-nav ml-auto">
 
-                        <li class="nav-item dropdown no-arrow mx-1">
-                            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-bell fa-fw"></i>
-                                <span class="badge badge-danger badge-counter">3+</span>
-                            </a>
-                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="alertsDropdown">
-                                <h6 class="dropdown-header">
-                                    Alerts Center
-                                </h6>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="mr-3">
-                                        <div class="icon-circle bg-primary">
-                                            <i class="fas fa-file-alt text-white"></i>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="small text-gray-500">December 12, 2019</div>
-                                        <span class="font-weight-bold">A new monthly report is ready to download!</span>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="mr-3">
-                                        <div class="icon-circle bg-success">
-                                            <i class="fas fa-donate text-white"></i>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="small text-gray-500">December 7, 2019</div>
-                                        $290.29 has been deposited into your account!
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="mr-3">
-                                        <div class="icon-circle bg-warning">
-                                            <i class="fas fa-exclamation-triangle text-white"></i>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="small text-gray-500">December 2, 2019</div>
-                                        Spending Alert: We've noticed unusually high spending for your account.
-                                    </div>
-                                </a>
-                                <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
-                            </div>
-                        </li>
-                      
+						<li class="nav-item">
+							<a class="nav-link" href="#" id="alertsDropdown" data-toggle="modal" data-target="#alertsModal">
+								<i class="fas fa-bell fa-fw"></i>
+								<span class="badge badge-danger badge-counter">3+</span>
+							</a>
+						</li>
+
+
+						<!-- Alerts Modal -->
+						<div class="modal fade" id="alertsModal" tabindex="-1" role="dialog" aria-labelledby="alertsModalLabel" aria-hidden="true">
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title" id="alertsModalLabel">Alerts Center</h5>
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+									<div class="modal-body">
+										<!-- First Alert -->
+										<div class="alert-item">
+											<div class="d-flex align-items-center">
+												<div class="icon-circle bg-primary mr-3">
+													<i class="fas fa-file-alt text-white"></i>
+												</div>
+												<div>
+													<div class="small text-gray-500">December 12, 2019</div>
+													<span class="font-weight-bold">A new monthly report is ready to download!</span>
+												</div>
+											</div>
+										</div>
+										<hr>
+										<!-- Second Alert -->
+										<div class="alert-item">
+											<div class="d-flex align-items-center">
+												<div class="icon-circle bg-success mr-3">
+													<i class="fas fa-donate text-white"></i>
+												</div>
+												<div>
+													<div class="small text-gray-500">December 7, 2019</div>
+													$290.29 has been deposited into your account!
+												</div>
+											</div>
+										</div>
+										<hr>
+										<!-- Third Alert -->
+										<div class="alert-item">
+											<div class="d-flex align-items-center">
+												<div class="icon-circle bg-warning mr-3">
+													<i class="fas fa-exclamation-triangle text-white"></i>
+												</div>
+												<div>
+													<div class="small text-gray-500">December 2, 2019</div>
+													Spending Alert: We've noticed unusually high spending for your account.
+												</div>
+											</div>
+										</div>
+										<hr>
+										<!-- Fourth Alert -->
+										<div class="alert-item">
+											<div class="d-flex align-items-center">
+												<div class="icon-circle bg-success mr-3">
+													<i class="fas fa-donate text-white"></i>
+												</div>
+												<div>
+													<div class="small text-gray-500">January 1, 2019</div>
+													$50.00 has been deposited into your account!
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+									</div>
+								</div>
+							</div>
+						</div>
+
+
                         <div class="topbar-divider d-none d-sm-block"></div>
 
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">ADMIN</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">ADMIN&nbsp;</span>
                                 <img class="img-profile rounded-circle"
                                     src="img/undraw_profile.svg">
                             </a>
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="profile.php">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Profile
                                 </a>
-                               <a class="dropdown-item" href="change-password.html">
-                                    <i class="fas fa-lock fa-sm fa-fw mr-2 text-gray-400"></i>
+								<a class="dropdown-item" href="change-password.php">
+                                   <i class="fas fa-lock fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Change Password
                                 </a>
                                 <div class="dropdown-divider"></div>
