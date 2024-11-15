@@ -20,12 +20,97 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" />
 
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
   <link href="css/font-awesome.min.css" rel="stylesheet" />
 
   <link href="css/style.css" rel="stylesheet" />
   <link href="css/responsive.css" rel="stylesheet" />
+	<style>
+	@-webkit-keyframes come-in {
+	  0% {
+		-webkit-transform: translatey(100px);
+				transform: translatey(100px);
+		opacity: 0;
+	  }
+	  30% {
+		-webkit-transform: translateX(-50px) scale(0.4);
+				transform: translateX(-50px) scale(0.4);
+	  }
+	  70% {
+		-webkit-transform: translateX(0px) scale(1.2);
+				transform: translateX(0px) scale(1.2);
+	  }
+	  100% {
+		-webkit-transform: translatey(0px) scale(1);
+				transform: translatey(0px) scale(1);
+		opacity: 1;
+	  }
+	}
+	@keyframes come-in {
+	  0% {
+		-webkit-transform: translatey(100px);
+				transform: translatey(100px);
+		opacity: 0;
+	  }
+	  30% {
+		-webkit-transform: translateX(-50px) scale(0.4);
+				transform: translateX(-50px) scale(0.4);
+	  }
+	  70% {
+		-webkit-transform: translateX(0px) scale(1.2);
+				transform: translateX(0px) scale(1.2);
+	  }
+	  100% {
+		-webkit-transform: translatey(0px) scale(1);
+				transform: translatey(0px) scale(1);
+		opacity: 1;
+	  }
+	}
 
+	* {
+	  margin: 0;
+	  padding: 0;
+	}
+
+	.floating-container {
+	  position: fixed;
+	  width: 100px;
+	  height: 100px; /* Keep the height fixed */
+	  bottom: 0;
+	  right: 0;
+	  margin: 35px 25px;
+	}
+
+	.floating-container .floating-button {
+	  position: relative;
+	  width: 100px;
+	  height: 55px;
+	  background: #2cb3f0;
+	  bottom: 0;
+	  border-radius: 10%;
+	  left: 0;
+	  right: 0;
+	  margin: auto;
+	  color: black;
+	  line-height: 55px;
+	  text-align: center;
+	  font-size: 15px;
+	  z-index: 100;
+	  box-shadow: 0 10px 25px -5px rgba(44, 179, 240, 0.6);
+	  cursor: pointer;
+	  -webkit-transition: all 0.3s;
+	  transition: all 0.3s;
+	}
+
+	/* Hover effect for the floating button */
+	.floating-container .floating-button:hover {
+	  box-shadow: 0 10px 25px rgba(44, 179, 240, 0.6);
+	  transform: translatey(-5px); /* Subtle lift effect */
+	  transition: transform 0.3s;
+	}
+
+	</style>
 </head>
 
 <body class="sub_page">
@@ -153,11 +238,6 @@
                 <p>
                   Perfect for light cleaning and quick touch-ups for your house. Get your sparkle on!
                 </p>
-				<div class="btn-box">
-                <a href="checkout-page.php">
-                  Book Now
-                </a>
-				</div>
               </div>
             </div>
           </div>
@@ -172,11 +252,6 @@
                 <p>
                   A spotless and organized workspace, enhancing productivity and making a lasting impression.
                 </p>
-				<div class="btn-box">
-                <a href="checkout-page.php">
-                  Book Now
-                </a>
-				</div>
               </div>
             </div>
           </div>
@@ -192,11 +267,6 @@
                 <p>
                   A thorough cleaning that leaves no corner untouched. Feel the difference!
                 </p>
-				<div class="btn-box">
-                <a href="checkout-page.php">
-                  Book Now
-                </a>  
-                </div>
               </div>
             </div>
           </div>
@@ -212,11 +282,6 @@
                 <p>
                   Enjoy crisp, wrinkle-free clothes, neatly folded laundry, and dishwashing services—making your life easier, one task at a time!
                 </p>
-				<div class="btn-box">
-                <a href="checkout-page.php">
-                  Book Now
-                </a>  
-                </div>
               </div>
             </div>
           </div>
@@ -231,12 +296,7 @@
                 </h5>
                 <p>
                   Ensure a smooth transition with our service, leaving your old home spotless and your new one ready to welcome you.
-                </p><p>
-				<div class="btn-box">
-                <a href="checkout-page.php">
-                  Book Now
-                </a>  
-                </div></p>
+                </p>
               </div>
             </div>
           </div>
@@ -252,11 +312,6 @@
                 <p>
                   Our Spring Cleaning service tackles every chore, leaving your entire home refreshed and spotless inside and out.
                 </p>
-				<div class="btn-box">
-                <a href="checkout-page.php">
-                  Book Now
-                </a>  
-                </div>
               </div>
             </div>
           </div>
@@ -294,6 +349,11 @@
     </div>
   </div>
   
+  <div class="floating-container">
+		<a class="active" href="checkout-page.php">
+        <div class="floating-button">Book Now</div>       
+        </a>
+	</div>
 
   <section class="info_section layout_padding2">
     <div class="container">
@@ -376,6 +436,7 @@
   </section>
   <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+  <script src="https://fonts.googleapis.com/css?family=Roboto"></script>
   <script type="text/javascript" src="js/bootstrap.js"></script>
 </body>
 
