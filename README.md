@@ -1,4 +1,4 @@
-![header](.../image/header.png)
+![header](./image/header.png)
 
 # :scroll: MyKakaks Cleaning Service System (MCSS)
 MyKakaks Cleaning Service System (MCSS) is a web-based platform designed to offer 
@@ -97,7 +97,7 @@ features a clean and visually appealing design, showcasing the core service offe
 Service. Users can explore available services, learn about professional cleaning options, and easily navigate 
 to booking features using a prominent "Book Now" button for a seamless experience.
 
-![homepage](.../image/custUI.jpg)
+![homepage](./image/custUI.jpg)
 
 
 ## :computer: Usage
