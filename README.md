@@ -9,14 +9,14 @@ background checks for all service providers.
 
 ## :clipboard: Table of Contents
 
-- [Overview](#Overview)
-- [Project Purpose and Scope](#ProjectPurposeandScope)
-- [Project Objectives](#Objectives)
-- [System Features](#SystemFeatures)
-- [Installation and Setup](#InstallationandSetup)
-- [Usage](#Usage)
-- [Contributing](#Contributing)
-- [License](#License)
+- [Overview](#scroll-mykakaks-cleaning-service-system-mcss)
+- [Project Purpose and Scope](#mag-project-purpose-and-scope)
+- [Project Objectives](#round_pushpin-project-objectives)
+- [System Features](#pushpin-system-features)
+- [Installation and Setup](#wrench-installation-and-setup)
+- [Usage](#computer-usage)
+- [Contributing](#busts_in_silhouette-contributing)
+- [License](#scroll-license)
 
 
 ## :mag: Project Purpose and Scope
