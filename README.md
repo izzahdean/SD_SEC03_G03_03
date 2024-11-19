@@ -7,6 +7,7 @@ payment system and a streamlined booking process, enabling customers to convenie
 schedule and pay for cleaning services. It ensures customer trust and safety by including
 background checks for all service providers.
 
+\
 ## :clipboard: Table of Contents
 
 - [Overview](#scroll-mykakaks-cleaning-service-system-mcss)
@@ -18,7 +19,7 @@ background checks for all service providers.
 - [Contributing](#busts_in_silhouette-contributing)
 - [License](#scroll-license)
 
-
+\
 ## :mag: Project Purpose and Scope
 
 **Purpose** \
@@ -32,14 +33,15 @@ facilitating easy bookings and payments.
     + Real-time service booking with flexible scheduling Integrated online payment system
     + Comprehensive cleaner profiles with background information for customer confidence
     + Four types of users: Guests, Customers, Staff, and Admins
-	
+
+\	
 ## :round_pushpin: Project Objectives
 
     1. Develop a web-based system for MyKakaks Cleaning Services.
     2. Enhance customer trust through detailed ratings and cleaner profiles.
     3. Streamline booking and payment processes.
 
-
+\
 ## :pushpin: System Features
 
 - User Authentication : Secure login and registration for different user roles (guests, customers, staff, admins).
@@ -48,6 +50,7 @@ facilitating easy bookings and payments.
 - Cleaner Profiles : Detailed profiles with background information and ratings for transparency.
 - Admin Dashboard : Manage bookings, customer information, staff assignments, and system settings.
 
+\
 ## :wrench: Installation and Setup
 
 1. Clone the repository:
@@ -96,21 +99,22 @@ After successful installation and setup, accessing the system will display the g
 features a clean and visually appealing design, showcasing the core service offerings of MyKakaks Cleaning 
 Service. Users can explore available services, learn about professional cleaning options, and easily navigate 
 to booking features using a prominent "Book Now" button for a seamless experience.
+\
 
 ![homepage](./image/custUI.jpg)
 
-
+\
 ## :computer: Usage
 1. Open the website on the configured local server.
 2. Register or login as a customer, staff, or admin.
 3. Navigate through the booking and payment modules to experience the full functionality.
 4. Admins can manage system settings and view reports through the admin dashboard.
 
-
+\
 ## :busts_in_silhouette: Contributing
 Contributions are welcome! Please follow the standard process for pull requests and ensure compatibility with the existing project structure.	
 
-
+\
 ## :scroll: License
 
 This project is licensed under the MIT License. For more information, see the [LICENSE](https://github.com/izzahdean/SD_SEC03_G03_03/blob/main/LICENSE) file.
