@@ -1,0 +1,122 @@
+Array
+(
+    [booking_id] => default
+    [total_price] => 80.00
+    [transaction_id] => 7W8271940W233831J
+    [payment_status] => COMPLETED
+    [payment_method] => PayPal
+)
+Array
+(
+    [booking_id] => default
+    [total_price] => 80.00
+    [transaction_id] => 9LC22863A40701035
+    [payment_status] => COMPLETED
+    [payment_method] => PayPal
+)
+Array
+(
+    [booking_id] => default
+    [total_price] => 80.00
+    [transaction_id] => 60K37948NT352840X
+    [payment_status] => COMPLETED
+    [payment_method] => PayPal
+)
+Received POST data:
+Array
+(
+    [booking_id] => default
+    [total_price] => 200.00
+    [transaction_id] => 8X61337483985544U
+    [payment_status] => COMPLETED
+    [payment_method] => PayPal
+)
+
+Booking ID: default, Total Price: 200.00, Transaction ID: 8X61337483985544U, Payment Status: COMPLETED, Payment Method: PayPal
+SQL: UPDATE booking SET 
+            total_price = ?, 
+            transaction_id = ?, 
+            payment_status = 'completed', 
+            payment_method = ? 
+        WHERE booking_id = ?
+Parameters bound successfully.
+Booking updated successfully.
+Received POST data:
+Array
+(
+    [booking_id] => default
+    [total_price] => 200.00
+    [transaction_id] => 875729039Y202140W
+    [payment_status] => COMPLETED
+    [payment_method] => PayPal
+)
+
+Booking ID: default, Total Price: 200.00, Transaction ID: 875729039Y202140W, Payment Status: COMPLETED, Payment Method: PayPal
+SQL: UPDATE booking SET 
+            total_price = ?, 
+            transaction_id = ?, 
+            payment_status = 'completed', 
+            payment_method = ? 
+        WHERE booking_id = ?
+Parameters bound successfully.
+Booking updated successfully.
+Received POST data:
+Array
+(
+    [booking_id] => default
+    [total_price] => 200.00
+    [transaction_id] => 0WL129481B2586304
+    [payment_status] => COMPLETED
+    [payment_method] => PayPal
+)
+
+Booking ID: , Total Price: , Transaction ID: , Payment Status: , Payment Method: 
+SQL Query: UPDATE booking SET 
+            total_price = ?, 
+            transaction_id = ?, 
+            payment_status = 'completed', 
+            payment_method = ? 
+        WHERE booking_id = ?
+Booking updated successfully.
+Received POST data:
+Array
+(
+    [booking_id] => default
+    [total_price] => 200.00
+    [transaction_id] => 8DA11530BD598853D
+    [payment_status] => COMPLETED
+    [payment_method] => PayPal
+)
+
+Booking ID: default, Total Price: 200.00, Transaction ID: 8DA11530BD598853D, Payment Status: COMPLETED, Payment Method: PayPal
+SQL Query: UPDATE booking SET 
+            total_price = ?, 
+            transaction_id = ?, 
+            payment_status = 'completed', 
+            payment_method = ? 
+        WHERE booking_id = ?
+Booking updated successfully.
+Received POST data:
+Array
+(
+    [booking_id] => default
+    [total_price] => 80.00
+    [transaction_id] => 058715420V475323K
+    [payment_status] => COMPLETED
+    [payment_method] => PayPal
+)
+
+Booking ID: default, Total Price: 80.00, Transaction ID: 058715420V475323K, Payment Status: COMPLETED, Payment Method: PayPal
+No booking found for booking_id: default
+Received POST data:
+Array
+(
+    [booking_id] => 14
+    [transaction_id] => 05A36837XD453111H
+    [total_price] => 230.00
+    [payment_status] => completed
+    [payment_method] => PayPal
+)
+
+Booking ID: 14, Total Price: 230.00, Transaction ID: 05A36837XD453111H, Payment Status: completed, Payment Method: PayPal
+Booking updated successfully.
