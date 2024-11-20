@@ -112,6 +112,21 @@ to booking features using a prominent "Book Now" button for a seamless experienc
 4. Admins can manage system settings and view reports through the admin dashboard.
 
 
+# :fountain_pen: List of username and password
+
+- Admin 
+   + Email : izah0130@gmail.com 
+   + Password : @Izzah0130
+
+- Maid
+    + Email : afiqahsherin04@gmail.com
+    + Password : pika123
+
+- Customer
+    + Email : xojote7581@merotx.com
+    + Password : &Amyra123
+
+
 ## :busts_in_silhouette: Contributing
 Contributions are welcome! Please follow the standard process for pull requests and ensure compatibility with the existing project structure.	
 
