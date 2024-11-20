@@ -167,51 +167,93 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             font-weight: bold;
             text-align: center;
         }
+		.btn-primary:disabled {
+            background-color: #cccccc;
+            border-color: #cccccc;
+        }
+        .valid {
+			color: green;
+		}
+
+		invalid {
+			color: red;
+		}
     </style>
 </head>
 <body>
-                <nav class="navbar navbar-expand-lg navbar-light bg-dark shadow-sm">
-					<div class="container-fluid">
-						<a class="navbar-brand" href="#">
-							<img src="img/logo.png" alt="Logo" style="width: 100px; height: 33px;">
-						</a>
-					</div>
-				</nav>
-                <div class="container">
-                    <h3 class="text-center">Change Password</h3>
-                    <div class="card-body">
-						<?php if ($message): ?>
-                            <p class="<?= ($message === 'Password changed successfully!') ? 'message' : 'error' ?>">
-								<?= htmlspecialchars($message) ?>
-							</p>
-                                    <?php endif; ?>
-                                    <form action="" method="POST">
-                                        <div class="form-group">
-                                            <label for="oldPassword">Old Password</label>
-                                            <input type="password" class="form-control" id="oldPassword" name="oldPassword" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="newPassword">New Password</label>
-                                            <input type="password" class="form-control" id="newPassword" name="newPassword" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="confirmPassword">Confirm New Password</label>
-                                            <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
-                                        </div>
-                                        <div class="form-row">
-											<div class="col text-left ">
-												<input type="submit" value="Save" class="btn btn-primary save-btn">
-											</div>
-											<div class="col text-right">
-												<button type="button" class="btn btn-danger" onclick="window.location.href='index.html'">Cancel</button>
-											</div>
-										</div>
-                                    </form>
-                                </div>
+    <nav class="navbar navbar-expand-lg navbar-light bg-dark shadow-sm">
+		<div class="container-fluid">
+			<a class="navbar-brand" href="#">
+			<img src="img/logo.png" alt="Logo" style="width: 100px; height: 33px;">
+			</a>
+		</div>
+	</nav>
+    <div class="container">
+        <h3 class="text-center">Change Password</h3>
+        <div class="card-body">
+            <?php if ($message): ?>
+                <p class="<?= ($message === 'Password changed successfully!') ? 'message' : 'error' ?>">
+                    <?= htmlspecialchars($message) ?>
+                </p>
+            <?php endif; ?>
+            <form action="" method="POST" id="change-password-form">
+                <div class="form-group">
+                    <label for="oldPassword">Old Password</label>
+                    <input type="password" class="form-control" id="oldPassword" name="oldPassword" required>
                 </div>
+                <div class="form-group">
+                    <label for="newPassword">New Password</label>
+                    <input type="password" class="form-control" id="newPassword" name="newPassword" required>
+                    <div id="password-requirements" class="password-requirement">
+						<p id="length" class="invalid">At least 8 characters</p>
+						<p id="uppercase" class="invalid">At least one uppercase letter</p>
+						<p id="number" class="invalid">At least one number</p>
+						<p id="special" class="invalid">At least one special character</p>
+					</div>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm New Password</label>
+                    <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
+                </div>
+                <div class="form-row">
+                    <div class="col text-left ">
+                        <input type="submit" value="Save" class="btn btn-primary save-btn" id="saveBtn" disabled>
+                    </div>
+                    <div class="col text-right">
+                        <button type="button" class="btn btn-danger" onclick="window.location.href='index.php'">Cancel</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	<script>
+        function checkPasswordStrength() {
+			const password = document.getElementById("newPassword").value;
+			const conditions = [
+				{ id: "length", regex: /.{8,}/ },
+				{ id: "uppercase", regex: /[A-Z]/ },
+				{ id: "number", regex: /[0-9]/ },
+				{ id: "special", regex: /[!@#$%^&*(),.?":{}|<>]/ }
+			];
+
+			let allValid = true;
+
+			conditions.forEach(condition => {
+				const element = document.getElementById(condition.id);
+				const isValid = condition.regex.test(password);
+				element.classList.toggle("valid", isValid);
+				element.classList.toggle("invalid", !isValid);
+				if (!isValid) allValid = false;
+			});
+
+			document.getElementById("saveBtn").disabled = !allValid;
+		}
+
+		document.getElementById("newPassword").addEventListener("input", checkPasswordStrength);
+    </script>
 </body>
 </html>

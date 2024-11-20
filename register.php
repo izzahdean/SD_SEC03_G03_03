@@ -1,13 +1,10 @@
 <?php
 require_once 'connect-db.php';
-
 require_once 'PHPMailer/src/PHPMailer.php';
 require_once 'PHPMailer/src/SMTP.php';
 require_once 'PHPMailer/src/Exception.php';
-
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
-
 function generateOtp() {
     return str_pad(rand(0, 9999), 4, '0', STR_PAD_LEFT);
 }
@@ -92,7 +89,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<link rel="shortcut icon" href="image/favicon.png" type="">
 	
-    <title>MYKAKAKS Guest - Sign Up</title>
+    <title>MYKAKAKS</title>
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
     <link href="styling.css" rel="stylesheet">
@@ -140,20 +137,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <form id="signupForm" class="user" action="register.php" method="POST">
                                     <div class="form-group row">
                                         <div class="col-sm-6 mb-3 mb-sm-0">
-                                            <input type="text" class="form-control form-control-user" id="firstName" name="first_name" placeholder="First Name" value="<?php echo htmlspecialchars($first_name); ?>" required>
+                                            <input type="text" class="form-control form-control-user" id="firstName" name="first_name" placeholder="First Name" 
+											value="<?php echo htmlspecialchars($first_name); ?>" required>
                                         </div>
                                         <div class="col-sm-6">
-                                            <input type="text" class="form-control form-control-user" id="lastName" name="last_name" placeholder="Last Name" value="<?php echo htmlspecialchars($last_name); ?>" required>
+                                            <input type="text" class="form-control form-control-user" id="lastName" name="last_name" placeholder="Last Name" 
+											value="<?php echo htmlspecialchars($last_name); ?>" required>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <input type="tel" class="form-control form-control-user" id="contactNumber" name="contact_number" placeholder="Contact Number" value="<?php echo htmlspecialchars($contact_number); ?>" required>
+                                        <input type="tel" class="form-control form-control-user" id="contactNumber" name="contact_number" placeholder="Contact Number" 
+										value="<?php echo htmlspecialchars($contact_number); ?>" required>
                                     </div>
                                     <div class="form-group">
-                                        <input type="text" class="form-control form-control-user" id="address" name="address" placeholder="Address" value="<?php echo htmlspecialchars($address); ?>" required>
+                                        <input type="text" class="form-control form-control-user" id="address" name="address" placeholder="Address" 
+										value="<?php echo htmlspecialchars($address); ?>" required>
                                     </div>
                                     <div class="form-group">
-                                        <input type="email" class="form-control form-control-user" id="email" name="email" placeholder="Email Address" value="<?php echo htmlspecialchars($email); ?>" required>
+                                        <input type="email" class="form-control form-control-user" id="email" name="email" placeholder="Email Address" 
+										value="<?php echo htmlspecialchars($email); ?>" required>
                                     </div>
                                     <div class="form-group row">
                                         <div class="col-sm-6 mb-3 mb-sm-0">

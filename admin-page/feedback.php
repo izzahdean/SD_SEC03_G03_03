@@ -12,6 +12,25 @@ if ($conn) {
     $stmt->execute();
     $feedback_result = $stmt->get_result();
 }
+// Query to fetch completed transactions for alerts
+$sql = "SELECT b.booking_id, b.booking_date, b.booking_slot, b.total_price, b.amount, b.payment_method, c.fname AS customer_name, m.fname AS maid_name
+        FROM booking b
+        LEFT JOIN customer c ON b.cust_id = c.id
+        LEFT JOIN maid m ON b.maid_id = m.id  -- Changed from 'maids' to 'maid'
+        WHERE b.payment_status = 'completed' AND b.booking_status = 'completed'
+        ORDER BY b.payment_date DESC LIMIT 5"; // Fetch the latest 5 completed bookings
+
+$result = $conn->query($sql);
+
+$alerts = [];
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $alerts[] = $row;
+    }
+}
+
+// Close the database connection
+$conn->close();
 ?>
 
 <!DOCTYPE html>
@@ -56,29 +75,22 @@ if ($conn) {
 </head>
 
 <body id="page-top">
-
     <div id="wrapper">
-
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-                  <img src="img/logo.png" class="sidebar-logo">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.php">
+                <img src="img/logo.png" class="sidebar-logo">
             </a>
-
             <hr class="sidebar-divider my-0">
-
             <li class="nav-item">
-                <a class="nav-link" href="index.html">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Dashboard</span></a>
+                <a class="nav-link" href="index.php">
+					<i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Dashboard</span>
+				</a>
             </li>
-
             <hr class="sidebar-divider">
-
             <div class="sidebar-heading">
                 Menu
             </div>
-
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                     aria-expanded="true" aria-controls="collapseTwo">
@@ -92,7 +104,6 @@ if ($conn) {
                     </div>
                 </div>
             </li>
-
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
                     aria-expanded="true" aria-controls="collapseUtilities">
@@ -106,7 +117,6 @@ if ($conn) {
                     </div>
                 </div>
             </li>
-			
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseService"
                     aria-expanded="true" aria-controls="collapseService">
@@ -116,58 +126,44 @@ if ($conn) {
                 <div id="collapseService" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="booking.html">Book Services</a>
+                        <a class="collapse-item" href="booking.php">Book Services</a>
                     </div>
                 </div>
             </li>
-
             <hr class="sidebar-divider">
 
             <div class="sidebar-heading">
                 Others
             </div>
-			
             <li class="nav-item active">
                 <a class="nav-link" href="feedback.html">
                     <i class="fas fa-fw fa-star"></i>
                     <span>Feedback</span></a>
             </li>
-
             <li class="nav-item">
-                <a class="nav-link" href="salesreport.html">
+                <a class="nav-link" href="salesreport.php">
                     <i class="fas fa-fw fa-download"></i>
                     <span>Generate Report</span></a>
             </li>
-
             <hr class="sidebar-divider d-none d-md-block">
 
             <div class="text-center d-none d-md-inline">
                 <button class="rounded-circle border-0" id="sidebarToggle" onclick="toggleSidebar()"></button>
-            </div>
-
+			</div>
         </ul>
-		
         <div id="content-wrapper" class="d-flex flex-column">
-
             <div id="content">
-
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-
                     <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                         <i class="fa fa-bars"></i>
                     </button>
-
-                          <ul class="navbar-nav ml-auto">
-
+                    <ul class="navbar-nav ml-auto">
 						<li class="nav-item">
 							<a class="nav-link" href="#" id="alertsDropdown" data-toggle="modal" data-target="#alertsModal">
 								<i class="fas fa-bell fa-fw"></i>
-								<span class="badge badge-danger badge-counter">3+</span>
+								<span class="badge badge-danger badge-counter"><?php echo count($alerts) > 0 ? count($alerts) : ''; ?>+</span>
 							</a>
 						</li>
-
-
-						<!-- Alerts Modal -->
 						<div class="modal fade" id="alertsModal" tabindex="-1" role="dialog" aria-labelledby="alertsModalLabel" aria-hidden="true">
 							<div class="modal-dialog" role="document">
 								<div class="modal-content">
@@ -178,57 +174,35 @@ if ($conn) {
 										</button>
 									</div>
 									<div class="modal-body">
-										<!-- First Alert -->
-										<div class="alert-item">
-											<div class="d-flex align-items-center">
-												<div class="icon-circle bg-primary mr-3">
-													<i class="fas fa-file-alt text-white"></i>
-												</div>
-												<div>
-													<div class="small text-gray-500">December 12, 2019</div>
-													<span class="font-weight-bold">A new monthly report is ready to download!</span>
-												</div>
-											</div>
-										</div>
-										<hr>
-										<!-- Second Alert -->
+										<!-- Loop through alerts to show completed bookings -->
+										<?php foreach ($alerts as $alert): ?>
 										<div class="alert-item">
 											<div class="d-flex align-items-center">
 												<div class="icon-circle bg-success mr-3">
-													<i class="fas fa-donate text-white"></i>
+													<i class="fas fa-check-circle text-white"></i>
 												</div>
 												<div>
-													<div class="small text-gray-500">December 7, 2019</div>
-													$290.29 has been deposited into your account!
+													<div class="small text-gray-500"><?php echo date('F d, Y', strtotime($alert['booking_date'])); ?></div>
+													<span class="font-weight-bold"><?php echo $alert['customer_name']; ?> has completed a booking with maid <?php echo $alert['maid_name']; ?>.</span>
+													<p>Booking Slot: <?php echo $alert['booking_slot']; ?> | Total Price: $<?php echo number_format($alert['total_price'], 2); ?></p>
 												</div>
 											</div>
 										</div>
 										<hr>
-										<!-- Third Alert -->
+										<?php endforeach; ?>
+
+										<?php if (count($alerts) == 0): ?>
 										<div class="alert-item">
 											<div class="d-flex align-items-center">
 												<div class="icon-circle bg-warning mr-3">
-													<i class="fas fa-exclamation-triangle text-white"></i>
+													<i class="fas fa-info-circle text-white"></i>
 												</div>
 												<div>
-													<div class="small text-gray-500">December 2, 2019</div>
-													Spending Alert: We've noticed unusually high spending for your account.
+													<span>No completed transactions yet.</span>
 												</div>
 											</div>
 										</div>
-										<hr>
-										<!-- Fourth Alert -->
-										<div class="alert-item">
-											<div class="d-flex align-items-center">
-												<div class="icon-circle bg-success mr-3">
-													<i class="fas fa-donate text-white"></i>
-												</div>
-												<div>
-													<div class="small text-gray-500">January 1, 2019</div>
-													$50.00 has been deposited into your account!
-												</div>
-											</div>
-										</div>
+										<?php endif; ?>
 									</div>
 									<div class="modal-footer">
 										<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -264,9 +238,7 @@ if ($conn) {
                                 </a>
                             </div>
                         </li>
-
                     </ul>
-
                 </nav>
                 <div class="container-fluid">
 					<h1 class="h3 mb-2 text-gray-800">Feedbacks</h1>
@@ -280,10 +252,10 @@ if ($conn) {
 								<img src="img/customer.jpg" class="img-fluid rounded-circle" alt="Customer Image" style="width: 60px;">
 							</div>
 							<div class="col-md-9">
-								<h5 class="card-title"><?php echo htmlspecialchars($row['fname']) . ' ' . htmlspecialchars($row['lname']); ?></h5> <!-- Display customer name -->
-								<p><strong>Service Type: </strong><?php echo htmlspecialchars($row['service_name']); ?></p> <!-- Display service type -->
-								<p class="card-text"><?php echo htmlspecialchars($row['comments']); ?></p> <!-- Display feedback content -->
-								<p class="card-text"><small class="text-muted"><?php echo htmlspecialchars($row['date_submitted']); ?></small></p> <!-- Display feedback date -->
+								<h5 class="card-title"><?php echo htmlspecialchars($row['fname']) . ' ' . htmlspecialchars($row['lname']); ?></h5> 
+								<p><strong>Service Type: </strong><?php echo htmlspecialchars($row['service_name']); ?></p> 
+								<p class="card-text"><?php echo htmlspecialchars($row['comments']); ?></p> 
+								<p class="card-text"><small class="text-muted"><?php echo htmlspecialchars($row['date_submitted']); ?></small></p> 
 							</div>
 						</div>
 					</div>
@@ -292,55 +264,40 @@ if ($conn) {
 						<p>No feedback available.</p>
 					<?php endif; ?>
 				</div>
-
-
-               
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; MyKakaks Website 2024</span>
-                    </div>
-                </div>
-            </footer>
-
-        </div>
-
-    </div>
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="../login.php">Logout</a>
-                </div>
-            </div>
-        </div>
-    </div>
-
+				<footer class="sticky-footer bg-white">
+					<div class="container my-auto">
+						<div class="copyright text-center my-auto">
+							<span>Copyright &copy; MyKakaks Website 2024</span>
+						</div>
+					</div>
+				</footer>
+			</div>
+		</div>
+		<a class="scroll-to-top rounded" href="#page-top">
+			<i class="fas fa-angle-up"></i>
+		</a>
+		<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+						<button class="close" type="button" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">×</span>
+						</button>
+					</div>
+					<div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+					<div class="modal-footer">
+						<button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+						<a class="btn btn-primary" href="../login.php">Logout</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
     <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
     <script src="js/sb-admin-2.min.js"></script>
-
-    <script src="vendor/chart.js/Chart.min.js"></script>
-
-    <script src="js/demo/chart-area-demo.js"></script>
-    <script src="js/demo/chart-pie-demo.js"></script>
-    <script src="js/demo/chart-bar-demo.js"></script>
-
 </body>
-
 </html>

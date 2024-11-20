@@ -96,7 +96,7 @@ $conn->close();
     <div class="container profile-container">
         <div class="d-flex justify-content-between align-items-center mb-3">
             <div class="d-flex flex-row align-items-center back">
-                <a href="index.html"><b>Back to home</b></a>
+                <a href="index.php"><b>Back to home</b></a>
             </div>
         </div>
         <h2 class="text-center mb-5">ADMIN PROFILE</h2>

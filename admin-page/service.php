@@ -15,7 +15,6 @@ $result = $conn->query($sql);
 if (isset($_GET['delete_id'])) {
     $service_id = $_GET['delete_id'];
 
-    // Prepared statement to delete the service securely
     $delete_sql = "DELETE FROM services WHERE id = ?";
     $stmt = $conn->prepare($delete_sql);
     $stmt->bind_param("i", $service_id);
@@ -34,6 +33,22 @@ if ($result->num_rows > 0) {
         $services[] = $row;
     }
 }
+$sql = "SELECT b.booking_id, b.booking_date, b.booking_slot, b.total_price, b.amount, b.payment_method, c.fname AS customer_name, m.fname AS maid_name
+        FROM booking b
+        LEFT JOIN customer c ON b.cust_id = c.id
+        LEFT JOIN maid m ON b.maid_id = m.id  -- Changed from 'maids' to 'maid'
+        WHERE b.payment_status = 'completed' AND b.booking_status = 'completed'
+        ORDER BY b.payment_date DESC LIMIT 5"; // Fetch the latest 5 completed bookings
+
+$result = $conn->query($sql);
+
+$alerts = [];
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $alerts[] = $row;
+    }
+}
+$conn->close();
 ?>
 
 <!DOCTYPE html>
@@ -127,7 +142,7 @@ if ($result->num_rows > 0) {
                 <div id="collapseService" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="booking.html">Book Services</a>
+                        <a class="collapse-item" href="booking.php">Book Services</a>
                     </div>
                 </div>
             </li>
@@ -168,12 +183,9 @@ if ($result->num_rows > 0) {
 						<li class="nav-item">
 							<a class="nav-link" href="#" id="alertsDropdown" data-toggle="modal" data-target="#alertsModal">
 								<i class="fas fa-bell fa-fw"></i>
-								<span class="badge badge-danger badge-counter">3+</span>
+								<span class="badge badge-danger badge-counter"><?php echo count($alerts) > 0 ? count($alerts) : ''; ?>+</span>
 							</a>
 						</li>
-
-
-						<!-- Alerts Modal -->
 						<div class="modal fade" id="alertsModal" tabindex="-1" role="dialog" aria-labelledby="alertsModalLabel" aria-hidden="true">
 							<div class="modal-dialog" role="document">
 								<div class="modal-content">
@@ -184,57 +196,34 @@ if ($result->num_rows > 0) {
 										</button>
 									</div>
 									<div class="modal-body">
-										<!-- First Alert -->
-										<div class="alert-item">
-											<div class="d-flex align-items-center">
-												<div class="icon-circle bg-primary mr-3">
-													<i class="fas fa-file-alt text-white"></i>
-												</div>
-												<div>
-													<div class="small text-gray-500">December 12, 2019</div>
-													<span class="font-weight-bold">A new monthly report is ready to download!</span>
-												</div>
-											</div>
-										</div>
-										<hr>
-										<!-- Second Alert -->
+										<?php foreach ($alerts as $alert): ?>
 										<div class="alert-item">
 											<div class="d-flex align-items-center">
 												<div class="icon-circle bg-success mr-3">
-													<i class="fas fa-donate text-white"></i>
+													<i class="fas fa-check-circle text-white"></i>
 												</div>
 												<div>
-													<div class="small text-gray-500">December 7, 2019</div>
-													$290.29 has been deposited into your account!
+													<div class="small text-gray-500"><?php echo date('F d, Y', strtotime($alert['booking_date'])); ?></div>
+													<span class="font-weight-bold"><?php echo $alert['customer_name']; ?> has completed a booking with maid <?php echo $alert['maid_name']; ?>.</span>
+													<p>Booking Slot: <?php echo $alert['booking_slot']; ?> | Total Price: $<?php echo number_format($alert['total_price'], 2); ?></p>
 												</div>
 											</div>
 										</div>
 										<hr>
-										<!-- Third Alert -->
+										<?php endforeach; ?>
+
+										<?php if (count($alerts) == 0): ?>
 										<div class="alert-item">
 											<div class="d-flex align-items-center">
 												<div class="icon-circle bg-warning mr-3">
-													<i class="fas fa-exclamation-triangle text-white"></i>
+													<i class="fas fa-info-circle text-white"></i>
 												</div>
 												<div>
-													<div class="small text-gray-500">December 2, 2019</div>
-													Spending Alert: We've noticed unusually high spending for your account.
+													<span>No completed transactions yet.</span>
 												</div>
 											</div>
 										</div>
-										<hr>
-										<!-- Fourth Alert -->
-										<div class="alert-item">
-											<div class="d-flex align-items-center">
-												<div class="icon-circle bg-success mr-3">
-													<i class="fas fa-donate text-white"></i>
-												</div>
-												<div>
-													<div class="small text-gray-500">January 1, 2019</div>
-													$50.00 has been deposited into your account!
-												</div>
-											</div>
-										</div>
+										<?php endif; ?>
 									</div>
 									<div class="modal-footer">
 										<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -242,10 +231,7 @@ if ($result->num_rows > 0) {
 								</div>
 							</div>
 						</div>
-
-
                         <div class="topbar-divider d-none d-sm-block"></div>
-
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -354,11 +340,7 @@ if ($result->num_rows > 0) {
 
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
     <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
     <script src="js/sb-admin-2.min.js"></script>
-
 </body>
-
 </html>

@@ -41,13 +41,13 @@ if (isset($_COOKIE['user'])) {
 
             switch ($user_type) {
                 case 'admin':
-                    header("Location: admin-page/index.html");
+                    header("Location: admin-page/index.php");
                     exit();
                 case 'customer':
-                    header("Location: customer-page/index.html");
+                    header("Location: cust-page/index.php");
                     exit();
                 case 'maid':
-                    header("Location: maid-page/index.html");
+                    header("Location: maid-page/index.php");
                     exit();
                 default:
                     $error_message = "Unknown user type!";
@@ -95,13 +95,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             switch ($user_type) {
                 case 'admin':
-                    header("Location: admin-page/index.html");
+                    header("Location: admin-page/index.php");
                     exit();
                 case 'customer':
-                    header("Location: customer-page/index.html");
+                    header("Location: cust-page/index.php");
                     exit();
                 case 'maid':
-                    header("Location: maid-page/index.html");
+                    header("Location: maid-page/index.php");
                     exit();
                 default:
                     $error_message = "Unknown user type!";
@@ -178,13 +178,13 @@ $conn->close();
                                 <form id="loginForm" class="user" action="login.php" method="POST" onsubmit="return validateForm();">
                                     <div class="form-group">
                                         <input type="email" class="form-control form-control-user" id="email" name="email" placeholder="Email Address" required>
-                                        <div id="email-error" class="text-danger"></div> <!-- Email error message -->
+                                        <div id="email-error" class="text-danger"></div> 
                                     </div>
                                     <div class="form-group">
                                         <input type="password" class="form-control form-control-user" id="password" name="password" placeholder="Password" required>
-                                        <div id="password-error" class="text-danger"></div> <!-- Password error message -->
+                                        <div id="password-error" class="text-danger"></div> 
                                     </div>
-                                    <div id="php-error-message" class="text-danger"></div> <!-- PHP Error message container -->
+                                    <div id="php-error-message" class="text-danger"></div> 
                                     <div class="form-group row">
                                         <div class="col-sm-6 mb-3 mb-sm-0">
                                             <div class="custom-control custom-checkbox small">

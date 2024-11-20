@@ -89,7 +89,7 @@
       const serviceName = serviceSelect.value;
 
       // Fetch service price from the backend
-      fetch(`/getServicePrice?serviceName=${serviceName}`)
+		fetch(`/getServicePrice?serviceName=${serviceName}`)
         .then(response => response.json())
         .then(data => {
           const price = data.price; // Backend should return JSON { price: amount }
@@ -132,11 +132,11 @@
 
 <body class="sub_page">
 
-  <div class="hero_area">
-    <div class="hero_bg_box">
-      <div class="bg_img_box">
-        <img src="images/hero-bg.png" alt="">
-      </div>
+	<div class="hero_area">
+		<div class="hero_bg_box">
+		<div class="bg_img_box">
+			<img src="images/hero-bg.png" alt="">
+		</div>
     </div>
 
     <!-- header section starts -->
@@ -225,126 +225,128 @@
     </div>
 	
   <!-- contact-us section -->
-  <section class="team_section layout_padding">
-    <div class="container-fluid">
-      <div class="heading_container heading_center">
-        <h2>
-          Booking <span> Details</span>
-        </h2>
-      </div>
-      <div class="team_container">
-        <div class="row">	
-        <div class="col-lg-7 col-sm-6">
-            <div class="box">
-				  <div class="detail-box">
-						<div class="map-part">
-							<h4>Service Detail</h4><br>
-							<p class="text-blk" id="w-c-s-fc_p-1-dm-id">
-								
-								<div class="form-group row">
-										<div class="col-sm-6 mb-3 mb-sm-0">
-											<label for="service" >Service Name</label>
-											<input type="text" class="form-control contact-inputs" id="service" name="service" placeholder="service" readonly>
+	<section class="team_section layout_padding">
+		<div class="container-fluid">
+			<div class="heading_container heading_center">
+				<h2>
+					Booking <span> Details</span>
+				</h2>
+			</div>
+			<div class="team_container">
+				<div class="row">	
+					<div class="col-lg-7 col-sm-6">
+						<div class="box">
+							<div class="detail-box">
+								<div class="map-part">
+									<h4>Service Detail</h4><br>
+									<p class="text-blk" id="w-c-s-fc_p-1-dm-id">
+										<div class="form-group row">
+											<div class="col-sm-6 mb-3 mb-sm-0">
+												<label for="service" >Service Name</label>
+												<input type="text" class="form-control contact-inputs" id="service" name="service" placeholder="service" readonly>
+											</div>
+											<div class="col-sm-6 mb-3 mb-sm-0">
+												<label for="date" >Select Date</label>
+												<input type="date" class="form-control contact-inputs" id="date" name="date" placeholder="date" required min="<?= date('Y-m-d'); ?>">
+											</div>
 										</div>
-										<div class="col-sm-6 mb-3 mb-sm-0">
-											<label for="date" >Select Date</label>
-											<input type="date" class="form-control contact-inputs" id="date" name="date" placeholder="date" required min="<?= date('Y-m-d'); ?>">
+										<br>
+										<div class="form-group row">
+											<div class="col-sm-6 mb-3 mb-sm-0">
+												<label for="price" >Price</label>
+												<input type="text" class="form-control contact-inputs" id="price" name="price" placeholder="price" readonly>
+											</div>
+											<div class="col-sm-6 mb-3 mb-sm-0">
+												<label for="slot">Select Slot</label><br>
+												<select id="slot" name="slot" class="form-control contact-inputs">
+													<option value="eight">8:00 AM</option>
+													<option value="nine">9:00 AM</option>
+													<option value="ten">10:00 AM</option>
+													<option value="twelve">12:00 PM</option>
+													<option value="two">2:00 PM</option>
+												</select>
+											</div>
 										</div>
-								</div>
-								<br>
-								<div class="form-group row">
-										<div class="col-sm-6 mb-3 mb-sm-0">
-											<label for="price" >Price</label>
-											<input type="text" class="form-control contact-inputs" id="price" name="price" placeholder="price" readonly>
-										</div>
-										<div class="col-sm-6 mb-3 mb-sm-0">
-										  <label for="slot">Select Slot</label><br>
-										  <select id="slot" name="slot" class="form-control contact-inputs">
-											<option value="eight">8:00 AM</option>
-											<option value="nine">9:00 AM</option>
-											<option value="ten">10:00 AM</option>
-											<option value="twelve">12:00 PM</option>
-											<option value="two">2:00 PM</option>
-										  </select>
-									</div>
-								</div>
-								<br>
-								<hr style="background-color:white">
-								<br>
-								<h4>Customer Detail</h4><br>
-									<div class="form-group row">
-										<div class="col-sm-6 mb-3 mb-sm-0">
+										<br>
+										<hr style="background-color:white">
+										<br>
+										<h4>Customer Detail</h4><br>
+										<div class="form-group row">
+											<div class="col-sm-6 mb-3 mb-sm-0">
 												<label for="fname" >First Name</label>
 												<input type="text" class="form-control contact-inputs col-sm-15" id="fname" name="fname" placeholder="Enter First Name" required>
-										</div>
-										<div class="col-sm-6 mb-3 mb-sm-0">
+											</div>
+											<div class="col-sm-6 mb-3 mb-sm-0">
 												<label for="lname" >Last Name</label>
 												<input type="text" class="form-control contact-inputs col-sm-15" id="lname" name="lname" placeholder="Enter Last Name" required>
-										</div>
-									</div>	
-								<br>
-									<div class="form-group row">
-										<div class="col-sm-6 mb-3 mb-sm-0">
+											</div>
+										</div>	
+										<br>
+										<div class="form-group row">
+											<div class="col-sm-6 mb-3 mb-sm-0">
 												<label for="cnum" >Phone Number</label>
 												<input type="tel" class="form-control contact-inputs col-sm-15" id="cnum" name="cnum" placeholder="Phone Number" required>
-										</div>
-										<div class="col-sm-6 mb-3 mb-sm-0">
+											</div>
+											<div class="col-sm-6 mb-3 mb-sm-0">
 												<label for="address" >Address</label>
 												<input type="text" class="form-control contact-inputs col-sm-15" id="address" name="address" placeholder="Enter Your Address" required>
-										</div>
-									</div>	
-								<br>	
-							</p>
+												</div>
+										</div>	
+										<br>	
+									</p>
+								</div>
+							</div>
 						</div>
-				  </div>
+					</div>
+		
+					<div class="col-lg-5 col-sm-6 ">
+						<div class="box ">
+							<div class="detail-box">
+								<div class="responsive-container-block container">
+									<div class="info_contact">
+										<h4>
+											Billing Details
+											<hr style="background-color:white">
+										</h4>
+										<div class="contact_link_box">
+											<label for="session" >Service :</label><br>
+											<label for="price" >Date :</label><br>
+											<hr style="background-color:white">
+											<label>Total:</label>
+											<span id="billingTotal">300.00</span> <!-- Replace 100.00 with dynamic value from backend if possible -->
+										</div>
+									</div><br>
+								</div>
+							</div>
+						</div>
+						<div class="box ">
+							<div class="detail-box">
+								<div class="responsive-container-block container">
+									<div class="info_contact">
+										<h4>
+											Payment Methods
+											<hr style="background-color:white">
+										</h4>
+										<div class="contact_link_box"></div><br>
+										<div class="contact_link_box">
+											<div id="paypal-button-container"></div> <!-- PayPal Button Container -->
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="detail-box">
+							<div class="btn-box">
+								<a href="receipt.html">
+									Next
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
-		
-		<div class="col-lg-5 col-sm-6 ">
-            <div class="box ">
-              <div class="detail-box">
-				  <div class="responsive-container-block container">
-					<div class="info_contact">
-							<h4>
-							  Billing Details
-							  <hr style="background-color:white">
-							</h4>
-							<div class="contact_link_box">
-								<label for="session" >Service :</label><br>
-								<label for="price" >Date :</label><br>
-								<hr style="background-color:white">
-								<label>Total:</label>
-								<span id="billingTotal">300.00</span> <!-- Replace 100.00 with dynamic value from backend if possible -->
-							</div>
-					</div><br>
-				  </div>
-              </div>
-            </div>
-			<div class="box ">
-              <div class="detail-box">
-				  <div class="responsive-container-block container">
-					<div class="info_contact">
-							<h4>
-							  Payment Methods
-							  <hr style="background-color:white">
-							</h4>
-								<div class="contact_link_box">
-								</div><br>
-								<div class="contact_link_box">
-												<div id="paypal-button-container"></div> <!-- PayPal Button Container -->
-				  </div>
-					</div>
-				  </div>
-				</div>
-			  </div>
-			<div class="detail-box">
-				<div class="btn-box">
-					<a href="receipt.html">
-					  Next
-					</a>
-				</div>
-			</div>	
-  </section>
+	</section>
 				
   <!-- End Booking Details section -->
 

@@ -97,7 +97,7 @@ $conn->close();
     <div class="container profile-container">
         <div class="d-flex justify-content-between align-items-center mb-3">
             <div class="d-flex flex-row align-items-center back"><i class="fa fa-long-arrow-left mr-1 mb-1"></i>
-                <a href="index.html"><b>Back to home</b></a>
+                <a href="index.php"><b>Back to home</b></a>
             </div>
         </div>
         <h2 class="text-center mb-5">MAID PROFILE</h2>
@@ -111,13 +111,6 @@ $conn->close();
         <div class="row">
             <div class="col-lg-4 text-center">
                 <img class="img-profile profile-image" src="img/undraw_profile.svg" alt="User profile image" width="150">
-                <div class="rating-stars mt-3">
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star"></i> 
-                </div>
             </div>
             <div class="col-lg-8">
                 <form id="profileForm" method="POST" action="profile.php">

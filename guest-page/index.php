@@ -2,7 +2,6 @@
 session_start();
 include '../connect-db.php';
 
-
 if ($conn) {
     $stmt = $conn->prepare("SELECT * FROM services WHERE status = ?");
     $status = 0;
@@ -112,7 +111,9 @@ if ($conn) {
 											Cleaners
 										</h1>
 										<p>
-											MyKakaks offers a professional house cleaning service in Kuala Lumpur, with a seamless online booking system that lets you schedule cleanings anytime, anywhere. Our website makes it easy to choose the service you need, set an appointment, and securely pay—all from the comfort of your home or while on the move, giving you complete flexibility and peace of mind.
+											MyKakaks offers a professional house cleaning service in Kuala Lumpur, with a seamless online booking system that lets you schedule cleanings anytime, 
+											anywhere. Our website makes it easy to choose the service you need, set an appointment, and securely pay—all from the comfort of your home or while on the move,
+											giving you complete flexibility and peace of mind.
 										</p>
 										<div class="btn-box">
 											<button class="nav-link btn btn-primary" data-toggle="modal" data-target="#signupModal">Book Now</button>
@@ -180,6 +181,7 @@ if ($conn) {
 								<div class="detail-box">
 									<h5><?php echo htmlspecialchars($row['name']); ?></h5>
 									<p><?php echo htmlspecialchars($row['description']); ?></p>
+									<p><i> RM <?php echo htmlspecialchars($row['price']); ?>/session</i></p>									
 								</div>
 							</div>
 						</div>

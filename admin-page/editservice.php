@@ -5,7 +5,6 @@ include '../connect-db.php';
 if (isset($_GET['edit_id'])) {
     $service_id = $_GET['edit_id'];
 
-    // Fetch existing service details
     $sql = "SELECT * FROM services WHERE id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $service_id);

@@ -3,7 +3,6 @@ session_start();
 include '../connect-db.php';
 
 if ($conn) {
-    // Fetch services that are visible (status = 0)
     $stmt = $conn->prepare("SELECT * FROM services WHERE status = ?");
     $status = 0;
     $stmt->bind_param("i", $status);
@@ -34,6 +33,33 @@ if ($conn) {
 	<style>
 		.shadow{
 		box-shadow: 2px 3px 18px 3px rgba(0, 32, 74, 0.9);
+		}
+		.floating-container {
+		position: fixed;
+		bottom: 20px;
+		right: 20px;
+		z-index: 1000;
+		}
+		.floating-button {
+		background-color: #007bff;
+		color: white;
+		padding: 10px 20px;
+		border-radius: 50px;
+		text-align: center;
+		box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+		cursor: pointer;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: 8px; /* Spacing between text and icon */
+		transition: background-color 0.3s ease;
+		}
+		.floating-button:hover {
+		background-color: #0056b3;
+		}
+		.icon {
+		font-size: 1.2em; /* Adjust icon size */
+		font-weight: bold;
 		}
 	</style>
 </head>
@@ -103,7 +129,6 @@ if ($conn) {
                 <div class="box shadow">
                   <div class="img-box">
                     <?php
-                      // Construct the image URL dynamically
                       $image_url = "http://localhost/master/uploads/" . htmlspecialchars($row['image']);
                     ?>
                     <img src="<?php echo $image_url; ?>" alt="Service Image for <?php echo htmlspecialchars($row['name']); ?>">
@@ -111,9 +136,7 @@ if ($conn) {
                   <div class="detail-box">
                     <h5><?php echo htmlspecialchars($row['name']); ?></h5>
                     <p><?php echo htmlspecialchars($row['description']); ?></p>
-                    <div class="btn-box">
-                      <button class="nav-link btn btn-primary" data-toggle="modal" data-target="#signupModal">Book Now</button>
-                    </div>
+					<p><i> RM <?php echo htmlspecialchars($row['price']); ?>/session</i></p>
                   </div>
                 </div>
               </div>
@@ -129,25 +152,35 @@ if ($conn) {
     </div>
   </section>
 
-  <div class="modal fade" id="signupModal" tabindex="-1" role="dialog" aria-labelledby="signupModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="signupModalLabel">Signup or Login to Book</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <p>Please login or create an account to book this service.</p>
-          <a href="../login.php" class="btn btn-primary">Login</a>
-          <a href="../register.php" class="btn btn-secondary">Sign Up</a>
-        </div>
-      </div>
-    </div>
-  </div>
+	<div class="modal fade" id="signupModal" tabindex="-1" role="dialog" aria-labelledby="signupModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="signupModalLabel">Signup or Login to Book</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<p>Please login or create an account to book this service.</p>
+					<a href="../login.php" class="btn btn-primary">Login</a>
+					<a href="../register.php" class="btn btn-secondary">Sign Up</a>
+				</div>
+			</div>
+		</div>
+	</div>
+  
+	<div class="floating-container">
+		<a class="active" href="#" data-toggle="modal" data-target="#signupModal">
+			<div class="floating-button">
+				Book Now <span class="icon">&gt;</span>
+			</div>
+		</a>
+	</div>
 
-<section class="info_section layout_padding2">
+
+	
+	<section class="info_section layout_padding2">
     <div class="container">
       <div class="row">
         <div class="col-md-6 col-lg-3 info_col">
@@ -218,6 +251,14 @@ if ($conn) {
     </div>
 </section>
 
+	<section class="footer_section">
+		<div class="container">
+			<p>
+				&copy; <span id="displayYear"></span> All Rights Reserved By
+				<a href="https://html.design/">MyKakaks</a>
+			</p>
+		</div>
+	</section>
   <script src="js/jquery-3.4.1.min.js"></script>
   <script src="js/bootstrap.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>

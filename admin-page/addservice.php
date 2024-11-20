@@ -3,28 +3,23 @@ session_start();
 include '../connect-db.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Handle the form submission
     $name = $_POST['name'];
     $description = $_POST['description'];
     $price = $_POST['price'];
     $status = isset($_POST['status']) ? 1 : 0; // Checkbox is checked, set status as 1
     $image = $_FILES['image']['name'];
     
-    // Handle image upload
     $target_dir = "../uploads/";
     $target_file = $target_dir . time() . '_' . basename($_FILES["image"]["name"]);
     $uploadOk = 1;
     
-    // Check if the image is uploaded
     if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
-        // Image uploaded successfully
     } else {
         $uploadOk = 0;
         $_SESSION['message'] = "Sorry, there was an error uploading your file.";
         $_SESSION['message_type'] = "error";
     }
 
-    // If everything is ok, insert into database
     if ($uploadOk == 1) {
         $sql = "INSERT INTO services (name, description, price, image, status) 
                 VALUES ('$name', '$description', '$price', '$target_file', '$status')";
@@ -126,7 +121,6 @@ $conn->close();
     <div class="container">
         <h3>Add a New Service</h3>
 
-        <!-- Alert box for success/error messages -->
         <div id="alertBox" class="alert-box"></div>
 
         <form action="addservice.php" method="POST" enctype="multipart/form-data">
@@ -163,7 +157,6 @@ $conn->close();
     </div>
 
     <script>
-        // Show alert message if there is a message in session
         document.addEventListener("DOMContentLoaded", function() {
             <?php if (isset($_SESSION['message'])): ?>
                 let alertBox = document.getElementById("alertBox");
@@ -171,7 +164,6 @@ $conn->close();
                 alertBox.classList.add("alert-" + "<?php echo $_SESSION['message_type']; ?>");
                 alertBox.style.display = "block";
                 <?php unset($_SESSION['message'], $_SESSION['message_type']); ?>
-                // Hide the alert box after 3 seconds
                 setTimeout(() => { alertBox.style.display = "none"; }, 3000);
             <?php endif; ?>
         });

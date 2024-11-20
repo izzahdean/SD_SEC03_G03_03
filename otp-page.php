@@ -3,24 +3,20 @@ session_start();
 
 include 'connect-db.php';
 
-// Handle OTP verification
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action']) && $_POST['action'] === 'verify') {
     $otp = $_POST['otp'];
     $email = $_POST['email'];
 
-    // Check OTP in the database
     $stmt = $conn->prepare("SELECT email FROM otp_codes WHERE email = ? AND code = ? AND TIMESTAMPDIFF(MINUTE, created_at, NOW()) < 30");
     $stmt->bind_param("ss", $email, $otp);
     $stmt->execute();
     $stmt->store_result();
 
     if ($stmt->num_rows > 0) {
-        // OTP is valid, delete it from the database
         $stmt = $conn->prepare("DELETE FROM otp_codes WHERE email = ? AND code = ?");
         $stmt->bind_param("ss", $email, $otp);
         $stmt->execute();
         
-        // Redirect to login page
         echo 'success';
     } else {
         echo 'error';
@@ -31,14 +27,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action']) && $_POST['a
     exit();
 }
 
-// Handle Resend OTP
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action']) && $_POST['action'] === 'resend') {
     $email = $_POST['email'];
 
-    // Generate a new OTP
     $verification_code = str_pad(rand(0, 9999), 4, '0', STR_PAD_LEFT);
 
-    // Update or insert new OTP
     $stmt = $conn->prepare("DELETE FROM otp_codes WHERE email = ?");
     $stmt->bind_param("s", $email);
     $stmt->execute();
@@ -47,16 +40,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action']) && $_POST['a
     $stmt->bind_param("ss", $email, $verification_code);
     $stmt->execute();
 
-    // Send OTP email using PHPMailer
     require_once 'PHPMailer/src/PHPMailer.php';
     require_once 'PHPMailer/src/SMTP.php';
     require_once 'PHPMailer/src/Exception.php';
 
-    // Initialize PHPMailer
     $mail = new PHPMailer\PHPMailer\PHPMailer();
 
     try {
-        // Server settings
         $mail->isSMTP();
         $mail->Host = 'smtp.gmail.com';
         $mail->SMTPAuth = true;
@@ -65,11 +55,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action']) && $_POST['a
         $mail->SMTPSecure = 'tls';
         $mail->Port = 587;
 
-        // Recipients
         $mail->setFrom('nrulizzh35@gmail.com', 'MyKakaks');
         $mail->addAddress($email);
 
-        // Content
         $mail->isHTML(true);
         $mail->Subject = 'Your account authentication Code';
         $mail->Body    = 'Your new OTP code is: ' . $verification_code;

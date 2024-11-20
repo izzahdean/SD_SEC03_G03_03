@@ -1,9 +1,8 @@
 <?php
 session_start();
-include '../connect-db.php';  // Adjust the path if needed
+include '../connect-db.php';
 
 if ($conn) {
-    // Query to fetch all feedback along with customer's name and service name
     $stmt = $conn->prepare("
         SELECT feedback.service_name, feedback.comments, feedback.date_submitted, customer.fname, customer.lname
         FROM feedback
@@ -67,7 +66,8 @@ if ($conn) {
             </span>
           </a>
 
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" 
+			aria-expanded="false" aria-label="Toggle navigation">
             <span class=""></span>
           </button>
 
@@ -110,10 +110,8 @@ if ($conn) {
 					<p>See what our happy customers have to say about us!</p>
 				</div>
 				<div class="row">
-                
 					<?php
 					if ($feedback_result && $feedback_result->num_rows > 0) {
-						// Loop through each feedback entry
 						while ($row = $feedback_result->fetch_assoc()) {
 							$customerName = htmlspecialchars($row['fname'] . ' ' . $row['lname']);
 							$serviceName = htmlspecialchars($row['service_name']);
@@ -226,22 +224,12 @@ if ($conn) {
       </p>
     </div>
   </section>
-  <!-- end footer section -->
-
-  <!-- jQery -->
   <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
-  <!-- popper js -->
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" crossorigin="anonymous"></script>
-  <!-- bootstrap js -->
   <script type="text/javascript" src="js/bootstrap.js"></script>
-  <!-- owl slider -->
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
-  <!-- custom js -->
   <script type="text/javascript" src="js/custom.js"></script>
-  <!-- Google Map -->
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCh39n5U-4IoWpsVGUHWdqB6puEkhRLdmI&callback=myMap"></script>
-  <!-- End Google Map -->
-
 </body>
 
 </html>
