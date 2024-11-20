@@ -102,7 +102,7 @@ Service. Users can explore available services, learn about professional cleaning
 to booking features using a prominent "Book Now" button for a seamless experience.
 
 
-![homepage](.SYSTEM FOLDER/image/custUI.jpg)
+![homepage](https://github.com/izzahdean/SD_SEC03_G03_03/blob/main/SYSTEM%20FOLDER/image/custUI.jpg)
 
 
 ## :computer: Usage
